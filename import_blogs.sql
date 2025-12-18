@@ -1,0 +1,40 @@
+-- Blog Import Template
+--
+-- Instructions:
+-- 1. Export your blogs from the old Bolt instance using the SQL query below
+-- 2. Copy the INSERT statements generated from the export
+-- 3. Replace the sample INSERT below with your actual blog data
+-- 4. Run this SQL in your new Supabase SQL Editor
+--
+-- To export from old database, run this in the OLD Supabase SQL Editor:
+--
+-- SELECT
+--   'INSERT INTO blog_posts (id, title, slug, excerpt, content, featured_image, author_name, author_avatar, category, tags, published, read_time, views, created_at, updated_at, published_at) VALUES (' ||
+--   quote_literal(id::text) || '::uuid, ' ||
+--   quote_literal(title) || ', ' ||
+--   quote_literal(slug) || ', ' ||
+--   quote_literal(excerpt) || ', ' ||
+--   quote_literal(content) || ', ' ||
+--   COALESCE(quote_literal(featured_image), 'NULL') || ', ' ||
+--   quote_literal(author_name) || ', ' ||
+--   COALESCE(quote_literal(author_avatar), 'NULL') || ', ' ||
+--   quote_literal(category) || ', ' ||
+--   'ARRAY[' || array_to_string(ARRAY(SELECT quote_literal(unnest(tags))), ',') || ']::text[], ' ||
+--   published || ', ' ||
+--   read_time || ', ' ||
+--   views || ', ' ||
+--   quote_literal(created_at::text) || '::timestamptz, ' ||
+--   quote_literal(updated_at::text) || '::timestamptz, ' ||
+--   COALESCE(quote_literal(published_at::text) || '::timestamptz', 'NULL') ||
+--   ');'
+-- FROM blog_posts
+-- ORDER BY created_at;
+--
+-- Then paste the results below:
+
+-- Example format (replace with your actual data):
+-- INSERT INTO blog_posts (id, title, slug, excerpt, content, featured_image, author_name, author_avatar, category, tags, published, read_time, views, created_at, updated_at, published_at)
+-- VALUES ('your-uuid', 'Your Title', 'your-slug', 'Your excerpt', 'Your content', 'image-url', 'Author', NULL, 'Category', ARRAY['tag1', 'tag2']::text[], true, 5, 0, '2024-01-01 00:00:00'::timestamptz, '2024-01-01 00:00:00'::timestamptz, '2024-01-01 00:00:00'::timestamptz);
+
+-- Your blog posts here:
+
