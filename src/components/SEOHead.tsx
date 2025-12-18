@@ -7,6 +7,8 @@ interface SEOHeadProps {
   keywords?: string;
   ogImage?: string;
   ogType?: string;
+  ogTitle?: string;
+  ogDescription?: string;
   article?: {
     publishedTime?: string;
     modifiedTime?: string;
@@ -27,11 +29,15 @@ export function SEOHead({
   keywords,
   ogImage = DEFAULT_IMAGE,
   ogType = 'website',
+  ogTitle,
+  ogDescription,
   article,
 }: SEOHeadProps) {
   const location = useLocation();
   const currentUrl = `${SITE_URL}${location.pathname}`;
   const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - Digital Marketing Agency | Local SEO, SEO & Paid Ads`;
+  const ogTitleFinal = ogTitle || fullTitle;
+  const ogDescriptionFinal = ogDescription || description;
 
   useEffect(() => {
     document.title = fullTitle;
@@ -54,8 +60,8 @@ export function SEOHead({
       updateMetaTag('keywords', keywords, true);
     }
 
-    updateMetaTag('og:title', fullTitle);
-    updateMetaTag('og:description', description);
+    updateMetaTag('og:title', ogTitleFinal);
+    updateMetaTag('og:description', ogDescriptionFinal);
     updateMetaTag('og:image', ogImage);
     updateMetaTag('og:url', currentUrl);
     updateMetaTag('og:type', ogType);
@@ -93,7 +99,7 @@ export function SEOHead({
       document.head.appendChild(canonicalLink);
     }
     canonicalLink.href = currentUrl;
-  }, [fullTitle, description, keywords, ogImage, currentUrl, ogType, article]);
+  }, [fullTitle, description, keywords, ogImage, currentUrl, ogType, ogTitleFinal, ogDescriptionFinal, article]);
 
   return null;
 }

@@ -4,7 +4,7 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')
-    .eq('published', true)
+    .or('status.eq.published,and(published.eq.true,status.is.null)')
     .order('published_at', { ascending: false });
 
   if (error) throw error;
