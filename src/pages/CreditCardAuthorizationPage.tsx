@@ -190,7 +190,7 @@ export function CreditCardAuthorizationPage() {
               <strong>SiteMaxi</strong><br />
               7398 Yonge St, Unit 619<br />
               Vaughan, ON, CA L4J 2J2<br />
-              Phone: (866) 498-0952<br />
+              Phone: +1 (866) 344-6294<br />
               Email: operations@sitemaxi.com
             </p>
           </div>
@@ -224,7 +224,7 @@ export function CreditCardAuthorizationPage() {
               <p className="text-blue-900 text-center">
                 <strong>SiteMaxi</strong><br />
                 7398 Yonge St, Unit 619, Vaughan, ON, CA L4J 2J2<br />
-                (866) 498-0952 | sitemaxi.com
+                +1 (866) 344-6294 | sitemaxi.com
               </p>
             </div>
 

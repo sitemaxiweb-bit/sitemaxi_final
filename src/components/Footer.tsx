@@ -58,7 +58,7 @@ export function Footer() {
             <h4 className="font-bold text-[#111111] mb-4">Get in Touch</h4>
             <ul className="space-y-2 text-[#666666]">
               <li>hello@sitemaxi.com</li>
-              <li>(866) 498-0952</li>
+              <li>+1 (866) 344-6294</li>
               <li className="text-sm">7398 Yonge St 6d Unit 619<br/>Vaughan, ON, CA L4J 2J2<br/></li>
               <li className="pt-4">
                 {isHomePage ? (

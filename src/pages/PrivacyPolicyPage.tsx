@@ -134,7 +134,7 @@ export function PrivacyPolicyPage() {
               <p>Vaughan, ON L4J 2J2</p>
               <p>Canada</p>
               <p className="mt-2">Email: hello@sitemaxi.com</p>
-              <p>Phone: (866) 498-0952</p>
+              <p>Phone: +1 (866) 344-6294</p>
             </div>
           </section>
         </div>

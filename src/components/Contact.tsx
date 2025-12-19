@@ -126,8 +126,8 @@ export function Contact() {
                   </div>
                   <div>
                     <div className="font-semibold text-[#111111] mb-1">Phone</div>
-                    <a href="tel:+15551234567" className="text-[#666666] hover:text-[#8B5CF6] transition-colors">
-                      (866) 498-0952
+                    <a href="tel:+18663446294" className="text-[#666666] hover:text-[#8B5CF6] transition-colors">
+                      +1 (866) 344-6294
                     </a>
                   </div>
                 </div>
@@ -217,7 +217,7 @@ export function Contact() {
                   value={formData.phone}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6] focus:ring-opacity-20 outline-none transition-all"
-                  placeholder="(555) 123-4567"
+                  placeholder="+1 (866) 344-6294"
                 />
               </div>
 
