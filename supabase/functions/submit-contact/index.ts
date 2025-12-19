@@ -31,7 +31,7 @@ const corsHeaders = {
 async function sendEmailNotification(formData: ContactFormData) {
   try {
     const picaSecretKey = Deno.env.get('PICA_SECRET_KEY');
-    const picaConnectionKey = Deno.env.get('PICA_RESEND_CONNECTION_KEY');
+    const picaConnectionKey = Deno.env.get('PICA_OUTLOOK_MAIL_CONNECTION_KEY');
 
     if (!picaSecretKey || !picaConnectionKey) {
       console.warn('Email credentials not configured. Skipping email notification.');
@@ -56,7 +56,7 @@ async function sendEmailNotification(formData: ContactFormData) {
 <body>
   <div class="container">
     <div class="header">
-      <h1 style="margin: 0;">🎉 New Contact Form Submission</h1>
+      <h1 style="margin: 0;">New Contact Form Submission</h1>
     </div>
     <div class="content">
       <div class="field">
@@ -91,33 +91,30 @@ async function sendEmailNotification(formData: ContactFormData) {
 </html>
     `;
 
-    const emailPayload = {
-      from: 'SiteMaxi <notifications@sitemaxi.com>',
-      to: 'operations@sitemaxi.com',
-      subject: 'You get a new form submission',
-      html: emailContent,
-      text: `
-New Contact Form Submission
-
-Name: ${formData.firstName} ${formData.lastName}
-Email: ${formData.email}
-${formData.phone ? `Phone: ${formData.phone}` : ''}
-Service: ${formData.service}
-
-Message:
-${formData.message}
-      `.trim(),
+    const message = {
+      subject: 'New Contact Form Submission - SiteMaxi',
+      body: {
+        contentType: 'HTML',
+        content: emailContent,
+      },
+      toRecipients: [
+        {
+          emailAddress: {
+            address: 'operations@sitemaxi.com',
+          },
+        },
+      ],
     };
 
-    const response = await fetch('https://api.picaos.com/v1/passthrough/email', {
+    const response = await fetch('https://api.picaos.com/v1/passthrough/me/sendMail', {
       method: 'POST',
       headers: {
         'x-pica-secret': picaSecretKey,
         'x-pica-connection-key': picaConnectionKey,
-        'x-pica-action-id': 'conn_mod_def::GC4q4JE4I28::x8Elxo0VRMK1X-uH1C3NeA',
+        'x-pica-action-id': 'conn_mod_def::GCwA84KBXNw::h9iYXKQMQY-nKxeNMrZwng',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(emailPayload),
+      body: JSON.stringify({ message, saveToSentItems: true }),
     });
 
     if (!response.ok) {
@@ -126,9 +123,8 @@ ${formData.message}
       return { success: false, error: errorText };
     }
 
-    const result = await response.json();
-    console.log('Email sent successfully:', result);
-    return { success: true, data: result };
+    console.log('Email sent successfully via Outlook');
+    return { success: true };
   } catch (error) {
     console.error('Error sending email notification:', error);
     return { success: false, error: String(error) };
