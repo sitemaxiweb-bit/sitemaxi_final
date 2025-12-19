@@ -28,6 +28,113 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Client-Info, Apikey',
 };
 
+async function sendEmailNotification(formData: ContactFormData) {
+  try {
+    const picaSecretKey = Deno.env.get('PICA_SECRET_KEY');
+    const picaConnectionKey = Deno.env.get('PICA_RESEND_CONNECTION_KEY');
+
+    if (!picaSecretKey || !picaConnectionKey) {
+      console.warn('Email credentials not configured. Skipping email notification.');
+      return { success: false, error: 'Email credentials not configured' };
+    }
+
+    const emailContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background-color: #2563eb; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+    .content { background-color: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none; }
+    .field { margin-bottom: 20px; }
+    .label { font-weight: bold; color: #374151; display: block; margin-bottom: 5px; }
+    .value { background-color: white; padding: 12px; border-radius: 4px; border: 1px solid #e5e7eb; }
+    .footer { background-color: #f3f4f6; padding: 15px; text-align: center; font-size: 12px; color: #6b7280; border-radius: 0 0 8px 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 style="margin: 0;">🎉 New Contact Form Submission</h1>
+    </div>
+    <div class="content">
+      <div class="field">
+        <span class="label">Name:</span>
+        <div class="value">${formData.firstName} ${formData.lastName}</div>
+      </div>
+      <div class="field">
+        <span class="label">Email:</span>
+        <div class="value">${formData.email}</div>
+      </div>
+      ${formData.phone ? `
+      <div class="field">
+        <span class="label">Phone:</span>
+        <div class="value">${formData.phone}</div>
+      </div>
+      ` : ''}
+      <div class="field">
+        <span class="label">Service Interested In:</span>
+        <div class="value">${formData.service}</div>
+      </div>
+      <div class="field">
+        <span class="label">Message:</span>
+        <div class="value" style="white-space: pre-wrap;">${formData.message}</div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>This notification was sent from your website contact form.</p>
+      <p>Please respond to the customer within 24 hours.</p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
+    const emailPayload = {
+      from: 'SiteMaxi <notifications@sitemaxi.com>',
+      to: 'operations@sitemaxi.com',
+      subject: 'You get a new form submission',
+      html: emailContent,
+      text: `
+New Contact Form Submission
+
+Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+${formData.phone ? `Phone: ${formData.phone}` : ''}
+Service: ${formData.service}
+
+Message:
+${formData.message}
+      `.trim(),
+    };
+
+    const response = await fetch('https://api.picaos.com/v1/passthrough/email', {
+      method: 'POST',
+      headers: {
+        'x-pica-secret': picaSecretKey,
+        'x-pica-connection-key': picaConnectionKey,
+        'x-pica-action-id': 'conn_mod_def::GC4q4JE4I28::x8Elxo0VRMK1X-uH1C3NeA',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(emailPayload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Email sending failed:', errorText);
+      return { success: false, error: errorText };
+    }
+
+    const result = await response.json();
+    console.log('Email sent successfully:', result);
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error sending email notification:', error);
+    return { success: false, error: String(error) };
+  }
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, {
@@ -94,6 +201,10 @@ Deno.serve(async (req: Request) => {
         }
       );
     }
+
+    sendEmailNotification(formData).catch(err => {
+      console.error('Failed to send email notification (non-blocking):', err);
+    });
 
     const { data: apiKeyData, error: keyError } = await supabase
       .from('api_config')
