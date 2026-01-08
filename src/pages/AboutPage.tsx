@@ -266,6 +266,13 @@ function OurTeam() {
       bio: "Design expert focused on creating clean, conversion-optimized digital experiences. Malinda blends modern aesthetics with usability to deliver websites that are both beautiful and effective.",
       image: "https://shwcwyonepqlupiwxijx.supabase.co/storage/v1/object/public/blog-images/content/mallinda-1763018826831-suoou6.jpg",
       email: "web@sitemaxi.com"
+    },
+    {
+      name: "Rafaela Gadelha",
+      role: "Social Media & Digital Communication Specialist",
+      bio: "A Publicist specializing in social media and digital communication, focused on strategic content planning and audience engagement. I help brands shape their online presence through creative, purpose-driven messaging that aligns with business goals and market needs.",
+      image: "/whatsapp_image_2025-12-21_at_11.36.05.jpeg",
+      email: "rafaela@sitemaxi.com"
     }
   ];
 
