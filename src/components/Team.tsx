@@ -41,6 +41,13 @@ export function Team() {
       image: "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=400",
       linkedin: "#",
       email: "emily@sitemaxi.com"
+    },
+    {
+      name: "Rafaela Gadelha",
+      role: "Social Media & Digital Communication Specialist",
+      bio: "A Publicist specializing in social media and digital communication, focused on strategic content planning and audience engagement. I help brands shape their online presence through creative, purpose-driven messaging that aligns with business goals and market needs.",
+      image: "/whatsapp_image_2025-12-21_at_11.36.05.jpeg",
+      email: "rafaela@sitemaxi.com"
     }
   ];
 
