@@ -294,52 +294,9 @@ function OurTeam() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.slice(0, 3).map((member, index) => (
+          {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="group bg-white rounded-3xl overflow-hidden border border-gray-200 hover:border-[#8B5CF6] hover:shadow-2xl transition-all duration-500"
-            >
-              <div className="relative overflow-hidden h-[320px]">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                <div className="absolute bottom-4 left-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-4 group-hover:translate-y-0">
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-[#8B5CF6] hover:text-white transition-all duration-300"
-                    >
-                      <Linkedin className="w-5 h-5" />
-                    </a>
-                  )}
-                  {member.email && (
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-[#8B5CF6] hover:text-white transition-all duration-300"
-                    >
-                      <Mail className="w-5 h-5" />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-[#111111] mb-1">{member.name}</h3>
-                <p className="text-[#8B5CF6] font-semibold text-sm mb-3">{member.role}</p>
-                <p className="text-[#666666] leading-relaxed">{member.bio}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 mt-8 max-w-3xl mx-auto">
-          {teamMembers.slice(3).map((member, index) => (
-            <div
-              key={index + 3}
               className="group bg-white rounded-3xl overflow-hidden border border-gray-200 hover:border-[#8B5CF6] hover:shadow-2xl transition-all duration-500"
             >
               <div className="relative overflow-hidden h-[320px]">
