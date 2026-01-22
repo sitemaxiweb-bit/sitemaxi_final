@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Save, Eye, ArrowLeft, X, Upload, Image as ImageIcon, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { createPost, updatePost, getPostById } from '../lib/blogApi';
 import { getCurrentUser } from '../lib/auth';
 import { BlogPost, supabase } from '../lib/supabase';
-import RichTextEditor from '../components/RichTextEditor';
+import RichTextEditor, { RichTextEditorRef } from '../components/RichTextEditor';
 import MediaLibrary from '../components/MediaLibrary';
 import { calculateReadTime, generateSlug } from '../utils/blogHelpers';
 
@@ -26,6 +26,7 @@ export function AdminBlogEditorPage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const isEditMode = id && id !== 'new';
+  const editorRef = useRef<RichTextEditorRef>(null);
 
   const [loading, setLoading] = useState(isEditMode);
   const [saving, setSaving] = useState(false);
@@ -279,8 +280,7 @@ export function AdminBlogEditorPage() {
     } else if (mediaSelectMode === 'og') {
       setOgImage(media.url);
     } else if (mediaSelectMode === 'inline') {
-      const imgHtml = `<img src="${media.url}" alt="${media.alt_text || media.filename}" />`;
-      setContent(content + imgHtml);
+      editorRef.current?.insertImage(media.url, media.alt_text || media.filename);
     }
     setShowMediaLibrary(false);
   }
@@ -441,6 +441,7 @@ export function AdminBlogEditorPage() {
                   Content <span className="text-red-500">*</span>
                 </label>
                 <RichTextEditor
+                  ref={editorRef}
                   content={content}
                   onChange={setContent}
                   onImageInsert={() => {

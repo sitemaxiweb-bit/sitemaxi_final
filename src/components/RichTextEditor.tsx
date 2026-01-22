@@ -9,7 +9,7 @@ import {
   Link as LinkIcon, Image as ImageIcon, Quote, Code, Minus,
   Heading1, Heading2, Heading3, Undo, Redo
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useImperativeHandle, forwardRef } from 'react';
 
 interface RichTextEditorProps {
   content: string;
@@ -18,12 +18,16 @@ interface RichTextEditorProps {
   placeholder?: string;
 }
 
-export default function RichTextEditor({
+export interface RichTextEditorRef {
+  insertImage: (url: string, alt?: string) => void;
+}
+
+const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(({
   content,
   onChange,
   onImageInsert,
   placeholder = 'Start writing your blog post...'
-}: RichTextEditorProps) {
+}, ref) => {
   const [showLinkDialog, setShowLinkDialog] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
 
@@ -60,6 +64,14 @@ export default function RichTextEditor({
       },
     },
   });
+
+  useImperativeHandle(ref, () => ({
+    insertImage: (url: string, alt?: string) => {
+      if (editor) {
+        editor.chain().focus().setImage({ src: url, alt: alt || '' }).run();
+      }
+    }
+  }));
 
   if (!editor) {
     return null;
@@ -280,4 +292,8 @@ export default function RichTextEditor({
       <EditorContent editor={editor} />
     </div>
   );
-}
+});
+
+RichTextEditor.displayName = 'RichTextEditor';
+
+export default RichTextEditor;
