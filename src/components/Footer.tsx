@@ -29,7 +29,7 @@ export function Footer() {
               <a href="http://linkedin.com/company/sitemaxi" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#1D4ED8] hover:to-[#8B5CF6] hover:text-white transition-all duration-300">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://www.youtube.com/@SiteMaxi" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#1D4ED8] hover:to-[#8B5CF6] hover:text-white transition-all duration-300">
+              <a href="https://www.youtube.com/@SiteMaxiHQ" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gradient-to-br hover:from-[#1D4ED8] hover:to-[#8B5CF6] hover:text-white transition-all duration-300">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
