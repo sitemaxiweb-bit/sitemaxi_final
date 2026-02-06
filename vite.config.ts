@@ -40,10 +40,10 @@ function safeCopyPublic(): import('vite').Plugin {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), safeCopyPublic()],
-  publicDir: false,
+export default defineConfig(({ command }) => ({
+  plugins: [react(), command === 'build' ? safeCopyPublic() : null].filter(Boolean) as import('vite').Plugin[],
+  publicDir: command === 'build' ? false : undefined,
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-});
+}));
