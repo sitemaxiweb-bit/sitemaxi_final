@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface FormData {
   firstName: string;
@@ -8,6 +9,7 @@ interface FormData {
   phone: string;
   service: string;
   message: string;
+  smsConsent: boolean;
 }
 
 interface SubmissionStatus {
@@ -23,6 +25,7 @@ export function Contact() {
     phone: '',
     service: '',
     message: '',
+    smsConsent: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,8 +34,12 @@ export function Contact() {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
+    const { id, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: type === 'checkbox' ? checked : value
+    }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -67,6 +74,7 @@ export function Contact() {
           phone: '',
           service: '',
           message: '',
+          smsConsent: false,
         });
       } else {
         setStatus({
@@ -152,9 +160,14 @@ export function Contact() {
               <p className="mb-6 leading-relaxed">
                 Book a 30-minute consultation to discover how we can help grow your business.
               </p>
-              <button className="bg-white text-[#8B5CF6] px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg w-full">
+              <a
+                href="https://calendly.com/sitemaxi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-white text-[#8B5CF6] px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg w-full text-center"
+              >
                 Schedule a Call
-              </button>
+              </a>
             </div>
           </div>
 
@@ -256,6 +269,28 @@ export function Contact() {
                   placeholder="Tell us about your business and what you're looking to achieve..."
                   required
                 ></textarea>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <input
+                  type="checkbox"
+                  id="smsConsent"
+                  checked={formData.smsConsent}
+                  onChange={handleInputChange}
+                  className="mt-1 w-4 h-4 text-[#8B5CF6] border-gray-300 rounded focus:ring-[#8B5CF6] focus:ring-2 cursor-pointer"
+                  required
+                />
+                <label htmlFor="smsConsent" className="text-sm text-[#666666] leading-relaxed cursor-pointer">
+                  By checking this box, I consent to receive SMS messages from SiteMaxi related to my inquiry, customer support, and service updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out at any time or HELP for assistance. I agree to the SiteMaxi{' '}
+                  <Link to="/terms" className="text-[#8B5CF6] hover:text-[#7C3AED] underline font-medium">
+                    Terms of Service
+                  </Link>
+                  {' '}and{' '}
+                  <Link to="/privacy" className="text-[#8B5CF6] hover:text-[#7C3AED] underline font-medium">
+                    Privacy Policy
+                  </Link>
+                  .
+                </label>
               </div>
 
               {status.type && (
