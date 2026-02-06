@@ -28,6 +28,7 @@ import { CreditCardAuthorizationPage } from './pages/CreditCardAuthorizationPage
 import { AdminCCPasswordSetupPage } from './pages/AdminCCPasswordSetupPage';
 import { AdminCCAuthorizationsPage } from './pages/AdminCCAuthorizationsPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
+import { AIBlueprintPage } from './pages/AIBlueprintPage';
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
               <Route path="/terms-of-service" element={<TermsOfServicePage />} />
               <Route path="/cookie-policy" element={<CookiePolicyPage />} />
               <Route path="/credit-card-authorization" element={<CreditCardAuthorizationPage />} />
+              <Route path="/ai-ecommerce-blueprint" element={<AIBlueprintPage />} />
             </Routes>
             <Footer />
           </div>
