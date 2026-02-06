@@ -161,7 +161,7 @@ export function Contact() {
                 Book a 30-minute consultation to discover how we can help grow your business.
               </p>
               <a
-                href="https://calendly.com/sitemaxi"
+                href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block bg-white text-[#8B5CF6] px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg w-full text-center"
@@ -312,9 +312,9 @@ export function Contact() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !formData.smsConsent}
                 className={`w-full bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-8 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 text-lg shadow-lg flex items-center justify-center gap-2 ${
-                  isSubmitting ? 'opacity-60 cursor-not-allowed' : ''
+                  isSubmitting || !formData.smsConsent ? 'opacity-60 cursor-not-allowed' : ''
                 }`}
               >
                 {isSubmitting ? (

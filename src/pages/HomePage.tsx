@@ -48,7 +48,7 @@ function Hero() {
               From SEO to paid ads, we help local businesses grow consistently with clear strategy, clean design, and data-backed execution.
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <a href="https://calendar.app.google/Pn2PUD5NDJWr25mk8" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-10 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
+              <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-10 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
                 Schedule a Call
               </a>
               <a href="#services" className="bg-white text-[#8B5CF6] border-2 border-[#8B5CF6] px-10 py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
@@ -450,7 +450,7 @@ function CTA() {
             Book a free strategy call and discover how we can help you achieve your goals.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="https://calendar.app.google/Pn2PUD5NDJWr25mk8" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-12 py-5 rounded-lg font-semibold text-lg hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-block">
+            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-12 py-5 rounded-lg font-semibold text-lg hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-block">
               Schedule a Call
             </a>
           </div>

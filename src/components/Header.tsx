@@ -92,7 +92,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <a href="https://calendar.app.google/Pn2PUD5NDJWr25mk8" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-6 py-2.5 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-block">
+          <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-6 py-2.5 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-block">
             Schedule a Call
           </a>
         </div>
@@ -163,7 +163,7 @@ export function Header() {
             </Link>
 
             <a
-              href="https://calendar.app.google/Pn2PUD5NDJWr25mk8"
+              href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-6 py-3 rounded-lg font-semibold text-center"

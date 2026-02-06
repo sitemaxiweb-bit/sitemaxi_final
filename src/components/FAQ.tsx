@@ -123,7 +123,7 @@ export function FAQ() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
-                href="https://calendar.app.google/Pn2PUD5NDJWr25mk8"
+                href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-8 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl hover:scale-105"

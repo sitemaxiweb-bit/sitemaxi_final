@@ -58,7 +58,7 @@ function AdMaxiHero() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://calendar.app.google/Pn2PUD5NDJWr25mk8"
+              href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-[#1D4ED8] to-[#3B82F6] text-white px-10 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#1D4ED8] transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block"
@@ -66,7 +66,7 @@ function AdMaxiHero() {
               Get Started
             </a>
             <a
-              href="https://calendar.app.google/Pn2PUD5NDJWr25mk8"
+              href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white text-[#1D4ED8] border-2 border-[#1D4ED8] px-10 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block"
@@ -189,7 +189,7 @@ function PackagesSection() {
               )}
 
               <a
-                href="https://calendar.app.google/Pn2PUD5NDJWr25mk8"
+                href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-gradient-to-r from-[#1D4ED8] to-[#3B82F6] text-white text-center px-8 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#1D4ED8] transition-all duration-300 shadow-md hover:shadow-lg"
@@ -215,7 +215,7 @@ function CTASection() {
           Click below to speak to an advertising expert.
         </p>
         <a
-          href="https://calendar.app.google/Pn2PUD5NDJWr25mk8"
+          href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-gradient-to-r from-[#1D4ED8] to-[#3B82F6] text-white px-12 py-5 rounded-lg font-semibold text-lg hover:from-[#1E40AF] hover:to-[#1D4ED8] transition-all duration-300 shadow-lg hover:shadow-xl"

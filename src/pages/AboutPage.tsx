@@ -351,7 +351,7 @@ function CallToAction() {
           Let's discuss how we can help you achieve your business goals and take your digital presence to the next level.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <a href="https://calendar.app.google/Pn2PUD5NDJWr25mk8" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-12 py-5 rounded-lg font-semibold text-lg hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 inline-block shadow-lg">
+          <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-12 py-5 rounded-lg font-semibold text-lg hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 inline-block shadow-lg">
             Schedule a Call
           </a>
         </div>
