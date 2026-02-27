@@ -5,10 +5,6 @@ export function LogoSlider() {
       alt: 'MyWelcare Healthcare Solutions - Digital Marketing Client Success Story'
     },
     {
-      src: '/care-made-home-care-client-logo.webp',
-      alt: 'Care Made Home Care Services - Social Media Marketing Client'
-    },
-    {
       src: '/salon-chez-pierre-beauty-client-logo.png',
       alt: 'Salon Chez Pierre Beauty Salon - Brand Development Client'
     },
