@@ -365,7 +365,7 @@ function Testimonials() {
     {
       quote: "It was a pleasure working with Sitemaxi. They are thorough, detail oriented & always work towards any goal you have in mind with efficiency & skill!",
       name: "Rohail Ali",
-      business: "Caremade.ca",
+      business: "SSME",
       role: "Owner",
       image: "/download (5).png"
     },
