@@ -1,33 +1,89 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+
+const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
+
+const services = [
+  {
+    icon: TrendingUp,
+    name: 'RankMaxi',
+    description: 'Local SEO — rank in Google Maps & local search',
+    path: '/rankmaxi',
+    color: '#1D4ED8',
+    bg: '#DBEAFE',
+  },
+  {
+    icon: Target,
+    name: 'SearchMaxi',
+    description: 'SEO — grow organic traffic that converts',
+    path: '/searchmaxi',
+    color: '#0891B2',
+    bg: '#CFFAFE',
+  },
+  {
+    icon: Share2,
+    name: 'SocialMaxi',
+    description: 'Social Media — content, strategy & engagement',
+    path: '/socialmaxi',
+    color: '#059669',
+    bg: '#D1FAE5',
+  },
+  {
+    icon: Zap,
+    name: 'AdMaxi',
+    description: 'Social Ads — paid campaigns for customer acquisition',
+    path: '/admaxi',
+    color: '#D97706',
+    bg: '#FEF3C7',
+  },
+  {
+    icon: MousePointerClick,
+    name: 'ClickMaxi',
+    description: 'Google Ads — capture high-intent buyers',
+    path: '/clickmaxi',
+    color: '#DC2626',
+    bg: '#FEE2E2',
+  },
+  {
+    icon: Palette,
+    name: 'SiteMaxi',
+    description: 'Web Design — high-converting websites',
+    path: '/sitemaxi',
+    color: '#7C3AED',
+    bg: '#EDE9FE',
+  },
+];
 
 export function Header() {
   const location = useLocation();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const services = [
-    { name: 'RankMaxi', description: 'Local SEO', path: '/rankmaxi' },
-    { name: 'SearchMaxi', description: 'SEO', path: '/searchmaxi' },
-    { name: 'SocialMaxi', description: 'Social Media', path: '/socialmaxi' },
-    { name: 'AdMaxi', description: 'Social Ads', path: '/admaxi' },
-    { name: 'ClickMaxi', description: 'Google Ads', path: '/clickmaxi' },
-    { name: 'SiteMaxi', description: 'Web Design', path: '/sitemaxi' },
-  ];
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const resourcesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (servicesRef.current && !servicesRef.current.contains(event.target as Node)) {
         setIsServicesOpen(false);
       }
+      if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) {
+        setIsResourcesOpen(false);
+      }
     }
-
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -36,140 +92,241 @@ export function Header() {
     } else {
       document.body.style.overflow = 'unset';
     }
+    return () => { document.body.style.overflow = 'unset'; };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsServicesOpen(false);
+    setIsResourcesOpen(false);
+  }, [location.pathname]);
+
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
+    <header className={`bg-white sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'shadow-md border-b border-gray-100' : 'border-b border-gray-200'}`}>
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link to="/" className="flex items-center flex-shrink-0">
           <img
             src="/SiteMaxi Professional Websites.png"
             alt="SiteMaxi"
-            className="h-10 md:h-10 w-auto"
+            className="h-9 md:h-10 w-auto"
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
-          <Link to="/" className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium">
+        <nav className="hidden lg:flex items-center gap-1">
+          <Link
+            to="/"
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+          >
             Home
           </Link>
-          <Link to="/about" className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium">
-            About Us
-          </Link>
-          <div className="relative" ref={dropdownRef}>
+
+          <div className="relative" ref={servicesRef}>
             <button
-              onClick={() => setIsServicesOpen(!isServicesOpen)}
-              className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium flex items-center gap-1"
+              onClick={() => { setIsServicesOpen(!isServicesOpen); setIsResourcesOpen(false); }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${isServicesOpen ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
             >
               Our Services
               <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isServicesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl py-3 animate-fadeIn">
-                {services.map((service, index) => (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[560px] bg-white border border-gray-200 rounded-2xl shadow-2xl p-4 z-50">
+                <div className="grid grid-cols-2 gap-2">
+                  {services.map((service) => (
+                    <Link
+                      key={service.path}
+                      to={service.path}
+                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+                    >
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: service.bg }}>
+                        <service.icon className="w-4 h-4" style={{ color: service.color }} />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-[#111111] text-sm group-hover:text-[#1D4ED8] transition-colors">{service.name}</div>
+                        <div className="text-xs text-[#6B7280] leading-snug mt-0.5">{service.description}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-3 pt-3 border-t border-gray-100">
                   <Link
-                    key={index}
-                    to={service.path}
-                    onClick={() => setIsServicesOpen(false)}
-                    className="block px-6 py-3 hover:bg-gray-50 transition-colors group"
+                    to="/services"
+                    className="flex items-center justify-center gap-2 text-sm font-semibold text-[#1D4ED8] hover:text-[#1E40AF] transition-colors py-1"
                   >
-                    <div className="font-semibold text-[#111111] group-hover:text-[#8B5CF6] transition-colors">
-                      {service.name}
-                    </div>
-                    <div className="text-sm text-[#666666]">{service.description}</div>
+                    View All Services
+                    <ChevronDown className="w-3.5 h-3.5 -rotate-90" />
                   </Link>
-                ))}
+                </div>
               </div>
             )}
           </div>
-          <Link to="/blog" className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium">
+
+          <Link
+            to="/industries"
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/industries') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+          >
+            Industries
+          </Link>
+
+          <div className="relative" ref={resourcesRef}>
+            <button
+              onClick={() => { setIsResourcesOpen(!isResourcesOpen); setIsServicesOpen(false); }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${isResourcesOpen ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+            >
+              Resources
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isResourcesOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {isResourcesOpen && (
+              <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-2xl shadow-2xl py-2 z-50">
+                <Link to="/resources" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                    <Wrench className="w-4 h-4 text-[#1D4ED8]" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-[#111111]">Resources Hub</div>
+                    <div className="text-xs text-[#6B7280]">Tools & guides</div>
+                  </div>
+                </Link>
+                <Link to="/free-seo-audit" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                    <Search className="w-4 h-4 text-[#059669]" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-[#111111]">Free AI Audit</div>
+                    <div className="text-xs text-[#6B7280]">Instant SEO report</div>
+                  </div>
+                </Link>
+                <Link to="/blog" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-[#D97706]" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-[#111111]">Blog</div>
+                    <div className="text-xs text-[#6B7280]">Marketing insights</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link
+            to="/blog"
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/blog') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+          >
             Blog
           </Link>
-          <Link to="/contact" className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium">
+
+          <Link
+            to="/about"
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/about') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+          >
+            About
+          </Link>
+
+          <Link
+            to="/contact"
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/contact') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+          >
             Contact
           </Link>
         </nav>
 
-        <div className="hidden md:block">
-          <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-6 py-2.5 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-block">
-            Schedule a Call
+        <div className="hidden lg:flex items-center gap-3">
+          <Link
+            to="/free-seo-audit"
+            className="bg-[#1D4ED8] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#1E40AF] transition-colors"
+          >
+            Free Audit
+          </Link>
+          <a
+            href={CALENDAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border border-[#1D4ED8] text-[#1D4ED8] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-50 transition-colors"
+          >
+            Book Strategy Call
           </a>
         </div>
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-[#111111] hover:text-[#8B5CF6] transition-colors"
+          className="lg:hidden p-2 text-[#374151] hover:text-[#1D4ED8] transition-colors"
+          aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-[73px] bg-white z-50 overflow-y-auto">
-          <nav className="flex flex-col px-6 py-6">
-            <Link
-              to="/"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium py-4 border-b border-gray-200"
-            >
+        <div className="lg:hidden fixed inset-0 top-[65px] bg-white z-50 overflow-y-auto">
+          <nav className="flex flex-col px-6 py-4">
+            <Link to="/" className="text-[#374151] font-medium py-4 border-b border-gray-100 flex items-center justify-between">
               Home
-            </Link>
-            <Link
-              to="/about"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium py-4 border-b border-gray-200"
-            >
-              About Us
             </Link>
 
             <button
-              onClick={() => setIsServicesOpen(!isServicesOpen)}
-              className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium py-4 border-b border-gray-200 flex items-center justify-between"
+              onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+              className="text-[#374151] font-medium py-4 border-b border-gray-100 flex items-center justify-between"
             >
               Our Services
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-180' : ''}`} />
             </button>
 
-            {isServicesOpen && (
-              <div className="pl-4 bg-gray-50">
-                {services.map((service, index) => (
+            {isMobileServicesOpen && (
+              <div className="bg-gray-50 rounded-xl mb-2">
+                {services.map((service) => (
                   <Link
-                    key={index}
+                    key={service.path}
                     to={service.path}
-                    onClick={() => { setIsMobileMenuOpen(false); setIsServicesOpen(false); }}
-                    className="block py-3 border-b border-gray-200 last:border-b-0"
+                    className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 last:border-b-0"
                   >
-                    <div className="font-semibold text-[#111111]">{service.name}</div>
-                    <div className="text-sm text-[#666666]">{service.description}</div>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: service.bg }}>
+                      <service.icon className="w-4 h-4" style={{ color: service.color }} />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-sm text-[#111111]">{service.name}</div>
+                      <div className="text-xs text-[#6B7280]">{service.description.split('—')[0].trim()}</div>
+                    </div>
                   </Link>
                 ))}
               </div>
             )}
 
-            <Link
-              to="/blog"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium py-4 border-b border-gray-200"
-            >
+            <Link to="/industries" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+              Industries
+            </Link>
+            <Link to="/resources" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+              Resources Hub
+            </Link>
+            <Link to="/blog" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Blog
             </Link>
-            <Link
-              to="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[#111111] hover:text-[#8B5CF6] transition-colors font-medium py-4 border-b border-gray-200"
-            >
+            <Link to="/about" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+              About
+            </Link>
+            <Link to="/contact" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Contact
             </Link>
 
-            <a
-              href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-6 py-3 rounded-lg font-semibold text-center"
-            >
-              Schedule a Call
-            </a>
+            <div className="mt-6 flex flex-col gap-3">
+              <Link
+                to="/free-seo-audit"
+                className="bg-[#1D4ED8] text-white px-6 py-3.5 rounded-lg font-semibold text-center"
+              >
+                Free Audit
+              </Link>
+              <a
+                href={CALENDAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-[#1D4ED8] text-[#1D4ED8] px-6 py-3.5 rounded-lg font-semibold text-center"
+              >
+                Book Strategy Call
+              </a>
+            </div>
           </nav>
         </div>
       )}

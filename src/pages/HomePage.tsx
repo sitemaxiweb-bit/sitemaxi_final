@@ -1,69 +1,127 @@
-import { TrendingUp, Share2, Target, MousePointerClick, Palette, Globe, Zap, ArrowRight, Award, Star, Users, TrendingUp as Chart, BarChart3 } from 'lucide-react';
+import {
+  TrendingUp, Target, Share2, Zap, MousePointerClick, Palette,
+  ArrowRight, CheckCircle, BarChart3, Globe, Wrench, Users, Star,
+  Search, ShoppingBag, Hammer, Stethoscope, Scale, Scissors, Truck, Leaf,
+  Shield, Cpu, Home
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { LogoSlider } from '../components/LogoSlider';
 import { Blog } from '../components/Blog';
-import { FAQ } from '../components/FAQ';
 import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
 import { OrganizationStructuredData, WebsiteStructuredData } from '../components/StructuredData';
+import { LogoSlider } from '../components/LogoSlider';
+
+const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
 
 export function HomePage() {
   return (
     <>
       <SEOHead
-        title="Digital Marketing Agency | Local SEO, SEO & Paid Ads"
-        description="Grow your business with SiteMaxi's Local SEO, SEO, social media, and paid ads services. We help businesses show up on Google, attract more leads, and turn online traffic into real customers."
-        keywords="digital marketing agency, local SEO, SEO services, paid ads, social media marketing, Google ads, Facebook ads, business growth"
+        title="SiteMaxi — Canadian Digital Marketing Agency | SEO, Ads & Web Design"
+        description="SiteMaxi helps local businesses and e-commerce brands grow with Local SEO, Google Ads, social media, and high-converting websites. Get your free AI marketing audit today."
+        keywords="digital marketing agency canada, local SEO, google ads management, web design, social media marketing, e-commerce SEO, lead generation"
       />
       <OrganizationStructuredData />
       <WebsiteStructuredData />
-      <Hero />
-      <LogoSlider />
-      <Services />
-      <AboutUs />
-      <Process />
-      <Testimonials />
+      <HeroSection />
+      <TrustSection />
+      <ServicesSection />
+      <IndustryFocusSection />
+      <FreeToolsSection />
+      <WhyChooseSection />
       <Blog />
-      <FAQ />
-      <CTA />
+      <FinalCTASection />
     </>
   );
 }
 
-function Hero() {
+function HeroSection() {
   return (
-    <section className="bg-white py-20 md:py-28">
+    <section className="bg-white py-20 md:py-28 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div>
-            <div className="inline-block mb-6">
-              <span className="text-[#8B5CF6] font-semibold text-sm uppercase tracking-wide bg-purple-50 px-4 py-2 rounded-full">
-                Digital Growth Agency
-              </span>
+            <div className="inline-flex items-center gap-2 mb-6 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full">
+              <span className="w-2 h-2 bg-[#1D4ED8] rounded-full animate-pulse"></span>
+              <span className="text-[#1D4ED8] font-semibold text-sm">Canadian Digital Marketing Agency</span>
             </div>
-            <h1 className="text-4xl md:text-7xl font-bold text-[#111111] mb-6 leading-[1.1]">
-              Be the business customers choose first
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] mb-6 leading-[1.1]">
+              More leads. More growth.<br />
+              <span className="text-[#1D4ED8]">More customers.</span>
             </h1>
-            <p className="text-lg md:text-xl text-[#666666] mb-10 leading-relaxed">
-              From SEO to paid ads, we help local businesses grow consistently with clear strategy, clean design, and data-backed execution.
+
+            <p className="text-lg md:text-xl text-[#555555] mb-4 leading-relaxed">
+              We help local service businesses and e-commerce brands grow through SEO, paid ads, and conversion-focused websites.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-10 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
-                Schedule a Call
+
+            <p className="text-base text-[#6B7280] mb-10">
+              No fluff. No guesswork. Just a data-driven strategy built to generate real results.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 mb-10">
+              <Link
+                to="/free-seo-audit"
+                className="bg-[#1D4ED8] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#1E40AF] transition-all duration-200 text-base shadow-lg shadow-blue-200 flex items-center gap-2"
+              >
+                Get Free AI Marketing Audit
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href={CALENDAR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-all duration-200 text-base"
+              >
+                Book Strategy Call
               </a>
-              <a href="/free-seo-audit" className="bg-white text-[#16a34a] border-2 border-[#16a34a] px-10 py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
-                Free Website Audit
-              </a>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-6 text-sm text-[#6B7280]">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-[#059669]" />
+                <span>No contracts required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-[#059669]" />
+                <span>Results in 30 days</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-[#059669]" />
+                <span>Canadian team</span>
+              </div>
             </div>
           </div>
-          <div className="hidden md:flex items-center justify-center">
-            <div className="relative w-full h-[550px] flex items-center justify-center overflow-hidden rounded-3xl transition-transform duration-500 hover:scale-105">
+
+          <div className="hidden md:block relative">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src="/team-collaboration-hero-image.png"
-                alt="Professional team collaborating on digital marketing strategy"
-                className="w-full h-full object-cover rounded-3xl shadow-2xl"
+                alt="SiteMaxi marketing team collaborating on growth strategy"
+                className="w-full h-[520px] object-cover"
                 loading="eager"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            </div>
+            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-5 border border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-[#059669]" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-[#111111]">Avg. Traffic Increase</div>
+                  <div className="text-2xl font-bold text-[#059669]">+143%</div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4 border border-gray-100">
+              <div className="flex items-center gap-2 mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <div className="text-sm font-semibold text-[#111111]">5-star agency</div>
+              <div className="text-xs text-[#6B7280]">Trusted by 100+ businesses</div>
             </div>
           </div>
         </div>
@@ -72,229 +130,273 @@ function Hero() {
   );
 }
 
-function Services() {
+function TrustSection() {
+  const stats = [
+    { value: '100+', label: 'Businesses Helped', icon: Users },
+    { value: '250+', label: 'Websites Optimized', icon: Globe },
+    { value: '500+', label: 'Campaigns Launched', icon: BarChart3 },
+  ];
+
+  return (
+    <section className="bg-gray-50 border-y border-gray-100 py-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <ScrollAnimateWrapper animation="fade-up">
+          <div className="text-center mb-12">
+            <p className="text-sm font-semibold text-[#6B7280] uppercase tracking-widest mb-8">
+              Trusted by local businesses and e-commerce brands across Canada
+            </p>
+            <LogoSlider />
+          </div>
+
+          <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-gray-200">
+            {stats.map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <stat.icon className="w-6 h-6 text-[#1D4ED8]" />
+                </div>
+                <div className="text-3xl md:text-4xl font-bold text-[#111111] mb-1">{stat.value}</div>
+                <div className="text-sm text-[#6B7280] font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 grid md:grid-cols-3 gap-4">
+            {[
+              { logo: 'Google Partner', text: 'Certified Google Ads & Analytics expertise' },
+              { logo: 'Shopify Partner', text: 'E-commerce growth specialists for Shopify stores' },
+              { logo: 'Meta Ads', text: 'Facebook & Instagram advertising professionals' },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-6 py-4 border border-gray-100 shadow-sm">
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-[#1D4ED8]" />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm text-[#111111]">{item.logo}</div>
+                  <div className="text-xs text-[#6B7280]">{item.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </ScrollAnimateWrapper>
+      </div>
+    </section>
+  );
+}
+
+function ServicesSection() {
   const services = [
     {
       icon: TrendingUp,
-      name: "RankMaxi",
-      description: "Dominate local search results and get found by customers in your area.",
-      benefits: [
-        "Google Business Profile optimization",
-        "Local SEO strategy & execution",
-        "Review management & reputation"
-      ],
-      color: "#1D4ED8",
-      bgColor: "#DBEAFE",
-      checkColor: "#1D4ED8",
-      hasLearnMore: true,
-      path: "/rankmaxi"
+      name: 'RankMaxi',
+      label: 'Local SEO',
+      description: 'Rank in Google Maps and local search to capture customers in your area.',
+      color: '#1D4ED8',
+      bg: '#DBEAFE',
+      path: '/rankmaxi',
     },
     {
       icon: Target,
-      name: "SearchMaxi",
-      description: "Build long-term organic traffic that converts into revenue.",
-      benefits: [
-        "Technical SEO & site optimization",
-        "Content strategy & creation",
-        "Link building & authority"
-      ],
-      color: "#0891B2",
-      bgColor: "#CFFAFE",
-      checkColor: "#0891B2",
-      hasLearnMore: true,
-      path: "/searchmaxi"
+      name: 'SearchMaxi',
+      label: 'SEO',
+      description: 'Advanced SEO strategies to grow organic search traffic and authority.',
+      color: '#0891B2',
+      bg: '#CFFAFE',
+      path: '/searchmaxi',
     },
     {
       icon: Share2,
-      name: "SocialMaxi",
-      description: "Build a strong social presence that engages your audience.",
-      benefits: [
-        "Content creation & scheduling",
-        "Community management",
-        "Organic growth strategies"
-      ],
-      color: "#8B5CF6",
-      bgColor: "#EDE9FE",
-      checkColor: "#8B5CF6",
-      hasLearnMore: true,
-      path: "/socialmaxi"
+      name: 'SocialMaxi',
+      label: 'Social Media',
+      description: 'Social media growth, content strategy, and audience engagement.',
+      color: '#059669',
+      bg: '#D1FAE5',
+      path: '/socialmaxi',
     },
     {
       icon: Zap,
-      name: "AdMaxi",
-      description: "Run profitable social ad campaigns that generate real leads.",
-      benefits: [
-        "Facebook & Instagram advertising",
-        "Creative development & testing",
-        "Campaign optimization & scaling"
-      ],
-      color: "#1D4ED8",
-      bgColor: "#DBEAFE",
-      checkColor: "#1D4ED8",
-      hasLearnMore: true,
-      path: "/admaxi"
+      name: 'AdMaxi',
+      label: 'Social Ads',
+      description: 'Paid social campaigns on Facebook, Instagram, and TikTok for customer acquisition.',
+      color: '#D97706',
+      bg: '#FEF3C7',
+      path: '/admaxi',
     },
     {
       icon: MousePointerClick,
-      name: "ClickMaxi",
-      description: "Capture high-intent customers ready to buy right now.",
-      benefits: [
-        "Google Ads management",
-        "Search & display campaigns",
-        "Conversion tracking & optimization"
-      ],
-      color: "#0891B2",
-      bgColor: "#CFFAFE",
-      checkColor: "#0891B2",
-      hasLearnMore: true,
-      path: "/clickmaxi"
+      name: 'ClickMaxi',
+      label: 'Google Ads',
+      description: 'Google Ads campaign management and optimization to capture high-intent buyers.',
+      color: '#DC2626',
+      bg: '#FEE2E2',
+      path: '/clickmaxi',
     },
     {
       icon: Palette,
-      name: "SiteMaxi",
-      description: "Your website; clean, modern, and built to convert.",
-      benefits: [
-        "Responsive + SEO-Ready",
-        "Simple, Clear Navigation",
-        "Fast Load Performance"
-      ],
-      color: "#8B5CF6",
-      bgColor: "#EDE9FE",
-      checkColor: "#8B5CF6",
-      hasLearnMore: true,
-      path: "/sitemaxi"
+      name: 'SiteMaxi',
+      label: 'Web Design',
+      description: 'High-converting websites designed to generate leads and sales around the clock.',
+      color: '#7C3AED',
+      bg: '#EDE9FE',
+      path: '/sitemaxi',
     },
   ];
 
   return (
-    <section className="py-32 bg-gradient-to-br from-[#F3F4F6] to-[#F9FAFB]" id="services">
+    <section className="py-24 bg-white" id="services">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollAnimateWrapper animation="fade-up">
-          <div className="text-center mb-20">
-            <div className="inline-block mb-6">
-              <span className="text-[#8B5CF6] font-semibold text-sm uppercase tracking-wide bg-purple-50 px-4 py-2 rounded-full">
-                OUR SERVICES
-              </span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-bold text-[#111111] mb-6 leading-tight">
-              Marketing services that turn online attention into real customers.
+          <div className="text-center mb-16">
+            <span className="text-[#1D4ED8] font-semibold text-sm uppercase tracking-widest">Our Services</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mt-3 mb-5 leading-tight">
+              A complete marketing system<br className="hidden md:block" /> built for growth
             </h2>
+            <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+              Every service is a branded system designed to deliver measurable results, not just activity.
+            </p>
           </div>
         </ScrollAnimateWrapper>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 3 === 1 ? 100 : index % 3 === 2 ? 200 : 0}>
-              <ServiceCard {...service} />
+              <Link
+                to={service.path}
+                className="group block bg-white rounded-2xl p-8 border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 h-full"
+              >
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+                  style={{ backgroundColor: service.bg }}
+                >
+                  <service.icon className="w-7 h-7" style={{ color: service.color }} />
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="text-xl font-bold text-[#111111]">{service.name}</h3>
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: service.bg, color: service.color }}>
+                    {service.label}
+                  </span>
+                </div>
+                <p className="text-[#6B7280] leading-relaxed mb-5">{service.description}</p>
+                <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-200" style={{ color: service.color }}>
+                  Learn more <ArrowRight className="w-4 h-4" />
+                </div>
+              </Link>
             </ScrollAnimateWrapper>
           ))}
         </div>
+
+        <ScrollAnimateWrapper animation="fade-up">
+          <div className="text-center mt-12">
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 border-2 border-[#1D4ED8] text-[#1D4ED8] px-8 py-3.5 rounded-xl font-semibold hover:bg-blue-50 transition-colors"
+            >
+              View All Services
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </ScrollAnimateWrapper>
       </div>
     </section>
   );
 }
 
-function ServiceCard({ icon: Icon, name, description, benefits, color, bgColor, checkColor, hasLearnMore, path }: any) {
-  return (
-    <Link to={path} className="block bg-white rounded-3xl p-10 border-2 border-gray-200 hover:border-opacity-0 hover:shadow-2xl hover:scale-105 transition-all duration-300 group cursor-pointer" style={{ '--hover-color': color } as any}>
-      <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: bgColor }}>
-        <Icon className="w-10 h-10 stroke-[2.5]" style={{ color: color }} />
-      </div>
-      <h3 className="text-2xl font-bold text-[#111111] mb-3">{name}</h3>
-      <p className="text-[#6B7280] mb-8 leading-relaxed text-base">{description}</p>
-      <ul className="space-y-3">
-        {benefits.map((benefit: string, idx: number) => (
-          <li key={idx} className="flex items-start text-base text-[#6B7280]">
-            <div className="w-6 h-6 rounded-full flex items-center justify-center mr-3 flex-shrink-0" style={{ backgroundColor: checkColor }}>
-              <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            {benefit}
-          </li>
-        ))}
-      </ul>
-      {hasLearnMore && (
-        <div className="mt-6 text-[#8B5CF6] font-semibold flex items-center gap-2 group-hover:gap-3 transition-all duration-300">
-          Learn More <ArrowRight className="w-4 h-4" />
-        </div>
-      )}
-    </Link>
-  );
-}
+function IndustryFocusSection() {
+  const localIndustries = [
+    { icon: Hammer, label: 'Contractors & Trades' },
+    { icon: Stethoscope, label: 'Dental & Medical' },
+    { icon: Scale, label: 'Law & Legal' },
+    { icon: Scissors, label: 'Salons & Spas' },
+    { icon: Home, label: 'Real Estate' },
+    { icon: Truck, label: 'Moving & Logistics' },
+  ];
 
-function AboutUs() {
+  const ecommerceIndustries = [
+    { icon: Leaf, label: 'Health & Wellness' },
+    { icon: ShoppingBag, label: 'Fashion & Apparel' },
+    { icon: Cpu, label: 'Electronics & Tech' },
+    { icon: Home, label: 'Home & Garden' },
+    { icon: Stethoscope, label: 'Beauty & Skincare' },
+    { icon: Truck, label: 'Food & Beverage' },
+  ];
+
   return (
-    <section className="py-32 bg-white">
+    <section className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <ScrollAnimateWrapper animation="fade-up">
+          <div className="text-center mb-16">
+            <span className="text-[#1D4ED8] font-semibold text-sm uppercase tracking-widest">Who We Serve</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mt-3 mb-5 leading-tight">
+              Built for two types of businesses
+            </h2>
+            <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+              Our strategies are tailored for the specific growth challenges of local service companies and online stores.
+            </p>
+          </div>
+        </ScrollAnimateWrapper>
+
+        <div className="grid md:grid-cols-2 gap-8">
           <ScrollAnimateWrapper animation="slide-left">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-6">
-                <div className="rounded-3xl overflow-hidden shadow-lg">
-                  <img
-                    src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt="Team collaboration"
-                    className="w-full h-[300px] object-cover"
-                  />
+            <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-gradient-to-br from-[#1D4ED8] to-[#2563EB] p-8 text-white">
+                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+                  <Users className="w-7 h-7 text-white" />
                 </div>
-                <div className="rounded-3xl overflow-hidden shadow-lg">
-                  <img
-                    src="https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt="Marketing workspace"
-                    className="w-full h-[200px] object-cover"
-                  />
-                </div>
+                <h3 className="text-2xl font-bold mb-2">Local Service Businesses</h3>
+                <p className="text-blue-100 leading-relaxed">
+                  Dominate your local market. Show up when customers in your city search for exactly what you offer.
+                </p>
               </div>
-              <div className="space-y-6 pt-12">
-                <div className="rounded-3xl overflow-hidden shadow-lg">
-                  <img
-                    src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
-                    alt="SEO strategy"
-                    className="w-full h-[240px] object-cover"
-                  />
+              <div className="p-8">
+                <p className="text-sm font-semibold text-[#6B7280] uppercase tracking-wider mb-5">Industries we work with</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {localIndustries.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <item.icon className="w-4 h-4 text-[#1D4ED8]" />
+                      </div>
+                      <span className="text-sm font-medium text-[#374151]">{item.label}</span>
+                    </div>
+                  ))}
                 </div>
+                <Link
+                  to="/industries"
+                  className="mt-8 flex items-center gap-2 text-[#1D4ED8] font-semibold text-sm hover:gap-3 transition-all duration-200"
+                >
+                  See all local industries <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
           </ScrollAnimateWrapper>
 
           <ScrollAnimateWrapper animation="slide-right">
-            <div>
-              <div className="inline-block mb-6">
-                <span className="text-[#8B5CF6] font-semibold text-sm uppercase tracking-wide bg-purple-50 px-4 py-2 rounded-full">
-                  About Us
-                </span>
-              </div>
-              <h2 className="text-4xl font-bold text-[#111111] mb-8 leading-tight">
-                We help local businesses grow with clarity, consistency, and confidence.
-              </h2>
-              <div className="space-y-6 text-[#6B7280] text-lg leading-relaxed">
-                <p>
-                  At SiteMaxi, we believe great marketing shouldn't feel complicated. Our mission is to make local businesses visible, trusted, and easy to choose online. From SEO to social media, we combine strategy, creativity, and data to turn attention into action.
-                </p>
-                <p>
-                  Our team blends deep marketing experience with modern AI and automation tools, so you can focus on running your business while we handle the growth engine behind it.
+            <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-gradient-to-br from-[#059669] to-[#10B981] p-8 text-white">
+                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+                  <ShoppingBag className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">E-commerce Brands</h3>
+                <p className="text-green-100 leading-relaxed">
+                  Scale your online store with paid ads, SEO, and conversion optimization that drives revenue.
                 </p>
               </div>
-              <div className="mt-10 pt-8 border-t border-gray-200">
-                <h3 className="text-2xl font-bold text-[#111111] mb-6">What sets us apart</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start text-[#6B7280] text-lg">
-                    <div className="w-2 h-2 rounded-full bg-[#8B5CF6] mt-2.5 mr-4 flex-shrink-0"></div>
-                    <span>Transparent results and measurable impact</span>
-                  </li>
-                  <li className="flex items-start text-[#6B7280] text-lg">
-                    <div className="w-2 h-2 rounded-full bg-[#8B5CF6] mt-2.5 mr-4 flex-shrink-0"></div>
-                    <span>Dedicated support that feels personal, not corporate</span>
-                  </li>
-                  <li className="flex items-start text-[#6B7280] text-lg">
-                    <div className="w-2 h-2 rounded-full bg-[#8B5CF6] mt-2.5 mr-4 flex-shrink-0"></div>
-                    <span>Strategies designed for long-term, sustainable growth</span>
-                  </li>
-                </ul>
-                <p className="text-[#111111] text-xl font-semibold mt-8">
-                  We're not just another agency, we're your local growth partner.
-                </p>
+              <div className="p-8">
+                <p className="text-sm font-semibold text-[#6B7280] uppercase tracking-wider mb-5">Industries we work with</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {ecommerceIndustries.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <item.icon className="w-4 h-4 text-[#059669]" />
+                      </div>
+                      <span className="text-sm font-medium text-[#374151]">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  to="/industries"
+                  className="mt-8 flex items-center gap-2 text-[#059669] font-semibold text-sm hover:gap-3 transition-all duration-200"
+                >
+                  See all e-commerce verticals <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
           </ScrollAnimateWrapper>
@@ -304,157 +406,241 @@ function AboutUs() {
   );
 }
 
-function Process() {
-  const steps = [
-    {
-      number: "01",
-      title: "Discovery",
-      description: "We dive deep into your business, understand your goals, and identify the best opportunities for growth."
-    },
-    {
-      number: "02",
-      title: "Strategy",
-      description: "Our team creates a customized roadmap designed to achieve your specific business objectives."
-    },
-    {
-      number: "03",
-      title: "Execution",
-      description: "We implement proven strategies, monitor results, and continuously optimize for maximum ROI."
-    }
-  ];
-
+function FreeToolsSection() {
   return (
-    <section className="py-32 bg-gray-50">
+    <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <ScrollAnimateWrapper animation="fade-up">
-          <div className="text-center mb-20">
-            <div className="inline-block mb-6">
-              <span className="text-[#8B5CF6] font-semibold text-sm uppercase tracking-wide bg-purple-50 px-4 py-2 rounded-full">
-                Our Process
-              </span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-bold text-[#111111] mb-6">
-              How we work with you
+          <div className="text-center mb-14">
+            <span className="text-[#1D4ED8] font-semibold text-sm uppercase tracking-widest">Free Marketing Tools</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mt-3 mb-5 leading-tight">
+              See exactly where you stand online
             </h2>
-            <p className="text-xl text-[#666666] max-w-3xl mx-auto">
-              A proven methodology that delivers consistent results for businesses like yours.
+            <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+              Our AI-powered audit tool gives you a complete picture of your website's SEO health, page speed, and growth opportunities in minutes.
             </p>
           </div>
         </ScrollAnimateWrapper>
 
-        <div className="grid md:grid-cols-3 gap-12">
-          {steps.map((step, index) => (
-            <ScrollAnimateWrapper key={index} animation="fade-up" delay={index * 100}>
-              <div className="text-center">
-                <div className="text-7xl font-bold bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] bg-clip-text text-transparent mb-6">
-                  {step.number}
+        <ScrollAnimateWrapper animation="scale">
+          <div className="bg-gradient-to-br from-[#0F172A] to-[#1E3A8A] rounded-3xl overflow-hidden">
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="p-10 md:p-14 flex flex-col justify-center">
+                <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-6 w-fit">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  <span className="text-green-400 text-sm font-semibold">Free — No credit card needed</span>
                 </div>
-                <h3 className="text-3xl font-bold text-[#111111] mb-4">{step.title}</h3>
-                <p className="text-[#666666] leading-relaxed">{step.description}</p>
-              </div>
-            </ScrollAnimateWrapper>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Testimonials() {
-  const testimonials = [
-    {
-      quote: "It was a pleasure working with Sitemaxi. They are thorough, detail oriented & always work towards any goal you have in mind with efficiency & skill!",
-      name: "Rohail Ali",
-      business: "SSME",
-      role: "Owner",
-      image: "/download (5).png"
-    },
-    {
-      quote: "We recently partnered with the incredible and talented SiteMaxi team to completely redesign and relaunch the Adly Travel website. The results speak for themselves.",
-      name: "Anu Gunasekara",
-      business: "Adly Travel",
-      role: "Owner",
-      image: "/WhatsApp Image 2025-11-12 at 19.18.27.jpeg"
-    },
-    {
-      quote: "The team at SiteMaxi is professional, responsive, and truly invested in our success. Couldn't ask for a better partner.",
-      name: "Dennis Kapadia",
-      business: "WelnessMed Supply Inc",
-      role: "Head of operations",
-      image: "/Generated Image November 12, 2025 - 7_24PM.png"
-    }
-  ];
-
-  return (
-    <section className="py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <ScrollAnimateWrapper animation="fade-up">
-          <div className="text-center mb-20">
-            <div className="inline-block mb-6">
-              <span className="text-[#8B5CF6] font-semibold text-sm uppercase tracking-wide bg-purple-50 px-4 py-2 rounded-full">
-                Testimonials
-              </span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-bold text-[#111111] mb-6">
-              What our clients say
-            </h2>
-            <p className="text-xl text-[#666666] max-w-3xl mx-auto">
-              Don't just take our word for it. Here's what real business owners have to say about working with us.
-            </p>
-          </div>
-        </ScrollAnimateWrapper>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <ScrollAnimateWrapper key={index} animation="scale" delay={index * 100}>
-              <div className="bg-white border border-[#E5E5E5] rounded-lg p-10 hover:border-[#8B5CF6] hover:shadow-xl transition-all duration-300">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-[#8B5CF6] text-[#8B5CF6]" />
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                  Free AI Marketing Audit Tool
+                </h3>
+                <p className="text-blue-200 text-lg mb-8 leading-relaxed">
+                  Enter your website URL and get a comprehensive report covering SEO score, technical issues, page speed metrics, and a prioritized action plan.
+                </p>
+                <ul className="space-y-3 mb-10">
+                  {[
+                    'Overall SEO health score',
+                    'Technical SEO issues identified',
+                    'Page speed & Core Web Vitals',
+                    'Top recommendations to fix now',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-blue-100">
+                      <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
                   ))}
-                </div>
-                <p className="text-[#666666] mb-8 leading-relaxed text-lg">"{testimonial.quote}"</p>
-                <div className="flex items-center">
-                  {testimonial.image ? (
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full mr-4 object-cover"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 bg-gradient-to-br from-[#1D4ED8] to-[#8B5CF6] rounded-full mr-4"></div>
-                  )}
-                  <div>
-                    <div className="font-bold text-[#111111]">{testimonial.name}</div>
-                    <div className="text-sm text-[#666666]">{testimonial.role}, {testimonial.business}</div>
+                </ul>
+                <Link
+                  to="/free-seo-audit"
+                  className="inline-flex items-center gap-2 bg-white text-[#1D4ED8] px-8 py-4 rounded-xl font-bold text-base hover:bg-blue-50 transition-colors w-fit shadow-lg"
+                >
+                  <Search className="w-5 h-5" />
+                  Run Free Marketing Audit
+                </Link>
+              </div>
+              <div className="hidden md:flex items-center justify-center p-10 relative">
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-8 w-full max-w-sm">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="text-white font-semibold">SEO Score</div>
+                    <div className="text-green-400 font-bold text-lg">Good</div>
+                  </div>
+                  <div className="flex items-center justify-center mb-6">
+                    <div className="relative w-32 h-32">
+                      <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="10" />
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="#22C55E" strokeWidth="10" strokeDasharray="314" strokeDashoffset="80" strokeLinecap="round" />
+                      </svg>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <span className="text-4xl font-bold text-white">74</span>
+                        <span className="text-xs text-blue-300">/100</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Page Speed', value: 'Needs Work', color: 'text-yellow-400' },
+                      { label: 'Title Tags', value: 'Optimized', color: 'text-green-400' },
+                      { label: 'Meta Desc.', value: 'Missing 3', color: 'text-red-400' },
+                      { label: 'Backlinks', value: 'Growing', color: 'text-blue-400' },
+                    ].map((row, i) => (
+                      <div key={i} className="flex items-center justify-between py-2 border-b border-white/10 last:border-0">
+                        <span className="text-blue-200 text-sm">{row.label}</span>
+                        <span className={`text-sm font-semibold ${row.color}`}>{row.value}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            </ScrollAnimateWrapper>
-          ))}
-        </div>
+            </div>
+          </div>
+        </ScrollAnimateWrapper>
       </div>
     </section>
   );
 }
 
-function CTA() {
+function WhyChooseSection() {
+  const differentiators = [
+    {
+      icon: Target,
+      title: 'SEO Expertise',
+      description: 'Deep technical and content SEO that builds lasting organic visibility for your business.',
+      color: '#1D4ED8',
+      bg: '#DBEAFE',
+    },
+    {
+      icon: MousePointerClick,
+      title: 'Paid Advertising',
+      description: 'Google Ads and paid social campaigns managed by certified professionals who optimize for ROI.',
+      color: '#DC2626',
+      bg: '#FEE2E2',
+    },
+    {
+      icon: BarChart3,
+      title: 'Growth Strategy',
+      description: 'A clear roadmap aligned to your business goals, not just vanity metrics.',
+      color: '#059669',
+      bg: '#D1FAE5',
+    },
+    {
+      icon: Cpu,
+      title: 'AI & Automation',
+      description: 'We leverage AI tools and marketing automation to move faster and smarter than traditional agencies.',
+      color: '#D97706',
+      bg: '#FEF3C7',
+    },
+    {
+      icon: Wrench,
+      title: 'Conversion Optimization',
+      description: 'Every landing page and website we build is designed to turn visitors into paying customers.',
+      color: '#7C3AED',
+      bg: '#EDE9FE',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Long-Term Growth',
+      description: 'We build sustainable systems, not short-term tactics. Your marketing compounds over time.',
+      color: '#0891B2',
+      bg: '#CFFAFE',
+    },
+  ];
+
   return (
-    <section className="py-32 bg-gray-50">
+    <section className="py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6">
+        <ScrollAnimateWrapper animation="fade-up">
+          <div className="text-center mb-16">
+            <span className="text-[#1D4ED8] font-semibold text-sm uppercase tracking-widest">Why SiteMaxi</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mt-3 mb-5 leading-tight">
+              We're not just another agency
+            </h2>
+            <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+              We combine deep marketing expertise with modern tools to deliver growth that lasts.
+            </p>
+          </div>
+        </ScrollAnimateWrapper>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {differentiators.map((item, index) => (
+            <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 3 === 1 ? 100 : index % 3 === 2 ? 200 : 0}>
+              <div className="bg-white rounded-2xl p-7 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+                  style={{ backgroundColor: item.bg }}
+                >
+                  <item.icon className="w-6 h-6" style={{ color: item.color }} />
+                </div>
+                <h3 className="text-lg font-bold text-[#111111] mb-3">{item.title}</h3>
+                <p className="text-[#6B7280] leading-relaxed text-sm">{item.description}</p>
+              </div>
+            </ScrollAnimateWrapper>
+          ))}
+        </div>
+
+        <ScrollAnimateWrapper animation="fade-up">
+          <div className="mt-16 bg-white rounded-3xl p-10 border border-gray-100 shadow-sm">
+            <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+              {[
+                { name: "Rohail Ali", business: "SSME", quote: "Thorough, detail oriented and always work towards any goal with efficiency and skill.", image: "/download (5).png" },
+                { name: "Anu Gunasekara", business: "Adly Travel", quote: "SiteMaxi completely redesigned our website and the results speak for themselves.", image: "/WhatsApp Image 2025-11-12 at 19.18.27.jpeg" },
+                { name: "Dennis Kapadia", business: "WelnessMed Supply Inc", quote: "Professional, responsive, and truly invested in our success.", image: "/Generated Image November 12, 2025 - 7_24PM.png" },
+              ].map((t, i) => (
+                <div key={i} className="pt-8 md:pt-0 md:px-8 first:pt-0 first:pl-0 last:pr-0">
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-[#374151] text-sm leading-relaxed mb-4 italic">"{t.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <img src={t.image} alt={t.name} className="w-9 h-9 rounded-full object-cover" />
+                    <div>
+                      <div className="font-semibold text-sm text-[#111111]">{t.name}</div>
+                      <div className="text-xs text-[#6B7280]">{t.business}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollAnimateWrapper>
+      </div>
+    </section>
+  );
+}
+
+function FinalCTASection() {
+  return (
+    <section className="py-24 bg-[#0F172A]">
       <ScrollAnimateWrapper animation="fade-up">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-6xl font-bold text-[#111111] mb-6 leading-tight">
-            Ready to grow your business?
+          <span className="inline-block text-blue-400 font-semibold text-sm uppercase tracking-widest mb-4">
+            Ready to Grow?
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            Start with a free audit.<br />
+            <span className="text-blue-400">See your growth potential.</span>
           </h2>
-          <p className="text-xl text-[#666666] mb-10">
-            Book a free strategy call and discover how we can help you achieve your goals.
+          <p className="text-lg text-blue-200 mb-10 max-w-2xl mx-auto">
+            Get a complete AI-powered marketing audit in minutes, then book a free strategy call to walk through the opportunities with our team.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-12 py-5 rounded-lg font-semibold text-lg hover:from-[#1E40AF] hover:to-[#7C3AED] transition-all duration-300 inline-block">
-              Schedule a Call
+            <Link
+              to="/free-seo-audit"
+              className="bg-[#1D4ED8] text-white px-10 py-4 rounded-xl font-bold text-base hover:bg-[#2563EB] transition-colors shadow-xl shadow-blue-900/40 flex items-center gap-2"
+            >
+              <Search className="w-5 h-5" />
+              Run Free AI Marketing Audit
+            </Link>
+            <a
+              href={CALENDAR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 border border-white/20 text-white px-10 py-4 rounded-xl font-bold text-base hover:bg-white/20 transition-colors"
+            >
+              Book Strategy Call
             </a>
           </div>
-          <p className="text-[#666666] mt-6">No contracts. No pressure. Just results.</p>
+          <p className="text-blue-300 text-sm mt-6">No commitment. No credit card. Just clarity.</p>
         </div>
       </ScrollAnimateWrapper>
     </section>
