@@ -7,7 +7,8 @@ import {
   CreditCard,
   Lock,
   LogOut,
-  User
+  User,
+  BarChart3
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useEffect, useState } from 'react';
@@ -74,6 +75,13 @@ export function AdminDashboardPage() {
       path: '/admin/cc-authorizations',
       icon: <CreditCard className="w-8 h-8" />,
       color: 'from-red-500 to-red-600'
+    },
+    {
+      title: 'SEO Audit Leads',
+      description: 'View leads from the Free AI Marketing Audit tool',
+      path: '/admin/audit-leads',
+      icon: <BarChart3 className="w-8 h-8" />,
+      color: 'from-emerald-500 to-teal-600'
     }
   ];
 

@@ -29,6 +29,8 @@ import { AdminCCPasswordSetupPage } from './pages/AdminCCPasswordSetupPage';
 import { AdminCCAuthorizationsPage } from './pages/AdminCCAuthorizationsPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AIBlueprintPage } from './pages/AIBlueprintPage';
+import { FreeSEOAuditPage } from './pages/FreeSEOAuditPage';
+import { AdminAuditLeadsPage } from './pages/AdminAuditLeadsPage';
 
 function App() {
   return (
@@ -72,6 +74,11 @@ function App() {
             <AdminCCAuthorizationsPage />
           </ProtectedRoute>
         } />
+        <Route path="/admin/audit-leads" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminAuditLeadsPage />
+          </ProtectedRoute>
+        } />
 
         <Route path="/*" element={
           <div className="min-h-screen bg-white">
@@ -94,6 +101,7 @@ function App() {
               <Route path="/cookie-policy" element={<CookiePolicyPage />} />
               <Route path="/credit-card-authorization" element={<CreditCardAuthorizationPage />} />
               <Route path="/ai-ecommerce-blueprint" element={<AIBlueprintPage />} />
+              <Route path="/free-seo-audit" element={<FreeSEOAuditPage />} />
             </Routes>
             <Footer />
           </div>
