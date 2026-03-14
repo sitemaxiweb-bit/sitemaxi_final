@@ -7,9 +7,9 @@ interface PageSpeedCardProps {
 }
 
 function SpeedMeter({ score, label, icon }: { score: number; label: string; icon: React.ReactNode }) {
-  const color = score >= 75 ? '#10b981' : score >= 50 ? '#eab308' : '#ef4444';
-  const bgColor = score >= 75 ? 'bg-emerald-500/10 border-emerald-500/20' : score >= 50 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-red-500/10 border-red-500/20';
-  const textColor = score >= 75 ? 'text-emerald-400' : score >= 50 ? 'text-yellow-400' : 'text-red-400';
+  const color = score >= 75 ? '#16a34a' : score >= 50 ? '#ca8a04' : '#dc2626';
+  const bgColor = score >= 75 ? 'bg-emerald-50 border-emerald-200' : score >= 50 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200';
+  const textColor = score >= 75 ? 'text-emerald-700' : score >= 50 ? 'text-yellow-700' : 'text-red-600';
   const statusLabel = score >= 75 ? 'Fast' : score >= 50 ? 'Average' : 'Slow';
 
   return (
@@ -18,14 +18,14 @@ function SpeedMeter({ score, label, icon }: { score: number; label: string; icon
         <div className={`w-8 h-8 rounded-lg border flex items-center justify-center ${bgColor} ${textColor}`}>
           {icon}
         </div>
-        <span className="text-gray-400 text-sm font-medium">{label}</span>
+        <span className="text-[#666666] text-sm font-medium">{label}</span>
       </div>
       <div className="flex items-end gap-2 mb-2">
-        <span className="text-4xl font-black text-white">{score}</span>
-        <span className="text-gray-500 text-sm pb-1">/100</span>
+        <span className="text-4xl font-black text-[#111111]">{score}</span>
+        <span className="text-[#999999] text-sm pb-1">/100</span>
         <span className={`text-sm font-semibold pb-1 ${textColor}`}>{statusLabel}</span>
       </div>
-      <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+      <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
         <div
           className="h-full rounded-full transition-all duration-1000"
           style={{ width: `${score}%`, backgroundColor: color }}
@@ -43,46 +43,46 @@ export function PageSpeedCard({ pageSpeed, mobileFriendly }: PageSpeedCardProps)
   ];
 
   return (
-    <div className="bg-gray-900/80 border border-gray-700/50 rounded-2xl p-6">
+    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-9 h-9 bg-yellow-500/10 border border-yellow-500/20 rounded-xl flex items-center justify-center">
-          <Zap className="w-4 h-4 text-yellow-400" />
+        <div className="w-9 h-9 bg-yellow-50 border border-yellow-200 rounded-xl flex items-center justify-center">
+          <Zap className="w-4 h-4 text-yellow-600" />
         </div>
         <div>
-          <h3 className="text-white font-bold">Page Speed</h3>
-          <p className="text-gray-500 text-xs">Google PageSpeed Insights data</p>
+          <h3 className="text-[#111111] font-bold">Page Speed</h3>
+          <p className="text-[#999999] text-xs">Google PageSpeed Insights data</p>
         </div>
       </div>
 
       <div className="flex gap-6 mb-6">
         <SpeedMeter score={pageSpeed.mobileScore} label="Mobile" icon={<Smartphone className="w-4 h-4" />} />
-        <div className="w-px bg-gray-700/50" />
+        <div className="w-px bg-gray-100" />
         <SpeedMeter score={pageSpeed.desktopScore} label="Desktop" icon={<Monitor className="w-4 h-4" />} />
       </div>
 
       <div className="grid grid-cols-3 gap-3 mb-4">
         {metrics.map((m, i) => (
-          <div key={i} className="bg-gray-800/60 rounded-xl p-3 text-center">
-            <div className="flex items-center justify-center gap-1 text-gray-500 mb-1">
+          <div key={i} className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
+            <div className="flex items-center justify-center gap-1 text-[#999999] mb-1">
               <Clock className="w-3 h-3" />
               <span className="text-xs font-semibold">{m.label}</span>
             </div>
-            <div className="text-white font-bold text-sm">{m.value}</div>
-            <div className="text-gray-600 text-xs">{m.desc}</div>
+            <div className="text-[#111111] font-bold text-sm">{m.value}</div>
+            <div className="text-[#999999] text-xs">{m.desc}</div>
           </div>
         ))}
       </div>
 
       <div className={`flex items-center justify-between p-3 rounded-xl border ${
         mobileFriendly
-          ? 'bg-emerald-500/5 border-emerald-500/20'
-          : 'bg-red-500/5 border-red-500/20'
+          ? 'bg-emerald-50 border-emerald-200'
+          : 'bg-red-50 border-red-200'
       }`}>
         <div className="flex items-center gap-2">
-          <Smartphone className={`w-4 h-4 ${mobileFriendly ? 'text-emerald-400' : 'text-red-400'}`} />
-          <span className="text-sm font-medium text-gray-300">Mobile Friendly</span>
+          <Smartphone className={`w-4 h-4 ${mobileFriendly ? 'text-emerald-600' : 'text-red-500'}`} />
+          <span className="text-sm font-medium text-[#333333]">Mobile Friendly</span>
         </div>
-        <span className={`text-sm font-bold ${mobileFriendly ? 'text-emerald-400' : 'text-red-400'}`}>
+        <span className={`text-sm font-bold ${mobileFriendly ? 'text-emerald-700' : 'text-red-600'}`}>
           {mobileFriendly ? 'Yes' : 'No'}
         </span>
       </div>

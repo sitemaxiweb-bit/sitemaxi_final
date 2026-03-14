@@ -80,7 +80,7 @@ export function FreeSEOAuditPage() {
         description="Get a free AI-powered SEO audit for your website in seconds. Discover your SEO score, page speed, and actionable recommendations."
         canonical="https://sitemaxi.com/free-seo-audit"
       />
-      <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
+      <div className="min-h-screen bg-white">
         {pageState === 'form' && <AuditForm onSubmit={handleSubmit} />}
         {pageState === 'loading' && <AuditLoading websiteUrl={userEmail} />}
         {pageState === 'results' && report && (
