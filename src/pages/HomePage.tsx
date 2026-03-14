@@ -51,8 +51,8 @@ function Hero() {
               <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[#1D4ED8] to-[#8B5CF6] text-white px-10 py-4 rounded-lg font-semibold hover:from-[#1E40AF] hover:to-[#7C3AED] hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
                 Schedule a Call
               </a>
-              <a href="#services" className="bg-white text-[#8B5CF6] border-2 border-[#8B5CF6] px-10 py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
-                Browse Services
+              <a href="/free-seo-audit" className="bg-white text-[#16a34a] border-2 border-[#16a34a] px-10 py-4 rounded-lg font-semibold hover:scale-105 transition-all duration-300 text-lg shadow-md hover:shadow-xl inline-block">
+                Free Website Audit
               </a>
             </div>
           </div>
