@@ -323,7 +323,11 @@ export function AdminBlogEditorPage() {
       if (generationMode === 'draft' || generationMode === 'full_package') {
         const draft = generationMode === 'full_package' ? (result as Record<string, unknown>).draft as Record<string, unknown> : result as Record<string, unknown>;
         if (draft?.title && !title) setTitle(draft.title as string);
-        if (draft?.content) setContent(draft.content as string);
+        if (draft?.content) {
+          const htmlContent = draft.content as string;
+          setContent(htmlContent);
+          editorRef.current?.setContent(htmlContent);
+        }
         if (draft?.excerpt) setExcerpt((draft.excerpt as string).slice(0, 200));
       }
       if (generationMode === 'metadata' || generationMode === 'full_package') {

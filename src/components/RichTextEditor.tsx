@@ -20,6 +20,7 @@ interface RichTextEditorProps {
 
 export interface RichTextEditorRef {
   insertImage: (url: string, alt?: string) => void;
+  setContent: (html: string) => void;
 }
 
 const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(({
@@ -70,7 +71,12 @@ const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(({
       if (editor) {
         editor.chain().focus().setImage({ src: url, alt: alt || '' }).run();
       }
-    }
+    },
+    setContent: (html: string) => {
+      if (editor) {
+        editor.commands.setContent(html, false);
+      }
+    },
   }));
 
   if (!editor) {
