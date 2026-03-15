@@ -1,8 +1,7 @@
-import { useId, useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useId } from 'react';
 import {
   TrendingUp, Target, Share2, Zap, MousePointerClick, Palette,
-  ArrowRight, ArrowLeft, CheckCircle, BarChart3, Globe, Wrench, Users, Star,
+  ArrowRight, CheckCircle, BarChart3, Globe, Wrench, Users, Star,
   Search, ShoppingBag, Hammer, Stethoscope, Scale, Scissors, Truck, Leaf,
   Shield, Cpu, Home
 } from 'lucide-react';
@@ -525,120 +524,6 @@ function FreeToolsSection() {
   );
 }
 
-const ROTATE_PATTERNS = [-6, 4, -3, 5, -7, 3];
-
-function AnimatedTestimonials({ testimonials: items, autoplay = true }: {
-  testimonials: { quote: string; name: string; business: string; image: string }[];
-  autoplay?: boolean;
-}) {
-  const [active, setActive] = useState(0);
-
-  const handleNext = useCallback(() => {
-    setActive((prev) => (prev + 1) % items.length);
-  }, [items.length]);
-
-  const handlePrev = () => {
-    setActive((prev) => (prev - 1 + items.length) % items.length);
-  };
-
-  useEffect(() => {
-    if (!autoplay) return;
-    const interval = setInterval(handleNext, 5000);
-    return () => clearInterval(interval);
-  }, [autoplay, handleNext]);
-
-  return (
-    <div className="relative grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-16">
-      <div className="flex items-center justify-center">
-        <div className="relative h-72 w-full max-w-xs">
-          <AnimatePresence>
-            {items.map((t, index) => (
-              <motion.div
-                key={t.image + index}
-                initial={{ opacity: 0, scale: 0.9, y: 40, rotate: `${ROTATE_PATTERNS[index % ROTATE_PATTERNS.length]}deg` }}
-                animate={{
-                  opacity: index === active ? 1 : 0.4,
-                  scale: index === active ? 1 : 0.92,
-                  y: index === active ? 0 : 16,
-                  zIndex: index === active ? items.length : items.length - Math.abs(index - active),
-                  rotate: index === active ? '0deg' : `${ROTATE_PATTERNS[index % ROTATE_PATTERNS.length]}deg`,
-                }}
-                exit={{ opacity: 0, scale: 0.9, y: -40 }}
-                transition={{ duration: 0.45, ease: 'easeInOut' }}
-                className="absolute inset-0 origin-bottom"
-              >
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  draggable={false}
-                  className="h-full w-full rounded-3xl object-cover shadow-2xl"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://placehold.co/400x400/e2e8f0/64748b?text=${t.name.charAt(0)}`;
-                    e.currentTarget.onerror = null;
-                  }}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      <div className="flex flex-col justify-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -18 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-          >
-            <div className="flex mb-4">
-              {[...Array(5)].map((_, j) => (
-                <Star key={j} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-              ))}
-            </div>
-            <p className="text-[#374151] text-lg leading-relaxed mb-6 italic">
-              "{items[active].quote}"
-            </p>
-            <div className="flex items-center gap-3">
-              <img
-                src={items[active].image}
-                alt={items[active].name}
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100"
-                onError={(e) => {
-                  e.currentTarget.src = `https://placehold.co/80x80/e2e8f0/64748b?text=${items[active].name.charAt(0)}`;
-                  e.currentTarget.onerror = null;
-                }}
-              />
-              <div>
-                <div className="font-semibold text-[#111111]">{items[active].name}</div>
-                <div className="text-sm text-[#6B7280]">{items[active].business}</div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="flex gap-3 mt-8">
-          <button
-            onClick={handlePrev}
-            aria-label="Previous testimonial"
-            className="group flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 text-gray-700 transition-transform duration-300 group-hover:-translate-x-0.5" />
-          </button>
-          <button
-            onClick={handleNext}
-            aria-label="Next testimonial"
-            className="group flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-          >
-            <ArrowRight className="h-4 w-4 text-gray-700 transition-transform duration-300 group-hover:translate-x-0.5" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function WhyChooseSection() {
   const differentiators = [
     {
@@ -706,13 +591,29 @@ function WhyChooseSection() {
 
         <ScrollAnimateWrapper animation="fade-up">
           <div className="mt-16 bg-white rounded-3xl p-10 border border-gray-100 shadow-sm">
-            <AnimatedTestimonials
-              testimonials={[
+            <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+              {[
                 { name: "Rohail Ali", business: "SSME", quote: "Thorough, detail oriented and always work towards any goal with efficiency and skill.", image: "/download (5).png" },
                 { name: "Anu Gunasekara", business: "Adly Travel", quote: "SiteMaxi completely redesigned our website and the results speak for themselves.", image: "/WhatsApp Image 2025-11-12 at 19.18.27.jpeg" },
                 { name: "Dennis Kapadia", business: "WelnessMed Supply Inc", quote: "Professional, responsive, and truly invested in our success.", image: "/Generated Image November 12, 2025 - 7_24PM.png" },
-              ]}
-            />
+              ].map((t, i) => (
+                <div key={i} className="pt-8 md:pt-0 md:px-8 first:pt-0 first:pl-0 last:pr-0">
+                  <div className="flex mb-3">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-[#374151] text-sm leading-relaxed mb-4 italic">"{t.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <img src={t.image} alt={t.name} className="w-9 h-9 rounded-full object-cover" />
+                    <div>
+                      <div className="font-semibold text-sm text-[#111111]">{t.name}</div>
+                      <div className="text-xs text-[#6B7280]">{t.business}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </ScrollAnimateWrapper>
       </div>
