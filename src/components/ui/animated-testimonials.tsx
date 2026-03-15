@@ -91,23 +91,12 @@ export const AnimatedTestimonials = ({
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <p className="text-lg text-[#D1D5DB] italic leading-relaxed mb-6">
+              <p className="text-lg text-[#374151] italic leading-relaxed mb-6">
                 "{testimonials[active].quote}"
               </p>
-              <div className="flex items-center gap-3">
-                <img
-                  src={testimonials[active].src}
-                  alt={testimonials[active].name}
-                  className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://placehold.co/80x80/1e293b/64748b?text=${testimonials[active].name.charAt(0)}`;
-                    e.currentTarget.onerror = null;
-                  }}
-                />
-                <div>
-                  <div className="font-semibold text-sm text-[#9CA3AF]">{testimonials[active].name}</div>
-                  <div className="text-xs text-[#6B7280]">{testimonials[active].designation}</div>
-                </div>
+              <div>
+                <div className="font-semibold text-sm text-[#111111]">{testimonials[active].name}</div>
+                <div className="text-xs text-[#6B7280]">{testimonials[active].designation}</div>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -116,16 +105,16 @@ export const AnimatedTestimonials = ({
             <button
               onClick={handlePrev}
               aria-label="Previous testimonial"
-              className="group flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors focus:outline-none"
+              className="group flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors focus:outline-none"
             >
-              <ArrowLeft className="h-4 w-4 text-white transition-transform duration-300 group-hover:-translate-x-0.5" />
+              <ArrowLeft className="h-4 w-4 text-gray-700 transition-transform duration-300 group-hover:-translate-x-0.5" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Next testimonial"
-              className="group flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors focus:outline-none"
+              className="group flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors focus:outline-none"
             >
-              <ArrowRight className="h-4 w-4 text-white transition-transform duration-300 group-hover:translate-x-0.5" />
+              <ArrowRight className="h-4 w-4 text-gray-700 transition-transform duration-300 group-hover:translate-x-0.5" />
             </button>
           </div>
         </div>

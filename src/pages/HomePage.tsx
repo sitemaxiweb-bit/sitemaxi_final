@@ -607,7 +607,7 @@ function WhyChooseSection() {
         </ScrollAnimateWrapper>
 
         <ScrollAnimateWrapper animation="fade-up">
-          <div className="mt-16 bg-[#111318] rounded-2xl overflow-hidden px-10 py-10">
+          <div className="mt-16 bg-white rounded-2xl overflow-hidden px-10 py-10 border border-gray-100 shadow-sm">
             <AnimatedTestimonials testimonials={SITE_TESTIMONIALS} autoplay={true} />
           </div>
         </ScrollAnimateWrapper>
