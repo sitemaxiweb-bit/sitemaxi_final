@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import {
   TrendingUp, Target, Share2, Zap, MousePointerClick, Palette,
   ArrowRight, CheckCircle, BarChart3, Globe, Wrench, Users, Star,
@@ -151,6 +152,54 @@ function TrustSection() {
   );
 }
 
+function GridPattern({ width, height, x, y, squares, ...props }: { width: number; height: number; x: string; y: string; squares: number[][]; className?: string }) {
+  const patternId = useId();
+  return (
+    <svg aria-hidden="true" {...props}>
+      <defs>
+        <pattern id={patternId} width={width} height={height} patternUnits="userSpaceOnUse" x={x} y={y}>
+          <path d={`M.5 ${height}V.5H${width}`} fill="none" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
+      {squares && (
+        <svg x={x} y={y} className="overflow-visible">
+          {squares.map(([sx, sy]) => (
+            <rect strokeWidth="0" key={`${sx}-${sy}`} width={width + 1} height={height + 1} x={sx * width} y={sy * height} />
+          ))}
+        </svg>
+      )}
+    </svg>
+  );
+}
+
+const CARD_GRID_PATTERNS: number[][][] = [
+  [[8,2],[10,4],[9,1],[11,3]],
+  [[7,3],[10,2],[9,5],[8,1]],
+  [[9,4],[11,2],[8,3],[10,1]],
+  [[8,1],[9,3],[11,4],[10,2]],
+  [[7,2],[10,5],[9,3],[8,4]],
+  [[11,1],[8,5],[10,3],[9,2]],
+];
+
+function CardGrid({ color, index = 0 }: { color: string; index?: number }) {
+  const squares = CARD_GRID_PATTERNS[index % CARD_GRID_PATTERNS.length];
+  return (
+    <div className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]">
+      <div className="absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-60" style={{ background: `radial-gradient(farthest-side at top, ${color}22, transparent)` }}>
+        <GridPattern
+          width={20}
+          height={20}
+          x="-12"
+          y="4"
+          squares={squares}
+          className="absolute inset-0 h-full w-full mix-blend-overlay fill-black/10 stroke-black/10"
+        />
+      </div>
+    </div>
+  );
+}
+
 function ServicesSection() {
   const services = [
     {
@@ -229,8 +278,10 @@ function ServicesSection() {
             <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 3 === 1 ? 100 : index % 3 === 2 ? 200 : 0}>
               <Link
                 to={service.path}
-                className="group relative flex flex-col justify-between overflow-hidden bg-white rounded-2xl border border-gray-100 h-full [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] hover:[box-shadow:0_0_0_1px_rgba(0,0,0,.06),0_4px_12px_rgba(0,0,0,.08),0_24px_48px_rgba(0,0,0,.08)] transition-shadow duration-300"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-100 h-full [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] hover:[box-shadow:0_0_0_1px_rgba(0,0,0,.06),0_4px_12px_rgba(0,0,0,.08),0_24px_48px_rgba(0,0,0,.08)] transition-shadow duration-300 bg-gradient-to-b from-neutral-50 to-white"
+                style={{ '--card-color': service.bg } as React.CSSProperties}
               >
+                <CardGrid color={service.color} index={index} />
                 <div className="pointer-events-none z-10 flex flex-col gap-1 p-8 transition-all duration-300 group-hover:-translate-y-8">
                   <div
                     className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 origin-left transform-gpu transition-all duration-300 group-hover:scale-75"
