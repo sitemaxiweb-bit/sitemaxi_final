@@ -1,12 +1,21 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { Save, Eye, ArrowLeft, X, Upload, Image as ImageIcon, Clock, ChevronDown, ChevronUp } from 'lucide-react';
+import { Save, Eye, ArrowLeft, X, Upload, Image as ImageIcon, Clock, ChevronDown, ChevronUp, Sparkles, Wand2, FileText, Link2, Image, Loader2 } from 'lucide-react';
 import { createPost, updatePost, getPostById } from '../lib/blogApi';
 import { getCurrentUser } from '../lib/auth';
 import { BlogPost, supabase } from '../lib/supabase';
 import RichTextEditor, { RichTextEditorRef } from '../components/RichTextEditor';
 import MediaLibrary from '../components/MediaLibrary';
 import { calculateReadTime, generateSlug } from '../utils/blogHelpers';
+import { getClusters, getKeywords, SERVICES, INDUSTRIES, type KeywordCluster, type Keyword } from '../lib/keywordApi';
+
+const LOCATIONS_LIST = [
+  'Vancouver', 'Surrey', 'Burnaby', 'Richmond', 'Coquitlam',
+  'Langley', 'Abbotsford', 'Kelowna', 'Victoria', 'Calgary',
+  'Edmonton', 'Toronto', 'Ottawa', 'Montreal', 'Canada',
+];
+
+type GenerationMode = 'titles' | 'outline' | 'draft' | 'full_package' | 'image_prompts' | 'metadata';
 
 interface Author {
   id: string;
@@ -62,11 +71,40 @@ export function AdminBlogEditorPage() {
   const [mediaSelectMode, setMediaSelectMode] = useState<'featured' | 'og' | 'inline'>('featured');
   const [showSEOPanel, setShowSEOPanel] = useState(false);
 
+  // Content system fields
+  const [relatedServices, setRelatedServices] = useState<string[]>([]);
+  const [relatedIndustries, setRelatedIndustries] = useState<string[]>([]);
+  const [relatedLocations, setRelatedLocations] = useState<string[]>([]);
+  const [clusterId, setClusterId] = useState('');
+  const [keywordId, setKeywordId] = useState('');
+  const [audienceType, setAudienceType] = useState('both');
+  const [contentType, setContentType] = useState('supporting');
+  const [ctaType, setCtaType] = useState('audit');
+  const [workflowStatus, setWorkflowStatus] = useState('content_idea');
+  const [workflowNotes, setWorkflowNotes] = useState('');
+  const [featuredImagePrompt, setFeaturedImagePrompt] = useState('');
+  const [socialImagePrompt, setSocialImagePrompt] = useState('');
+  const [featuredImageAlt, setFeaturedImageAlt] = useState('');
+  const [internalLinks, setInternalLinks] = useState<Array<{ anchorText: string; targetPage: string; url: string }>>([]);
+  const [faqSection, setFaqSection] = useState<Array<{ question: string; answer: string }>>([]);
+
+  // AI generation
+  const [clusters, setClusters] = useState<KeywordCluster[]>([]);
+  const [keywords, setKeywordsList] = useState<Keyword[]>([]);
+  const [showAIPanel, setShowAIPanel] = useState(false);
+  const [showContentSystem, setShowContentSystem] = useState(false);
+  const [generationMode, setGenerationMode] = useState<GenerationMode>('full_package');
+  const [generating, setGenerating] = useState(false);
+  const [generationResult, setGenerationResult] = useState<Record<string, unknown> | null>(null);
+  const [generationError, setGenerationError] = useState('');
+
   const categories = ['SEO', 'Social Media', 'Web Design', 'Google Ads', 'Content Marketing', 'Analytics', 'General'];
 
   useEffect(() => {
     initializeEditor();
     loadAuthors();
+    getClusters().then(setClusters).catch(console.error);
+    getKeywords().then(setKeywordsList).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -150,12 +188,128 @@ export function AdminBlogEditorPage() {
           const localDatetime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
           setPublishedAt(localDatetime);
         }
+
+        // Content system fields
+        const p = post as BlogPost & Record<string, unknown>;
+        if (Array.isArray(p.related_services)) setRelatedServices(p.related_services as string[]);
+        if (Array.isArray(p.related_industries)) setRelatedIndustries(p.related_industries as string[]);
+        if (Array.isArray(p.related_locations)) setRelatedLocations(p.related_locations as string[]);
+        if (p.cluster_id) setClusterId(p.cluster_id as string);
+        if (p.keyword_id) setKeywordId(p.keyword_id as string);
+        if (p.audience_type) setAudienceType(p.audience_type as string);
+        if (p.content_type) setContentType(p.content_type as string);
+        if (p.cta_type) setCtaType(p.cta_type as string);
+        if (p.workflow_status) setWorkflowStatus(p.workflow_status as string);
+        if (p.workflow_notes) setWorkflowNotes(p.workflow_notes as string);
+        if (p.featured_image_prompt) setFeaturedImagePrompt(p.featured_image_prompt as string);
+        if (p.social_image_prompt) setSocialImagePrompt(p.social_image_prompt as string);
+        if (p.featured_image_alt) setFeaturedImageAlt(p.featured_image_alt as string);
+        if (p.internal_links) setInternalLinks(p.internal_links as Array<{ anchorText: string; targetPage: string; url: string }>);
+        if (p.faq_section) setFaqSection(p.faq_section as Array<{ question: string; answer: string }>);
       }
     } catch (error) {
       console.error('Error loading post:', error);
       alert('Failed to load post');
     } finally {
       setLoading(false);
+    }
+  }
+
+  function buildContentSystemData(): Record<string, unknown> {
+    return {
+      related_services: relatedServices.length ? relatedServices : null,
+      related_industries: relatedIndustries.length ? relatedIndustries : null,
+      related_locations: relatedLocations.length ? relatedLocations : null,
+      cluster_id: clusterId || null,
+      keyword_id: keywordId || null,
+      audience_type: audienceType,
+      content_type: contentType,
+      cta_type: ctaType,
+      workflow_status: workflowStatus,
+      workflow_notes: workflowNotes || null,
+      featured_image_prompt: featuredImagePrompt || null,
+      social_image_prompt: socialImagePrompt || null,
+      featured_image_alt: featuredImageAlt || null,
+      internal_links: internalLinks.length ? internalLinks : null,
+      faq_section: faqSection.length ? faqSection : null,
+    };
+  }
+
+  async function handleGenerate() {
+    const selectedKw = keywords.find((k) => k.id === keywordId);
+    const keyword = selectedKw?.keyword || title;
+    if (!keyword) { setGenerationError('Select a keyword or enter a title first'); return; }
+
+    setGenerating(true);
+    setGenerationError('');
+    setGenerationResult(null);
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const supabaseUrl = (supabase as unknown as { supabaseUrl: string }).supabaseUrl || import.meta.env.VITE_SUPABASE_URL;
+      const res = await fetch(`${supabaseUrl}/functions/v1/generate-blog-content`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session?.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mode: generationMode,
+          keyword,
+          articleTitle: title || undefined,
+          businessType: audienceType === 'local_business' ? 'local' : audienceType === 'ecommerce_owner' ? 'ecommerce' : 'both',
+          targetAudience: audienceType,
+          services: relatedServices,
+          industries: relatedIndustries,
+          locations: relatedLocations,
+          ctaType,
+          contentType,
+        }),
+      });
+
+      if (!res.ok) throw new Error(await res.text());
+      const result = await res.json();
+      setGenerationResult(result);
+
+      // Auto-apply results to form
+      if (generationMode === 'draft' || generationMode === 'full_package') {
+        const draft = generationMode === 'full_package' ? (result as Record<string, unknown>).draft as Record<string, unknown> : result as Record<string, unknown>;
+        if (draft?.title && !title) setTitle(draft.title as string);
+        if (draft?.content) setContent(draft.content as string);
+        if (draft?.excerpt) setExcerpt((draft.excerpt as string).slice(0, 200));
+      }
+      if (generationMode === 'metadata' || generationMode === 'full_package') {
+        const meta = generationMode === 'full_package' ? (result as Record<string, unknown>).metadata as Record<string, unknown> : result as Record<string, unknown>;
+        if (meta?.metaTitle) setMetaTitle(meta.metaTitle as string);
+        if (meta?.metaDescription) setMetaDescription(meta.metaDescription as string);
+        if (meta?.ogTitle) setOgTitle(meta.ogTitle as string);
+        if (meta?.ogDescription) setOgDescription(meta.ogDescription as string);
+        if (meta?.slug && !slug) setSlug(meta.slug as string);
+        if (meta?.tags) setTags(meta.tags as string[]);
+      }
+      if (generationMode === 'outline' || generationMode === 'full_package') {
+        const outline = generationMode === 'full_package' ? (result as Record<string, unknown>).outline as Record<string, unknown> : result as Record<string, unknown>;
+        if (outline?.internalLinks) setInternalLinks(outline.internalLinks as Array<{ anchorText: string; targetPage: string; url: string }>);
+        if (outline?.recommendedTitle && !title) setTitle(outline.recommendedTitle as string);
+      }
+      if (generationMode === 'full_package') {
+        const faq = (result as Record<string, unknown>).faq as Record<string, unknown>;
+        if (faq?.faqs) setFaqSection(faq.faqs as Array<{ question: string; answer: string }>);
+        const imgs = (result as Record<string, unknown>).imagePrompts as Record<string, unknown>;
+        if (imgs?.featuredImagePrompt) setFeaturedImagePrompt(imgs.featuredImagePrompt as string);
+        if (imgs?.socialImagePrompt) setSocialImagePrompt(imgs.socialImagePrompt as string);
+        if (imgs?.featuredImageAlt) setFeaturedImageAlt(imgs.featuredImageAlt as string);
+      }
+      if (generationMode === 'image_prompts') {
+        const imgs = result as Record<string, unknown>;
+        if (imgs.featuredImagePrompt) setFeaturedImagePrompt(imgs.featuredImagePrompt as string);
+        if (imgs.socialImagePrompt) setSocialImagePrompt(imgs.socialImagePrompt as string);
+        if (imgs.featuredImageAlt) setFeaturedImageAlt(imgs.featuredImageAlt as string);
+      }
+    } catch (e: unknown) {
+      setGenerationError((e as Error).message);
+    } finally {
+      setGenerating(false);
     }
   }
 
@@ -185,7 +339,8 @@ export function AdminBlogEditorPage() {
         og_title: ogTitle || null,
         og_description: ogDescription || null,
         og_image: ogImage || null,
-      };
+        ...buildContentSystemData(),
+      } as Partial<BlogPost>;
 
       await updatePost(id, postData);
       setLastSaved(new Date());
@@ -246,7 +401,8 @@ export function AdminBlogEditorPage() {
         og_description: ogDescription || null,
         og_image: ogImage || null,
         original_slug: originalSlug || slug,
-      };
+        ...buildContentSystemData(),
+      } as Partial<BlogPost>;
 
       if (isEditMode && id) {
         await updatePost(id, postData);
@@ -732,6 +888,317 @@ export function AdminBlogEditorPage() {
                       {ogImage ? 'Change Image' : 'Select from Media Library (Defaults to featured image)'}
                     </span>
                   </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* AI Content Generation Panel */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+            <button
+              type="button"
+              onClick={() => setShowAIPanel(!showAIPanel)}
+              className="w-full px-8 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">AI Content Generation</h2>
+                  <p className="text-xs text-gray-500 mt-0.5">Generate outlines, drafts, metadata, image prompts, and more</p>
+                </div>
+              </div>
+              {showAIPanel ? <ChevronUp className="w-6 h-6 text-gray-400" /> : <ChevronDown className="w-6 h-6 text-gray-400" />}
+            </button>
+
+            {showAIPanel && (
+              <div className="px-8 pb-8 space-y-6 border-t border-gray-100 pt-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Source Keyword</label>
+                    <select
+                      value={keywordId}
+                      onChange={(e) => setKeywordId(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    >
+                      <option value="">Select keyword (or use title)</option>
+                      {keywords.map((kw) => (
+                        <option key={kw.id} value={kw.id}>{kw.keyword}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Generation Mode</label>
+                    <select
+                      value={generationMode}
+                      onChange={(e) => setGenerationMode(e.target.value as GenerationMode)}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    >
+                      <option value="full_package">Full Package (Everything)</option>
+                      <option value="titles">Title Options Only</option>
+                      <option value="outline">Outline Only</option>
+                      <option value="draft">Draft Only</option>
+                      <option value="metadata">Metadata Only</option>
+                      <option value="image_prompts">Image Prompts Only</option>
+                    </select>
+                  </div>
+                </div>
+
+                {generationError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-700">{generationError}</div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleGenerate}
+                  disabled={generating}
+                  className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                >
+                  {generating ? (
+                    <><Loader2 className="w-5 h-5 animate-spin" /> Generating...</>
+                  ) : (
+                    <><Wand2 className="w-5 h-5" /> Generate Content</>
+                  )}
+                </button>
+
+                {generationResult && (
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-5">
+                    <p className="text-sm font-semibold text-green-800 mb-3">Generation complete — results applied to form fields above.</p>
+
+                    {/* Show title options if generated */}
+                    {(generationResult.titles as { titles?: Array<{ title: string; format: string; angle: string }> })?.titles && (
+                      <div className="mb-4">
+                        <p className="text-xs font-semibold text-green-700 mb-2">Title Options — click to apply:</p>
+                        <div className="space-y-1">
+                          {(generationResult.titles as { titles: Array<{ title: string; format: string; angle: string }> }).titles.map((t, i) => (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => setTitle(t.title)}
+                              className="w-full text-left text-xs px-3 py-2 bg-white border border-green-200 rounded-lg hover:bg-green-50 transition-colors text-gray-800"
+                            >
+                              <span className="font-medium text-green-700 uppercase text-[10px] mr-2">{t.format}</span>{t.title}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* FAQ preview */}
+                    {faqSection.length > 0 && (
+                      <div className="mt-3">
+                        <p className="text-xs font-semibold text-green-700 mb-1">{faqSection.length} FAQ questions generated</p>
+                      </div>
+                    )}
+
+                    {/* Image prompts preview */}
+                    {featuredImagePrompt && (
+                      <div className="mt-3 text-xs text-green-700">
+                        <span className="font-semibold">Featured image prompt saved</span> — visible in Content System panel below.
+                      </div>
+                    )}
+
+                    {internalLinks.length > 0 && (
+                      <div className="mt-3">
+                        <p className="text-xs font-semibold text-green-700 mb-1">{internalLinks.length} internal link suggestions generated</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Content System Panel */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+            <button
+              type="button"
+              onClick={() => setShowContentSystem(!showContentSystem)}
+              className="w-full px-8 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center">
+                  <Link2 className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Content System</h2>
+                  <p className="text-xs text-gray-500 mt-0.5">Workflow, linking, image prompts, audience, and SEO connections</p>
+                </div>
+              </div>
+              {showContentSystem ? <ChevronUp className="w-6 h-6 text-gray-400" /> : <ChevronDown className="w-6 h-6 text-gray-400" />}
+            </button>
+
+            {showContentSystem && (
+              <div className="px-8 pb-8 space-y-6 border-t border-gray-100 pt-6">
+                {/* Workflow */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Workflow Status</label>
+                    <select value={workflowStatus} onChange={(e) => setWorkflowStatus(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                      <option value="content_idea">Content Idea</option>
+                      <option value="outline_ready">Outline Ready</option>
+                      <option value="draft_ready">Draft Ready</option>
+                      <option value="review_needed">Review Needed</option>
+                      <option value="approved">Approved</option>
+                      <option value="published">Published</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Keyword Cluster</label>
+                    <select value={clusterId} onChange={(e) => setClusterId(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                      <option value="">No cluster</option>
+                      {clusters.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Audience Type</label>
+                    <select value={audienceType} onChange={(e) => setAudienceType(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                      <option value="local_business">Local Business</option>
+                      <option value="ecommerce_owner">E-Commerce</option>
+                      <option value="both">Both</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Content Type</label>
+                    <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                      <option value="pillar">Pillar Page</option>
+                      <option value="supporting">Supporting Article</option>
+                      <option value="listicle">Listicle</option>
+                      <option value="how_to">How-To Guide</option>
+                      <option value="case_study">Case Study</option>
+                      <option value="news">News/Update</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">CTA Type</label>
+                    <select value={ctaType} onChange={(e) => setCtaType(e.target.value)} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                      <option value="audit">Free SEO Audit</option>
+                      <option value="strategy_call">Book Strategy Call</option>
+                      <option value="contact">Contact Form</option>
+                      <option value="resource">Resource</option>
+                      <option value="none">None</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Related Services */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Related Services</label>
+                  <div className="flex flex-wrap gap-2">
+                    {SERVICES.map((s) => (
+                      <button key={s} type="button"
+                        onClick={() => setRelatedServices(relatedServices.includes(s) ? relatedServices.filter((x) => x !== s) : [...relatedServices, s])}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${relatedServices.includes(s) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300'}`}>
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Related Industries */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Related Industries</label>
+                  <div className="flex flex-wrap gap-2">
+                    {INDUSTRIES.map((ind) => (
+                      <button key={ind} type="button"
+                        onClick={() => setRelatedIndustries(relatedIndustries.includes(ind) ? relatedIndustries.filter((x) => x !== ind) : [...relatedIndustries, ind])}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${relatedIndustries.includes(ind) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300'}`}>
+                        {ind}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Related Locations */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Related Locations</label>
+                  <div className="flex flex-wrap gap-2">
+                    {LOCATIONS_LIST.map((loc) => (
+                      <button key={loc} type="button"
+                        onClick={() => setRelatedLocations(relatedLocations.includes(loc) ? relatedLocations.filter((x) => x !== loc) : [...relatedLocations, loc])}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${relatedLocations.includes(loc) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300'}`}>
+                        {loc}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Image Prompts */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Featured Image Prompt</label>
+                    <textarea value={featuredImagePrompt} onChange={(e) => setFeaturedImagePrompt(e.target.value)} rows={3}
+                      placeholder="AI image generation prompt for hero image..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none text-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Social Image Prompt</label>
+                    <textarea value={socialImagePrompt} onChange={(e) => setSocialImagePrompt(e.target.value)} rows={3}
+                      placeholder="Prompt for social media share image..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none text-sm" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Featured Image Alt Text</label>
+                  <input type="text" value={featuredImageAlt} onChange={(e) => setFeaturedImageAlt(e.target.value)}
+                    placeholder="Alt text for featured image (for accessibility and SEO)"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                </div>
+
+                {/* Internal Links */}
+                {internalLinks.length > 0 && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Internal Link Suggestions</label>
+                    <div className="space-y-2">
+                      {internalLinks.map((link, i) => (
+                        <div key={i} className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                          <div>
+                            <span className="text-sm font-medium text-blue-600">{link.anchorText}</span>
+                            <span className="text-xs text-gray-500 ml-3">{link.url}</span>
+                          </div>
+                          <button type="button" onClick={() => setInternalLinks(internalLinks.filter((_, idx) => idx !== i))}
+                            className="text-gray-400 hover:text-red-500 transition-colors">
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* FAQ Section */}
+                {faqSection.length > 0 && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">FAQ Section ({faqSection.length} questions)</label>
+                    <div className="space-y-2">
+                      {faqSection.map((faq, i) => (
+                        <div key={i} className="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-gray-800">{faq.question}</p>
+                              <p className="text-xs text-gray-600 mt-1">{faq.answer}</p>
+                            </div>
+                            <button type="button" onClick={() => setFaqSection(faqSection.filter((_, idx) => idx !== i))}
+                              className="text-gray-400 hover:text-red-500 flex-shrink-0">
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Workflow Notes */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Workflow Notes</label>
+                  <textarea value={workflowNotes} onChange={(e) => setWorkflowNotes(e.target.value)} rows={2}
+                    placeholder="Internal notes for reviewers, editors..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none text-sm" />
                 </div>
               </div>
             )}

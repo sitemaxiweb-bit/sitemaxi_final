@@ -38,6 +38,10 @@ import { IndustriesPage } from './pages/IndustriesPage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { ResourcesHubPage } from './pages/ResourcesHubPage';
 import { AdminLocationsPage } from './pages/AdminLocationsPage';
+import AdminKeywordsPage from './pages/AdminKeywordsPage';
+import AdminKeywordEditorPage from './pages/AdminKeywordEditorPage';
+import AdminClustersPage from './pages/AdminClustersPage';
+import AdminClusterEditorPage from './pages/AdminClusterEditorPage';
 import { LocationsPage, CityPage, CityServicePage } from './pages/locations';
 import {
   DentistsPage,
@@ -105,6 +109,26 @@ function App() {
         <Route path="/admin/locations" element={
           <ProtectedRoute requireAdmin={true}>
             <AdminLocationsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/keywords" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminKeywordsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/keywords/:id" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminKeywordEditorPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/clusters" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminClustersPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/clusters/:id" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminClusterEditorPage />
           </ProtectedRoute>
         } />
 
