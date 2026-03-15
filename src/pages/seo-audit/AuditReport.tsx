@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { CheckCircle, XCircle, AlertTriangle, Info, Zap, Shield, Smartphone, Search, ArrowRight, Mail, RotateCcw, TrendingUp, Clock } from 'lucide-react';
+import { CheckCircle, XCircle, AlertTriangle, Info, Zap, Search, ArrowRight, Mail, RotateCcw, TrendingUp, Clock, Download } from 'lucide-react';
 import type { AuditReportData } from './types';
 import { ScoreGauge } from './ScoreGauge';
 import { TechnicalSEOCard } from './TechnicalSEOCard';
 import { PageSpeedCard } from './PageSpeedCard';
 import { IssuesList } from './IssuesList';
 import { RecommendationsList } from './RecommendationsList';
+import { downloadAuditPDF } from './pdfExport';
 
 interface AuditReportProps {
   report: AuditReportData;
@@ -27,6 +28,10 @@ export function AuditReport({ report, businessName, email, onEmailReport, onRunA
     setEmailSent(true);
   }
 
+  function handleDownloadPDF() {
+    downloadAuditPDF(report, businessName);
+  }
+
   const errorCount = report.onPageIssues.filter(i => i.type === 'error').length;
   const warningCount = report.onPageIssues.filter(i => i.type === 'warning').length;
   const infoCount = report.onPageIssues.filter(i => i.type === 'info').length;
@@ -46,7 +51,14 @@ export function AuditReport({ report, businessName, email, onEmailReport, onRunA
             <h1 className="text-3xl font-black text-[#111111]">{businessName} — SEO Report</h1>
             <p className="text-[#999999] text-sm mt-1">{report.auditedUrl}</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all shadow-sm"
+            >
+              <Download className="w-4 h-4" />
+              Download PDF
+            </button>
             {!emailSent ? (
               <button
                 onClick={handleEmailReport}

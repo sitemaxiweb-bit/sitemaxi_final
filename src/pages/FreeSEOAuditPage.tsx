@@ -82,7 +82,7 @@ export function FreeSEOAuditPage() {
       />
       <div className="min-h-screen bg-white">
         {pageState === 'form' && <AuditForm onSubmit={handleSubmit} />}
-        {pageState === 'loading' && <AuditLoading websiteUrl={userEmail} />}
+        {pageState === 'loading' && <AuditLoading websiteUrl={report?.auditedUrl || ''} />}
         {pageState === 'results' && report && (
           <AuditReport
             report={report}

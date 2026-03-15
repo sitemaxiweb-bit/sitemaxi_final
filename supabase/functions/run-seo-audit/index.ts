@@ -51,6 +51,74 @@ interface AuditReport {
   auditDate: string;
 }
 
+function toBase64Url(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (const b of bytes) binary += String.fromCharCode(b);
+  const base64 = btoa(binary);
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+}
+
+function buildMimeMessage(to: string, subject: string, html: string, from?: string): string {
+  const boundary = `boundary_${crypto.randomUUID().replace(/-/g, '')}`;
+  const plainText = html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const lines: string[] = [];
+  lines.push(`To: ${to}`);
+  if (from) lines.push(`From: ${from}`);
+  lines.push(`Subject: ${subject}`);
+  lines.push('MIME-Version: 1.0');
+  lines.push(`Content-Type: multipart/alternative; boundary="${boundary}"`);
+  lines.push('');
+  lines.push(`--${boundary}`);
+  lines.push('Content-Type: text/plain; charset="UTF-8"');
+  lines.push('');
+  lines.push(plainText);
+  lines.push('');
+  lines.push(`--${boundary}`);
+  lines.push('Content-Type: text/html; charset="UTF-8"');
+  lines.push('');
+  lines.push(html);
+  lines.push('');
+  lines.push(`--${boundary}--`);
+  return lines.join('\r\n');
+}
+
+async function sendGmailEmail(to: string, subject: string, html: string): Promise<boolean> {
+  try {
+    const picaSecretKey = Deno.env.get('PICA_SECRET_KEY');
+    const picaGmailConnectionKey = Deno.env.get('PICA_GMAIL_CONNECTION_KEY');
+    if (!picaSecretKey || !picaGmailConnectionKey) {
+      console.warn('Gmail env vars not set: PICA_SECRET_KEY or PICA_GMAIL_CONNECTION_KEY');
+      return false;
+    }
+
+    const mime = buildMimeMessage(to, subject, html);
+    const raw = toBase64Url(mime);
+
+    const response = await fetch('https://api.picaos.com/v1/passthrough/users/me/messages/send', {
+      method: 'POST',
+      headers: {
+        'x-pica-secret': picaSecretKey,
+        'x-pica-connection-key': picaGmailConnectionKey,
+        'x-pica-action-id': 'conn_mod_def::F_JeJ_A_TKg::cc2kvVQQTiiIiLEDauy6zQ',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ raw }),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('Gmail send failed:', response.status, errText);
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Gmail send error:', err);
+    return false;
+  }
+}
+
 async function fetchPageData(url: string): Promise<{ html: string; finalUrl: string }> {
   const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
   const response = await fetch(normalizedUrl, {
@@ -236,7 +304,6 @@ function buildReport(seoData: ReturnType<typeof extractSEOData>, pageSpeed: Awai
   if (pageSpeed.desktop < 70) { scoreDeductions += 5; issues.push({ type: 'warning', title: `Desktop Speed Needs Improvement (${pageSpeed.desktop}/100)`, description: 'Desktop performance score indicates optimization opportunities.' }); }
 
   const seoScore = Math.max(0, 100 - scoreDeductions);
-
   const pageSpeedStatus = pageSpeed.mobile >= 75 ? 'good' : pageSpeed.mobile >= 50 ? 'warning' : 'error';
 
   return {
@@ -271,10 +338,7 @@ function buildReport(seoData: ReturnType<typeof extractSEOData>, pageSpeed: Awai
 
 async function sendTeamNotification(businessName: string, email: string, websiteUrl: string, seoScore: number) {
   try {
-    const picaSecretKey = Deno.env.get('PICA_SECRET_KEY');
-    const picaConnectionKey = Deno.env.get('PICA_OUTLOOK_MAIL_CONNECTION_KEY');
-    if (!picaSecretKey || !picaConnectionKey) return;
-
+    const scoreColor = seoScore >= 75 ? '#16a34a' : seoScore >= 50 ? '#ca8a04' : '#dc2626';
     const emailContent = `
 <!DOCTYPE html>
 <html>
@@ -282,14 +346,13 @@ async function sendTeamNotification(businessName: string, email: string, website
   <style>
     body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 24px; border-radius: 8px 8px 0 0; }
+    .header { background: #0f172a; color: white; padding: 24px; border-radius: 8px 8px 0 0; }
     .content { background-color: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none; }
-    .score-badge { display: inline-block; background: #16a34a; color: white; font-size: 28px; font-weight: bold; padding: 12px 24px; border-radius: 50px; margin: 10px 0; }
+    .score-badge { display: inline-block; background: ${scoreColor}; color: white; font-size: 28px; font-weight: bold; padding: 12px 24px; border-radius: 50px; margin: 10px 0; }
     .field { margin-bottom: 16px; }
     .label { font-weight: bold; color: #374151; }
-    .value { color: #111; }
-    .footer { background-color: #f3f4f6; padding: 15px; text-align: center; font-size: 12px; color: #6b7280; border-radius: 0 0 8px 8px; }
     .cta { display: inline-block; background: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 16px; }
+    .footer { background-color: #f3f4f6; padding: 15px; text-align: center; font-size: 12px; color: #6b7280; border-radius: 0 0 8px 8px; }
   </style>
 </head>
 <body>
@@ -299,60 +362,30 @@ async function sendTeamNotification(businessName: string, email: string, website
       <p style="margin:4px 0 0; opacity:0.85;">A new lead has been captured from the Free AI Marketing Audit tool</p>
     </div>
     <div class="content">
-      <div class="field">
-        <span class="label">Business Name:</span><br/>
-        <span class="value" style="font-size:18px; font-weight:600;">${businessName}</span>
-      </div>
-      <div class="field">
-        <span class="label">Email:</span><br/>
-        <span class="value">${email}</span>
-      </div>
-      <div class="field">
-        <span class="label">Website Audited:</span><br/>
-        <span class="value"><a href="${websiteUrl}">${websiteUrl}</a></span>
-      </div>
-      <div class="field">
-        <span class="label">SEO Score:</span><br/>
-        <span class="score-badge">${seoScore}/100</span>
-      </div>
-      <p style="color:#374151; margin-top:20px;">This lead has been saved to the admin panel. Follow up within 24 hours for best conversion results.</p>
+      <div class="field"><span class="label">Business Name:</span><br/><span style="font-size:18px; font-weight:600;">${businessName}</span></div>
+      <div class="field"><span class="label">Email:</span><br/><span>${email}</span></div>
+      <div class="field"><span class="label">Website Audited:</span><br/><a href="${websiteUrl}">${websiteUrl}</a></div>
+      <div class="field"><span class="label">SEO Score:</span><br/><span class="score-badge">${seoScore}/100</span></div>
+      <p style="color:#374151; margin-top:20px;">Follow up within 24 hours for best conversion results.</p>
       <a href="https://sitemaxi.com/admin" class="cta">View in Admin Panel</a>
     </div>
-    <div class="footer">
-      <p>Sent from SiteMaxi Free AI Marketing Audit tool</p>
-    </div>
+    <div class="footer"><p>Sent from SiteMaxi Free AI Marketing Audit tool</p></div>
   </div>
 </body>
 </html>`;
 
-    await fetch('https://api.picaos.com/v1/passthrough/me/sendMail', {
-      method: 'POST',
-      headers: {
-        'x-pica-secret': picaSecretKey,
-        'x-pica-connection-key': picaConnectionKey,
-        'x-pica-action-id': 'conn_mod_def::GCwA84KBXNw::h9iYXKQMQY-nKxeNMrZwng',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: {
-          subject: `New SEO Audit Lead: ${businessName} (Score: ${seoScore}/100)`,
-          body: { contentType: 'HTML', content: emailContent },
-          toRecipients: [{ emailAddress: { address: 'operations@sitemaxi.com' } }],
-        },
-        saveToSentItems: true,
-      }),
-    });
+    await sendGmailEmail(
+      'operations@sitemaxi.com',
+      `New SEO Audit Lead: ${businessName} (Score: ${seoScore}/100)`,
+      emailContent
+    );
   } catch (err) {
     console.error('Team notification failed:', err);
   }
 }
 
-async function sendReportEmail(businessName: string, email: string, report: AuditReport) {
+async function sendReportEmail(businessName: string, email: string, report: AuditReport): Promise<boolean> {
   try {
-    const picaSecretKey = Deno.env.get('PICA_SECRET_KEY');
-    const picaConnectionKey = Deno.env.get('PICA_OUTLOOK_MAIL_CONNECTION_KEY');
-    if (!picaSecretKey || !picaConnectionKey) return false;
-
     const scoreColor = report.seoScore >= 75 ? '#16a34a' : report.seoScore >= 50 ? '#ca8a04' : '#dc2626';
     const highPriorityRecs = report.recommendations.filter(r => r.priority === 'high');
 
@@ -420,25 +453,11 @@ async function sendReportEmail(businessName: string, email: string, report: Audi
 </body>
 </html>`;
 
-    const response = await fetch('https://api.picaos.com/v1/passthrough/me/sendMail', {
-      method: 'POST',
-      headers: {
-        'x-pica-secret': picaSecretKey,
-        'x-pica-connection-key': picaConnectionKey,
-        'x-pica-action-id': 'conn_mod_def::GCwA84KBXNw::h9iYXKQMQY-nKxeNMrZwng',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: {
-          subject: `Your SEO Audit Report - ${businessName} (Score: ${report.seoScore}/100)`,
-          body: { contentType: 'HTML', content: emailContent },
-          toRecipients: [{ emailAddress: { address: email } }],
-        },
-        saveToSentItems: true,
-      }),
-    });
-
-    return response.ok;
+    return await sendGmailEmail(
+      email,
+      `Your SEO Audit Report - ${businessName} (Score: ${report.seoScore}/100)`,
+      emailContent
+    );
   } catch (err) {
     console.error('Report email failed:', err);
     return false;
