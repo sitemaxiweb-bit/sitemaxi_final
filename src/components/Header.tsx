@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench } from 'lucide-react';
+import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench, MapPin } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
@@ -170,6 +170,14 @@ export function Header() {
             Industries
           </Link>
 
+          <Link
+            to="/locations"
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${location.pathname.startsWith('/locations') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+          >
+            <MapPin className="w-3.5 h-3.5" />
+            Locations
+          </Link>
+
           <div className="relative" ref={resourcesRef}>
             <button
               onClick={() => { setIsResourcesOpen(!isResourcesOpen); setIsServicesOpen(false); }}
@@ -306,6 +314,10 @@ export function Header() {
 
             <Link to="/industries" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Industries
+            </Link>
+            <Link to="/locations" className="text-[#374151] font-medium py-4 border-b border-gray-100 flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[#1D4ED8]" />
+              Locations
             </Link>
             <Link to="/resources-hub" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Resources Hub

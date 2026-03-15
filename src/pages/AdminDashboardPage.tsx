@@ -8,7 +8,8 @@ import {
   Lock,
   LogOut,
   User,
-  BarChart3
+  BarChart3,
+  MapPin
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useEffect, useState } from 'react';
@@ -82,6 +83,13 @@ export function AdminDashboardPage() {
       path: '/admin/audit-leads',
       icon: <BarChart3 className="w-8 h-8" />,
       color: 'from-emerald-500 to-teal-600'
+    },
+    {
+      title: 'Location Pages',
+      description: 'Manage city-based local SEO landing pages across Canada',
+      path: '/admin/locations',
+      icon: <MapPin className="w-8 h-8" />,
+      color: 'from-blue-500 to-cyan-600'
     }
   ];
 

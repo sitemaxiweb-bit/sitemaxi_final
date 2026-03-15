@@ -37,6 +37,8 @@ import { ServicesPage } from './pages/ServicesPage';
 import { IndustriesPage } from './pages/IndustriesPage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { ResourcesHubPage } from './pages/ResourcesHubPage';
+import { AdminLocationsPage } from './pages/AdminLocationsPage';
+import { LocationsPage, CityPage, CityServicePage } from './pages/locations';
 import {
   DentistsPage,
   LawyersPage,
@@ -100,6 +102,11 @@ function App() {
             <AdminAuditLeadsPage />
           </ProtectedRoute>
         } />
+        <Route path="/admin/locations" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminLocationsPage />
+          </ProtectedRoute>
+        } />
 
         <Route path="/*" element={
           <div className="min-h-screen bg-white">
@@ -140,6 +147,9 @@ function App() {
               <Route path="/industries/ecommerce" element={<EcommercePage />} />
               <Route path="/resources" element={<ResourcesPage />} />
               <Route path="/resources-hub" element={<ResourcesHubPage />} />
+              <Route path="/locations" element={<LocationsPage />} />
+              <Route path="/locations/:city" element={<CityPage />} />
+              <Route path="/locations/:city/:service" element={<CityServicePage />} />
             </Routes>
             <Footer />
             <StickyAuditCTA />

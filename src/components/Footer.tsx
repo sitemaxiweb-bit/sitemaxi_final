@@ -70,6 +70,7 @@ export function Footer() {
               <li><Link to="/" className="text-gray-400 text-sm hover:text-white transition-colors">Home</Link></li>
               <li><Link to="/about" className="text-gray-400 text-sm hover:text-white transition-colors">About</Link></li>
               <li><Link to="/industries" className="text-gray-400 text-sm hover:text-white transition-colors">Industries</Link></li>
+              <li><Link to="/locations" className="text-gray-400 text-sm hover:text-white transition-colors">Locations</Link></li>
               <li><Link to="/resources" className="text-gray-400 text-sm hover:text-white transition-colors">Resources Hub</Link></li>
               <li><Link to="/blog" className="text-gray-400 text-sm hover:text-white transition-colors">Blog</Link></li>
               <li><Link to="/contact" className="text-gray-400 text-sm hover:text-white transition-colors">Contact</Link></li>
@@ -94,6 +95,34 @@ export function Footer() {
                 Vaughan, ON, CA L4J 2J2
               </li>
             </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 pt-10 pb-8 mb-4">
+          <h4 className="font-bold text-white text-sm uppercase tracking-wider mb-5">Popular Locations</h4>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { label: 'Local SEO Vancouver', path: '/locations/vancouver/local-seo' },
+              { label: 'SEO Surrey', path: '/locations/surrey/seo' },
+              { label: 'Google Ads Toronto', path: '/locations/toronto/google-ads' },
+              { label: 'Web Design Calgary', path: '/locations/calgary/web-design' },
+              { label: 'SEO Mississauga', path: '/locations/mississauga/seo' },
+              { label: 'Local SEO Edmonton', path: '/locations/edmonton/local-seo' },
+              { label: 'Digital Marketing Ottawa', path: '/locations/ottawa/digital-marketing' },
+              { label: 'Google Ads Burnaby', path: '/locations/burnaby/google-ads' },
+              { label: 'SEO Winnipeg', path: '/locations/winnipeg/seo' },
+              { label: 'Local SEO Hamilton', path: '/locations/hamilton/local-seo' },
+              { label: 'Web Design Victoria', path: '/locations/victoria/web-design' },
+              { label: 'View All Cities →', path: '/locations' },
+            ].map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="text-gray-500 text-xs hover:text-gray-300 transition-colors px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
 
