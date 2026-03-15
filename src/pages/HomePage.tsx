@@ -354,33 +354,33 @@ function IndustryFocusSection() {
           </div>
         </ScrollAnimateWrapper>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6">
           <ScrollAnimateWrapper animation="slide-left">
-            <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300">
-              <div className="bg-gradient-to-br from-[#1D4ED8] to-[#2563EB] p-8 text-white">
-                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                  <Users className="w-7 h-7 text-white" />
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
+              <div className="bg-[#2563EB] px-8 pt-8 pb-10 text-white">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-5">
+                  <Users className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Local Service Businesses</h3>
-                <p className="text-blue-100 leading-relaxed">
+                <h3 className="text-2xl font-bold mb-2 leading-snug">Local Service Businesses</h3>
+                <p className="text-blue-100 text-sm leading-relaxed">
                   Dominate your local market. Show up when customers in your city search for exactly what you offer.
                 </p>
               </div>
-              <div className="p-8">
-                <p className="text-sm font-semibold text-[#6B7280] uppercase tracking-wider mb-5">Industries we work with</p>
-                <div className="grid grid-cols-2 gap-3">
+              <div className="px-8 pt-7 pb-8 flex flex-col flex-1">
+                <p className="text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-5">Industries we work with</p>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4 flex-1">
                   {localIndustries.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <item.icon className="w-4 h-4 text-[#1D4ED8]" />
+                        <item.icon className="w-[15px] h-[15px] text-[#2563EB]" />
                       </div>
-                      <span className="text-sm font-medium text-[#374151]">{item.label}</span>
+                      <span className="text-[13px] font-medium text-[#374151]">{item.label}</span>
                     </div>
                   ))}
                 </div>
                 <Link
                   to="/industries"
-                  className="mt-8 flex items-center gap-2 text-[#1D4ED8] font-semibold text-sm hover:gap-3 transition-all duration-200"
+                  className="mt-7 inline-flex items-center gap-1.5 text-[#2563EB] font-semibold text-sm hover:gap-2.5 transition-all duration-200"
                 >
                   See all local industries <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -389,31 +389,31 @@ function IndustryFocusSection() {
           </ScrollAnimateWrapper>
 
           <ScrollAnimateWrapper animation="slide-right">
-            <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300">
-              <div className="bg-gradient-to-br from-[#059669] to-[#10B981] p-8 text-white">
-                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
-                  <ShoppingBag className="w-7 h-7 text-white" />
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
+              <div className="bg-[#059669] px-8 pt-8 pb-10 text-white">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-5">
+                  <ShoppingBag className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">E-commerce Brands</h3>
-                <p className="text-green-100 leading-relaxed">
+                <h3 className="text-2xl font-bold mb-2 leading-snug">E-commerce Brands</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Scale your online store with paid ads, SEO, and conversion optimization that drives revenue.
                 </p>
               </div>
-              <div className="p-8">
-                <p className="text-sm font-semibold text-[#6B7280] uppercase tracking-wider mb-5">Industries we work with</p>
-                <div className="grid grid-cols-2 gap-3">
+              <div className="px-8 pt-7 pb-8 flex flex-col flex-1">
+                <p className="text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-5">Industries we work with</p>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4 flex-1">
                   {ecommerceIndustries.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <item.icon className="w-4 h-4 text-[#059669]" />
+                        <item.icon className="w-[15px] h-[15px] text-[#059669]" />
                       </div>
-                      <span className="text-sm font-medium text-[#374151]">{item.label}</span>
+                      <span className="text-[13px] font-medium text-[#374151]">{item.label}</span>
                     </div>
                   ))}
                 </div>
                 <Link
                   to="/industries"
-                  className="mt-8 flex items-center gap-2 text-[#059669] font-semibold text-sm hover:gap-3 transition-all duration-200"
+                  className="mt-7 inline-flex items-center gap-1.5 text-[#059669] font-semibold text-sm hover:gap-2.5 transition-all duration-200"
                 >
                   See all e-commerce verticals <ArrowRight className="w-4 h-4" />
                 </Link>
