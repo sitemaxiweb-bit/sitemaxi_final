@@ -1,5 +1,4 @@
-import React, { forwardRef, useRef, useCallback } from "react";
-import { useGSAP } from "@gsap/react";
+import React, { forwardRef, useRef, useCallback, useEffect } from "react";
 import { gsap } from "gsap";
 import { cn } from "../../lib/cn";
 import { ArrowRight } from "lucide-react";
@@ -160,9 +159,9 @@ export const RevealIndustryCard = forwardRef<HTMLDivElement, RevealIndustryCardP
     const startClip = "circle(50px at 56px 56px)";
     const expandClip = "circle(160% at 56px 56px)";
 
-    useGSAP(() => {
+    useEffect(() => {
       gsap.set(overlayRef.current, { clipPath: startClip });
-    }, { scope: holderRef });
+    }, []);
 
     const reveal = () => {
       gsap.to(overlayRef.current, {
