@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Blog } from '../components/Blog';
 import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
+import { PinContainer } from '../components/ui/3d-pin';
 import { OrganizationStructuredData, WebsiteStructuredData } from '../components/StructuredData';
 import { LogoSlider } from '../components/LogoSlider';
 import { FeatureCarousel } from '../components/FeatureCarousel';
@@ -355,68 +356,78 @@ function IndustryFocusSection() {
 
         <div className="grid md:grid-cols-2 gap-6">
           <ScrollAnimateWrapper animation="slide-left">
-            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-              <div className="bg-[#2563EB] px-8 pt-8 pb-10 text-white">
-                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-5">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2 leading-snug">Local Service Businesses</h3>
-                <p className="text-blue-100 text-sm leading-relaxed">
-                  Dominate your local market. Show up when customers in your city search for exactly what you offer.
-                </p>
-              </div>
-              <div className="px-8 pt-7 pb-8 flex flex-col flex-1">
-                <p className="text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-5">Industries we work with</p>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-4 flex-1">
-                  {localIndustries.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <item.icon className="w-[15px] h-[15px] text-[#2563EB]" />
-                      </div>
-                      <span className="text-[13px] font-medium text-[#374151]">{item.label}</span>
+            <div className="h-[28rem] flex items-center justify-center">
+              <PinContainer
+                title="Explore Local Industries"
+                href="/industries"
+                containerClassName="w-full h-full"
+              >
+                <div className="flex flex-col w-[22rem] h-[22rem]">
+                  <div className="bg-[#2563EB] px-6 pt-6 pb-7 text-white rounded-t-xl">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                      <Users className="w-6 h-6 text-white" />
                     </div>
-                  ))}
+                    <h3 className="text-xl font-bold mb-1.5 leading-snug">Local Service Businesses</h3>
+                    <p className="text-blue-100 text-xs leading-relaxed">
+                      Dominate your local market. Show up when customers in your city search for exactly what you offer.
+                    </p>
+                  </div>
+                  <div className="bg-[#111827] px-6 pt-5 pb-5 flex flex-col flex-1 rounded-b-xl">
+                    <p className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest mb-4">Industries we work with</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-3 flex-1">
+                      {localIndustries.map((item, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-blue-900/50 rounded-md flex items-center justify-center flex-shrink-0">
+                            <item.icon className="w-3 h-3 text-[#60A5FA]" />
+                          </div>
+                          <span className="text-[11px] font-medium text-[#D1D5DB]">{item.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 inline-flex items-center gap-1.5 text-[#60A5FA] font-semibold text-xs">
+                      See all local industries <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </div>
                 </div>
-                <Link
-                  to="/industries"
-                  className="mt-7 inline-flex items-center gap-1.5 text-[#2563EB] font-semibold text-sm hover:gap-2.5 transition-all duration-200"
-                >
-                  See all local industries <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              </PinContainer>
             </div>
           </ScrollAnimateWrapper>
 
           <ScrollAnimateWrapper animation="slide-right">
-            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-              <div className="bg-[#059669] px-8 pt-8 pb-10 text-white">
-                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-5">
-                  <ShoppingBag className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2 leading-snug">E-commerce Brands</h3>
-                <p className="text-green-100 text-sm leading-relaxed">
-                  Scale your online store with paid ads, SEO, and conversion optimization that drives revenue.
-                </p>
-              </div>
-              <div className="px-8 pt-7 pb-8 flex flex-col flex-1">
-                <p className="text-[11px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-5">Industries we work with</p>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-4 flex-1">
-                  {ecommerceIndustries.map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <item.icon className="w-[15px] h-[15px] text-[#059669]" />
-                      </div>
-                      <span className="text-[13px] font-medium text-[#374151]">{item.label}</span>
+            <div className="h-[28rem] flex items-center justify-center">
+              <PinContainer
+                title="Explore E-commerce Verticals"
+                href="/industries"
+                containerClassName="w-full h-full"
+              >
+                <div className="flex flex-col w-[22rem] h-[22rem]">
+                  <div className="bg-[#059669] px-6 pt-6 pb-7 text-white rounded-t-xl">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                      <ShoppingBag className="w-6 h-6 text-white" />
                     </div>
-                  ))}
+                    <h3 className="text-xl font-bold mb-1.5 leading-snug">E-commerce Brands</h3>
+                    <p className="text-green-100 text-xs leading-relaxed">
+                      Scale your online store with paid ads, SEO, and conversion optimization that drives revenue.
+                    </p>
+                  </div>
+                  <div className="bg-[#111827] px-6 pt-5 pb-5 flex flex-col flex-1 rounded-b-xl">
+                    <p className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest mb-4">Industries we work with</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-3 flex-1">
+                      {ecommerceIndustries.map((item, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-emerald-900/50 rounded-md flex items-center justify-center flex-shrink-0">
+                            <item.icon className="w-3 h-3 text-[#34D399]" />
+                          </div>
+                          <span className="text-[11px] font-medium text-[#D1D5DB]">{item.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 inline-flex items-center gap-1.5 text-[#34D399] font-semibold text-xs">
+                      See all e-commerce verticals <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </div>
                 </div>
-                <Link
-                  to="/industries"
-                  className="mt-7 inline-flex items-center gap-1.5 text-[#059669] font-semibold text-sm hover:gap-2.5 transition-all duration-200"
-                >
-                  See all e-commerce verticals <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              </PinContainer>
             </div>
           </ScrollAnimateWrapper>
         </div>
