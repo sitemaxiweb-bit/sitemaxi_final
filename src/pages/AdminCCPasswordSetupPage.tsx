@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Lock, Shield, CheckCircle, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Lock, Shield, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { getCurrentUser } from '../lib/auth';
 
@@ -160,6 +161,10 @@ export function AdminCCPasswordSetupPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-6">
       <div className="max-w-2xl mx-auto">
+        <Link to="/admin" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-6">
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm font-medium">Back to Dashboard</span>
+        </Link>
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6">
             <div className="flex items-center gap-3">

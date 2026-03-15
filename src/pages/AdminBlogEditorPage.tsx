@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { Save, Eye, ArrowLeft, X, Upload, Image as ImageIcon, Clock, ChevronDown, ChevronUp, Sparkles, Wand2, FileText, Link2, Image, Loader2 } from 'lucide-react';
+import { Save, Eye, ArrowLeft, X, Image as ImageIcon, Clock, ChevronDown, ChevronUp, Sparkles, Wand2, FileText, Link2, Loader2, Search, Tag } from 'lucide-react';
 import { createPost, updatePost, getPostById } from '../lib/blogApi';
 import { getCurrentUser } from '../lib/auth';
 import { BlogPost, supabase } from '../lib/supabase';
@@ -91,12 +91,16 @@ export function AdminBlogEditorPage() {
   // AI generation
   const [clusters, setClusters] = useState<KeywordCluster[]>([]);
   const [keywords, setKeywordsList] = useState<Keyword[]>([]);
+  const [selectedKeywordIds, setSelectedKeywordIds] = useState<string[]>([]);
+  const [keywordSearch, setKeywordSearch] = useState('');
+  const [showKeywordDropdown, setShowKeywordDropdown] = useState(false);
   const [showAIPanel, setShowAIPanel] = useState(false);
   const [showContentSystem, setShowContentSystem] = useState(false);
   const [generationMode, setGenerationMode] = useState<GenerationMode>('full_package');
   const [generating, setGenerating] = useState(false);
   const [generationResult, setGenerationResult] = useState<Record<string, unknown> | null>(null);
   const [generationError, setGenerationError] = useState('');
+  const [generatingImage, setGeneratingImage] = useState(false);
 
   const categories = ['SEO', 'Social Media', 'Web Design', 'Google Ads', 'Content Marketing', 'Analytics', 'General'];
 
@@ -235,10 +239,52 @@ export function AdminBlogEditorPage() {
     };
   }
 
+  function buildKeywordString(): string {
+    if (selectedKeywordIds.length > 0) {
+      return selectedKeywordIds
+        .map(id => keywords.find(k => k.id === id)?.keyword)
+        .filter(Boolean)
+        .join(', ');
+    }
+    if (keywordId) {
+      return keywords.find(k => k.id === keywordId)?.keyword || title;
+    }
+    return title;
+  }
+
+  async function handleGenerateImage(prompt: string) {
+    if (!prompt) return;
+    setGeneratingImage(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const res = await fetch(`${supabaseUrl}/functions/v1/generate-blog-content`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session?.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mode: 'generate_image',
+          keyword: buildKeywordString() || title,
+          imagePrompt: prompt,
+        }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const result = await res.json() as Record<string, unknown>;
+      if (result.imageUrl) {
+        setFeaturedImage(result.imageUrl as string);
+      }
+    } catch (e: unknown) {
+      setGenerationError('Image generation failed: ' + (e as Error).message);
+    } finally {
+      setGeneratingImage(false);
+    }
+  }
+
   async function handleGenerate() {
-    const selectedKw = keywords.find((k) => k.id === keywordId);
-    const keyword = selectedKw?.keyword || title;
-    if (!keyword) { setGenerationError('Select a keyword or enter a title first'); return; }
+    const keyword = buildKeywordString();
+    if (!keyword) { setGenerationError('Select keywords or enter a title first'); return; }
 
     setGenerating(true);
     setGenerationError('');
@@ -246,7 +292,7 @@ export function AdminBlogEditorPage() {
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      const supabaseUrl = (supabase as unknown as { supabaseUrl: string }).supabaseUrl || import.meta.env.VITE_SUPABASE_URL;
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const res = await fetch(`${supabaseUrl}/functions/v1/generate-blog-content`, {
         method: 'POST',
         headers: {
@@ -256,6 +302,7 @@ export function AdminBlogEditorPage() {
         body: JSON.stringify({
           mode: generationMode,
           keyword,
+          keywords: selectedKeywordIds.map(id => keywords.find(k => k.id === id)?.keyword).filter(Boolean),
           articleTitle: title || undefined,
           businessType: audienceType === 'local_business' ? 'local' : audienceType === 'ecommerce_owner' ? 'ecommerce' : 'both',
           targetAudience: audienceType,
@@ -264,6 +311,7 @@ export function AdminBlogEditorPage() {
           locations: relatedLocations,
           ctaType,
           contentType,
+          generateImage: generationMode === 'full_package',
         }),
       });
 
@@ -299,6 +347,8 @@ export function AdminBlogEditorPage() {
         if (imgs?.featuredImagePrompt) setFeaturedImagePrompt(imgs.featuredImagePrompt as string);
         if (imgs?.socialImagePrompt) setSocialImagePrompt(imgs.socialImagePrompt as string);
         if (imgs?.featuredImageAlt) setFeaturedImageAlt(imgs.featuredImageAlt as string);
+        const generatedImageUrl = (result as Record<string, unknown>).generatedImageUrl as string | undefined;
+        if (generatedImageUrl) setFeaturedImage(generatedImageUrl);
       }
       if (generationMode === 'image_prompts') {
         const imgs = result as Record<string, unknown>;
@@ -914,53 +964,158 @@ export function AdminBlogEditorPage() {
 
             {showAIPanel && (
               <div className="px-8 pb-8 space-y-6 border-t border-gray-100 pt-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">Source Keyword</label>
-                    <select
-                      value={keywordId}
-                      onChange={(e) => setKeywordId(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                    >
-                      <option value="">Select keyword (or use title)</option>
-                      {keywords.map((kw) => (
-                        <option key={kw.id} value={kw.id}>{kw.keyword}</option>
-                      ))}
-                    </select>
+
+                {/* Multi-keyword selector */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Target Keywords
+                    <span className="text-xs text-gray-500 font-normal ml-2">Select one or more keywords — or pick a cluster to auto-load all</span>
+                  </label>
+
+                  <div className="flex gap-3 mb-3">
+                    <div className="flex-1">
+                      <select
+                        value={clusterId}
+                        onChange={(e) => {
+                          const cid = e.target.value;
+                          setClusterId(cid);
+                          if (cid) {
+                            const cluster = clusters.find(c => c.id === cid);
+                            if (cluster) {
+                              const clusterKwIds = keywords
+                                .filter(k => cluster.supporting_keywords?.includes(k.keyword) || k.keyword === cluster.main_keyword)
+                                .map(k => k.id);
+                              setSelectedKeywordIds(clusterKwIds);
+                            }
+                          }
+                        }}
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm"
+                      >
+                        <option value="">Load from cluster...</option>
+                        {clusters.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                      </select>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-2">Generation Mode</label>
-                    <select
-                      value={generationMode}
-                      onChange={(e) => setGenerationMode(e.target.value as GenerationMode)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                    >
-                      <option value="full_package">Full Package (Everything)</option>
-                      <option value="titles">Title Options Only</option>
-                      <option value="outline">Outline Only</option>
-                      <option value="draft">Draft Only</option>
-                      <option value="metadata">Metadata Only</option>
-                      <option value="image_prompts">Image Prompts Only</option>
-                    </select>
+
+                  <div className="border border-gray-200 rounded-lg overflow-hidden">
+                    <div className="px-3 py-2 border-b border-gray-100 bg-gray-50 flex items-center gap-2">
+                      <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <input
+                        type="text"
+                        value={keywordSearch}
+                        onChange={(e) => setKeywordSearch(e.target.value)}
+                        placeholder="Search keywords..."
+                        className="flex-1 text-sm bg-transparent focus:outline-none"
+                      />
+                      {selectedKeywordIds.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedKeywordIds([])}
+                          className="text-xs text-gray-500 hover:text-red-500 transition-colors whitespace-nowrap"
+                        >
+                          Clear all
+                        </button>
+                      )}
+                    </div>
+                    <div className="max-h-48 overflow-y-auto divide-y divide-gray-50">
+                      {keywords
+                        .filter(k => !keywordSearch || k.keyword.toLowerCase().includes(keywordSearch.toLowerCase()))
+                        .map(kw => {
+                          const selected = selectedKeywordIds.includes(kw.id);
+                          return (
+                            <button
+                              key={kw.id}
+                              type="button"
+                              onClick={() => setSelectedKeywordIds(
+                                selected
+                                  ? selectedKeywordIds.filter(id => id !== kw.id)
+                                  : [...selectedKeywordIds, kw.id]
+                              )}
+                              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${selected ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
+                            >
+                              <div className={`w-4 h-4 rounded border-2 flex-shrink-0 flex items-center justify-center transition-colors ${selected ? 'bg-blue-600 border-blue-600' : 'border-gray-300'}`}>
+                                {selected && <X className="w-2.5 h-2.5 text-white" />}
+                              </div>
+                              <span className={`text-sm ${selected ? 'text-blue-900 font-medium' : 'text-gray-700'}`}>{kw.keyword}</span>
+                              <span className={`ml-auto text-xs px-1.5 py-0.5 rounded ${selected ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'}`}>{kw.category}</span>
+                            </button>
+                          );
+                        })}
+                      {keywords.filter(k => !keywordSearch || k.keyword.toLowerCase().includes(keywordSearch.toLowerCase())).length === 0 && (
+                        <p className="px-4 py-4 text-sm text-gray-500 text-center">No keywords found</p>
+                      )}
+                    </div>
                   </div>
+
+                  {selectedKeywordIds.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {selectedKeywordIds.map(id => {
+                        const kw = keywords.find(k => k.id === id);
+                        return kw ? (
+                          <span key={id} className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                            <Tag className="w-3 h-3" />
+                            {kw.keyword}
+                            <button type="button" onClick={() => setSelectedKeywordIds(prev => prev.filter(i => i !== id))} className="hover:text-blue-600">
+                              <X className="w-3 h-3" />
+                            </button>
+                          </span>
+                        ) : null;
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Generation Mode</label>
+                  <select
+                    value={generationMode}
+                    onChange={(e) => setGenerationMode(e.target.value as GenerationMode)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  >
+                    <option value="full_package">Full Package — Content + Images + SEO (Recommended)</option>
+                    <option value="titles">Title Options Only</option>
+                    <option value="outline">Outline Only</option>
+                    <option value="draft">Draft Only</option>
+                    <option value="metadata">Metadata Only</option>
+                    <option value="image_prompts">Image Prompts Only</option>
+                  </select>
+                  {generationMode === 'full_package' && (
+                    <p className="text-xs text-gray-500 mt-1.5">Generates full article, SEO metadata, FAQ, internal links, image prompts, and AI featured image in one click.</p>
+                  )}
                 </div>
 
                 {generationError && (
                   <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-700">{generationError}</div>
                 )}
 
-                <button
-                  type="button"
-                  onClick={handleGenerate}
-                  disabled={generating}
-                  className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
-                >
-                  {generating ? (
-                    <><Loader2 className="w-5 h-5 animate-spin" /> Generating...</>
-                  ) : (
-                    <><Wand2 className="w-5 h-5" /> Generate Content</>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    disabled={generating || generatingImage}
+                    className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                  >
+                    {generating ? (
+                      <><Loader2 className="w-5 h-5 animate-spin" /> {generationMode === 'full_package' ? 'Generating full blog...' : 'Generating...'}</>
+                    ) : (
+                      <><Wand2 className="w-5 h-5" /> {generationMode === 'full_package' ? 'Generate Full Blog with Image' : 'Generate Content'}</>
+                    )}
+                  </button>
+                  {featuredImagePrompt && (
+                    <button
+                      type="button"
+                      onClick={() => handleGenerateImage(featuredImagePrompt)}
+                      disabled={generatingImage || generating}
+                      className="flex items-center gap-2 px-4 py-3 bg-gray-800 text-white rounded-lg font-semibold text-sm hover:bg-gray-900 disabled:opacity-50 transition-colors"
+                    >
+                      {generatingImage ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" /> Generating image...</>
+                      ) : (
+                        <><ImageIcon className="w-4 h-4" /> Generate Image</>
+                      )}
+                    </button>
                   )}
-                </button>
+                </div>
 
                 {generationResult && (
                   <div className="bg-green-50 border border-green-200 rounded-xl p-5">

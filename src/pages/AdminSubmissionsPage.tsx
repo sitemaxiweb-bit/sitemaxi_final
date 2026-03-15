@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { CheckCircle, XCircle, Clock, Mail, Phone, Calendar, User, MessageSquare, Tag } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, Mail, Phone, Calendar, User, MessageSquare, Tag, ArrowLeft } from 'lucide-react';
 
 interface ContactSubmission {
   id: string;
@@ -105,6 +106,10 @@ export function AdminSubmissionsPage() {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-8">
+          <Link to="/admin" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-4">
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm font-medium">Back to Dashboard</span>
+          </Link>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Contact Submissions</h1>
           <p className="text-gray-600">
             Total submissions: <span className="font-semibold">{submissions.length}</span>

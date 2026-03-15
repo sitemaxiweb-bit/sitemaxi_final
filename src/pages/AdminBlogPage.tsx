@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Edit, Trash2, Eye, EyeOff, LogOut, FileText, Image, Mail } from 'lucide-react';
+import { Plus, CreditCard as Edit, Trash2, Eye, EyeOff, LogOut, FileText, Image, Mail, ArrowLeft } from 'lucide-react';
 import { getAllPosts, deletePost } from '../lib/blogApi';
 import { signOut, getCurrentUser } from '../lib/auth';
 import { BlogPost } from '../lib/supabase';
@@ -76,15 +76,12 @@ export function AdminBlogPage() {
       <div className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center">
-              <img
-                src="/SiteMaxi Professional Websites.png"
-                alt="SiteMaxi"
-                className="h-8 w-auto"
-              />
+            <Link to="/admin" className="flex items-center gap-2 text-[#666666] hover:text-[#111111] transition-colors">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-sm font-medium">Back to Dashboard</span>
             </Link>
             <span className="text-[#666666]">|</span>
-            <h1 className="text-xl font-bold text-[#111111]">Blog Admin</h1>
+            <h1 className="text-xl font-bold text-[#111111]">Blog Management</h1>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-[#666666]">{user?.email}</span>

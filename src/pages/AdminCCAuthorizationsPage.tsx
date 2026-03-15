@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { getCurrentUser } from '../lib/auth';
-import { Lock, CreditCard, Calendar, Mail, Phone, MapPin, FileText, Shield, X, Search, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Lock, CreditCard, Calendar, Mail, Phone, MapPin, FileText, Shield, X, Search, AlertCircle, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
 interface CCAuthorization {
   id: string;
@@ -337,12 +338,18 @@ export function AdminCCAuthorizationsPage() {
           </div>
         </div>
 
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Credit Card Authorizations</h1>
-            <p className="text-gray-600">
-              Total authorizations: <span className="font-semibold">{authorizations.length}</span>
-            </p>
+        <div className="mb-8">
+          <Link to="/admin" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-4">
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm font-medium">Back to Dashboard</span>
+          </Link>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">Credit Card Authorizations</h1>
+              <p className="text-gray-600">
+                Total authorizations: <span className="font-semibold">{authorizations.length}</span>
+              </p>
+            </div>
           </div>
         </div>
 

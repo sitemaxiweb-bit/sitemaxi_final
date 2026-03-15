@@ -1,4 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -7,8 +8,9 @@ const corsHeaders = {
 };
 
 interface GenerateRequest {
-  mode: "outline" | "draft" | "full_package" | "image_prompts" | "metadata" | "titles";
+  mode: "outline" | "draft" | "full_package" | "image_prompts" | "metadata" | "titles" | "generate_image";
   keyword: string;
+  keywords?: string[];
   articleTitle?: string;
   existingOutline?: string;
   existingContent?: string;
@@ -21,6 +23,8 @@ interface GenerateRequest {
   locations?: string[];
   ctaType?: string;
   contentType?: string;
+  generateImage?: boolean;
+  imagePrompt?: string;
 }
 
 const SITEMAXI_CONTEXT = `
@@ -61,7 +65,14 @@ Rules:
 `;
 }
 
-async function callOpenAI(prompt: string, systemPrompt: string): Promise<string> {
+function buildKeywordContext(req: GenerateRequest): string {
+  if (req.keywords && req.keywords.length > 1) {
+    return `Primary keyword: "${req.keyword}"\nAll target keywords: ${req.keywords.map(k => `"${k}"`).join(", ")}`;
+  }
+  return `Keyword: "${req.keyword}"`;
+}
+
+async function callOpenAI(prompt: string, systemPrompt: string, maxTokens = 4000): Promise<string> {
   const apiKey = Deno.env.get("OPENAI_API_KEY");
   if (!apiKey) throw new Error("OpenAI API key not configured");
 
@@ -78,7 +89,7 @@ async function callOpenAI(prompt: string, systemPrompt: string): Promise<string>
         { role: "user", content: prompt },
       ],
       temperature: 0.7,
-      max_tokens: 4000,
+      max_tokens: maxTokens,
     }),
   });
 
@@ -91,8 +102,78 @@ async function callOpenAI(prompt: string, systemPrompt: string): Promise<string>
   return data.choices[0].message.content;
 }
 
+async function generateDALLEImage(prompt: string): Promise<string | null> {
+  const apiKey = Deno.env.get("OPENAI_API_KEY");
+  if (!apiKey) return null;
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/images/generations", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "dall-e-3",
+        prompt: prompt.slice(0, 1000),
+        n: 1,
+        size: "1792x1024",
+        quality: "standard",
+        response_format: "b64_json",
+      }),
+    });
+
+    if (!res.ok) {
+      console.error("DALL-E error:", await res.text());
+      return null;
+    }
+
+    const data = await res.json();
+    return data.data[0]?.b64_json || null;
+  } catch (e) {
+    console.error("DALL-E generation failed:", e);
+    return null;
+  }
+}
+
+async function uploadImageToStorage(b64Image: string, keyword: string): Promise<string | null> {
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (!supabaseUrl || !serviceKey) return null;
+
+    const supabase = createClient(supabaseUrl, serviceKey);
+
+    const bytes = Uint8Array.from(atob(b64Image), c => c.charCodeAt(0));
+    const slug = keyword.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40);
+    const filename = `ai-generated/${slug}-${Date.now()}.png`;
+
+    const { error } = await supabase.storage
+      .from("blog-images")
+      .upload(filename, bytes, {
+        contentType: "image/png",
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("Storage upload error:", error);
+      return null;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("blog-images")
+      .getPublicUrl(filename);
+
+    return urlData.publicUrl;
+  } catch (e) {
+    console.error("Upload failed:", e);
+    return null;
+  }
+}
+
 async function generateTitles(req: GenerateRequest): Promise<object> {
-  const prompt = `Generate 5 compelling blog post title options for the keyword: "${req.keyword}"
+  const prompt = `Generate 5 compelling blog post title options for:
+${buildKeywordContext(req)}
 
 Context:
 - Business type: ${req.businessType || "both"}
@@ -105,7 +186,8 @@ Requirements:
 - Titles should be 50-65 characters
 - Mix formats: how-to, list, question, benefit-led
 - Make them click-worthy but not clickbait
-- Include the keyword naturally
+- Include the primary keyword naturally
+${req.keywords && req.keywords.length > 1 ? `- Naturally weave in secondary keywords where relevant` : ""}
 
 Return JSON with this exact structure:
 {
@@ -122,7 +204,7 @@ Return JSON with this exact structure:
 async function generateOutline(req: GenerateRequest): Promise<object> {
   const prompt = `Create a detailed SEO blog post outline for:
 
-Keyword: "${req.keyword}"
+${buildKeywordContext(req)}
 ${req.articleTitle ? `Title: "${req.articleTitle}"` : ""}
 Business type: ${req.businessType || "both"}
 Search intent: ${req.searchIntent || "informational"}
@@ -170,9 +252,13 @@ Internal link targets to suggest from:
 }
 
 async function generateDraft(req: GenerateRequest): Promise<object> {
+  const keywordsInstruction = req.keywords && req.keywords.length > 1
+    ? `\nNaturally incorporate ALL of these keywords throughout the article: ${req.keywords.map(k => `"${k}"`).join(", ")}`
+    : "";
+
   const prompt = `Write a complete, high-quality SEO blog post.
 
-Keyword: "${req.keyword}"
+${buildKeywordContext(req)}
 ${req.articleTitle ? `Title: "${req.articleTitle}"` : ""}
 ${req.existingOutline ? `Follow this outline:\n${req.existingOutline}` : ""}
 Business type: ${req.businessType || "both"}
@@ -181,14 +267,16 @@ Services to reference: ${(req.services || []).join(", ") || "digital marketing s
 Industries: ${(req.industries || []).join(", ") || "local business"}
 Location context: ${(req.locations || []).join(", ") || "Canada"}
 CTA type: ${req.ctaType || "audit"}
+${keywordsInstruction}
 
 Writing requirements:
-- 1000-1500 words
+- 1200-1800 words for comprehensive coverage
 - H2 and H3 headings
 - Short paragraphs (2-4 sentences max)
 - Bullet points for lists
 - Include real actionable advice
 - End with a CTA paragraph relevant to SiteMaxi services
+- Include at least one practical example or case study reference
 
 ${req.ctaType === "audit" ? 'CTA: Encourage readers to get their free AI Marketing Audit at sitemaxi.com' : ''}
 ${req.ctaType === "strategy_call" ? 'CTA: Encourage readers to book a free strategy call with SiteMaxi' : ''}
@@ -202,7 +290,7 @@ Return JSON with this exact structure:
   "readTimeMinutes": 6
 }`;
 
-  const raw = await callOpenAI(prompt, buildSystemPrompt());
+  const raw = await callOpenAI(prompt, buildSystemPrompt(), 6000);
   const clean = raw.replace(/```json\n?|\n?```/g, "").trim();
   return JSON.parse(clean);
 }
@@ -210,7 +298,7 @@ Return JSON with this exact structure:
 async function generateMetadata(req: GenerateRequest): Promise<object> {
   const prompt = `Generate complete SEO metadata for a blog post.
 
-Keyword: "${req.keyword}"
+${buildKeywordContext(req)}
 ${req.articleTitle ? `Title: "${req.articleTitle}"` : ""}
 ${req.existingContent ? `Content summary: ${req.existingContent.slice(0, 500)}` : ""}
 
@@ -226,8 +314,8 @@ Return JSON with this exact structure:
 }
 
 Rules:
-- metaTitle: 50-60 characters, includes keyword
-- metaDescription: 150-160 characters, compelling, includes keyword
+- metaTitle: 50-60 characters, includes primary keyword
+- metaDescription: 150-160 characters, compelling, includes primary keyword
 - ogTitle: can be slightly longer and more engaging
 - ogDescription: 1-2 sentence social share description
 - slug: lowercase, hyphens only, 3-6 words
@@ -241,7 +329,7 @@ Rules:
 async function generateFAQ(req: GenerateRequest): Promise<object> {
   const prompt = `Generate a comprehensive FAQ section for a blog post.
 
-Keyword: "${req.keyword}"
+${buildKeywordContext(req)}
 ${req.articleTitle ? `Article title: "${req.articleTitle}"` : ""}
 Business type: ${req.businessType || "both"}
 Target audience: ${req.targetAudience || "business owners"}
@@ -263,7 +351,7 @@ Generate 5-7 FAQs. Focus on real questions business owners ask. Include question
 async function generateImagePrompts(req: GenerateRequest): Promise<object> {
   const prompt = `Generate professional image prompts for a blog post.
 
-Keyword: "${req.keyword}"
+${buildKeywordContext(req)}
 ${req.articleTitle ? `Title: "${req.articleTitle}"` : ""}
 Business type: ${req.businessType || "both"}
 Industries: ${(req.industries || []).join(", ") || "local business"}
@@ -284,7 +372,8 @@ Style guidelines:
 - Professional, modern, clean aesthetics
 - No generic stock photo clichés
 - Include specific details (lighting, setting, mood)
-- Featured image should work as blog hero (16:9 ratio)`;
+- Featured image should work as blog hero (16:9 ratio)
+- Make prompts DALL-E 3 compatible: detailed, specific, photorealistic`;
 
   const raw = await callOpenAI(prompt, buildSystemPrompt());
   const clean = raw.replace(/```json\n?|\n?```/g, "").trim();
@@ -307,7 +396,18 @@ async function generateFullPackage(req: GenerateRequest): Promise<object> {
   };
   const draft = await generateDraft(draftReq);
 
-  return { titles, outline, metadata, faq, imagePrompts, draft };
+  let generatedImageUrl: string | null = null;
+  if (req.generateImage) {
+    const imgPromptsData = imagePrompts as { featuredImagePrompt?: string };
+    if (imgPromptsData.featuredImagePrompt) {
+      const b64 = await generateDALLEImage(imgPromptsData.featuredImagePrompt);
+      if (b64) {
+        generatedImageUrl = await uploadImageToStorage(b64, req.keyword);
+      }
+    }
+  }
+
+  return { titles, outline, metadata, faq, imagePrompts, draft, generatedImageUrl };
 }
 
 Deno.serve(async (req: Request) => {
@@ -317,6 +417,28 @@ Deno.serve(async (req: Request) => {
 
   try {
     const body: GenerateRequest = await req.json();
+
+    if (body.mode === "generate_image") {
+      if (!body.imagePrompt) {
+        return new Response(JSON.stringify({ error: "imagePrompt is required for generate_image mode" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const b64 = await generateDALLEImage(body.imagePrompt);
+      if (!b64) {
+        return new Response(JSON.stringify({ error: "Image generation failed" }), {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const imageUrl = await uploadImageToStorage(b64, body.keyword || "blog-image");
+      return new Response(JSON.stringify({ imageUrl }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     if (!body.keyword) {
       return new Response(JSON.stringify({ error: "keyword is required" }), {

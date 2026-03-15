@@ -90,6 +90,13 @@ export default function AdminKeywordsPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link
+              to="/admin/keywords/import"
+              className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-blue-300 transition-colors"
+            >
+              <BarChart2 className="w-4 h-4" />
+              Import Keywords
+            </Link>
+            <Link
               to="/admin/keywords/new"
               className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
             >

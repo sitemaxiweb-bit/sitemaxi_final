@@ -40,6 +40,7 @@ import { ResourcesHubPage } from './pages/ResourcesHubPage';
 import { AdminLocationsPage } from './pages/AdminLocationsPage';
 import AdminKeywordsPage from './pages/AdminKeywordsPage';
 import AdminKeywordEditorPage from './pages/AdminKeywordEditorPage';
+import AdminKeywordImportPage from './pages/AdminKeywordImportPage';
 import AdminClustersPage from './pages/AdminClustersPage';
 import AdminClusterEditorPage from './pages/AdminClusterEditorPage';
 import { LocationsPage, CityPage, CityServicePage } from './pages/locations';
@@ -114,6 +115,11 @@ function App() {
         <Route path="/admin/keywords" element={
           <ProtectedRoute requireAdmin={true}>
             <AdminKeywordsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/keywords/import" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminKeywordImportPage />
           </ProtectedRoute>
         } />
         <Route path="/admin/keywords/:id" element={
