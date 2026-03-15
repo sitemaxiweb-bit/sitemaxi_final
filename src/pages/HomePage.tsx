@@ -10,6 +10,7 @@ import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
 import { OrganizationStructuredData, WebsiteStructuredData } from '../components/StructuredData';
 import { LogoSlider } from '../components/LogoSlider';
+import { FeatureCarousel } from '../components/FeatureCarousel';
 
 const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
 
@@ -526,22 +527,9 @@ function WhyChooseSection() {
           </div>
         </ScrollAnimateWrapper>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {differentiators.map((item, index) => (
-            <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 3 === 1 ? 100 : index % 3 === 2 ? 200 : 0}>
-              <div className="bg-white rounded-2xl p-7 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                  style={{ backgroundColor: item.bg }}
-                >
-                  <item.icon className="w-6 h-6" style={{ color: item.color }} />
-                </div>
-                <h3 className="text-lg font-bold text-[#111111] mb-3">{item.title}</h3>
-                <p className="text-[#6B7280] leading-relaxed text-sm">{item.description}</p>
-              </div>
-            </ScrollAnimateWrapper>
-          ))}
-        </div>
+        <ScrollAnimateWrapper animation="fade-up">
+          <FeatureCarousel />
+        </ScrollAnimateWrapper>
 
         <ScrollAnimateWrapper animation="fade-up">
           <div className="mt-16 bg-white rounded-3xl p-10 border border-gray-100 shadow-sm">
