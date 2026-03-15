@@ -131,12 +131,6 @@ function HeroSection() {
 }
 
 function TrustSection() {
-  const stats = [
-    { value: '100+', label: 'Businesses Helped', icon: Users },
-    { value: '250+', label: 'Websites Optimized', icon: Globe },
-    { value: '500+', label: 'Campaigns Launched', icon: BarChart3 },
-  ];
-
   return (
     <section className="bg-gray-50 border-y border-gray-100 py-16">
       <div className="max-w-7xl mx-auto px-6">
@@ -148,17 +142,7 @@ function TrustSection() {
             <LogoSlider />
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-gray-200">
-            {stats.map((stat, i) => (
-              <div key={i} className="text-center">
-                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="w-6 h-6 text-[#1D4ED8]" />
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-[#111111] mb-1">{stat.value}</div>
-                <div className="text-sm text-[#6B7280] font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+
 
           <div className="mt-12 grid md:grid-cols-3 gap-4">
             {[
