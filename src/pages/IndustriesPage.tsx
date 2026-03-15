@@ -16,72 +16,84 @@ const localIndustries = [
     name: 'Contractors & Trades',
     description: 'Plumbers, electricians, HVAC, roofers — we get you found when locals need you most.',
     services: ['RankMaxi', 'ClickMaxi', 'SiteMaxi'],
+    link: '/industries/contractors',
   },
   {
     icon: Stethoscope,
     name: 'Dental & Medical',
     description: 'Clinics, dentists, chiropractors — build trust and fill your appointment book.',
     services: ['RankMaxi', 'SearchMaxi', 'SiteMaxi'],
+    link: '/industries/dentists',
   },
   {
     icon: Scale,
     name: 'Law & Legal',
     description: 'Law firms and legal professionals ready to rank for high-value search terms.',
     services: ['SearchMaxi', 'ClickMaxi', 'SiteMaxi'],
+    link: '/industries/lawyers',
   },
   {
     icon: Scissors,
-    name: 'Salons & Spas',
-    description: 'Beauty businesses that want steady bookings and a standout local presence.',
+    name: 'Salons & Med Spas',
+    description: 'Beauty and aesthetic businesses that want steady bookings and a standout local presence.',
     services: ['RankMaxi', 'SocialMaxi', 'AdMaxi'],
+    link: '/industries/med-spas',
   },
   {
     icon: Home,
     name: 'Real Estate',
     description: 'Agents and brokerages looking to dominate local search and generate quality leads.',
     services: ['RankMaxi', 'SearchMaxi', 'ClickMaxi'],
+    link: '/industries/real-estate',
   },
   {
     icon: Truck,
     name: 'Moving & Logistics',
     description: 'Moving companies and logistics providers that need calls from local customers.',
     services: ['RankMaxi', 'ClickMaxi', 'SiteMaxi'],
+    link: '/industries',
   },
   {
     icon: Utensils,
     name: 'Restaurants & Catering',
     description: 'Food businesses wanting more foot traffic, reservations, and online orders.',
     services: ['RankMaxi', 'SocialMaxi', 'AdMaxi'],
+    link: '/industries/restaurants',
   },
   {
     icon: Dumbbell,
     name: 'Gyms & Fitness',
     description: 'Fitness studios, gyms, and personal trainers ready to grow their member base.',
     services: ['RankMaxi', 'SocialMaxi', 'AdMaxi'],
+    link: '/industries',
   },
   {
     icon: Car,
-    name: 'Auto Services',
+    name: 'Auto Repair Shops',
     description: 'Dealerships, repair shops, and detailers looking to dominate local search.',
     services: ['RankMaxi', 'ClickMaxi', 'SiteMaxi'],
+    link: '/industries/auto-repair',
   },
   {
-    icon: GraduationCap,
-    name: 'Education & Tutoring',
-    description: 'Schools, tutors, and learning centres growing enrollment through digital.',
+    icon: Stethoscope,
+    name: 'Clinics & Healthcare',
+    description: 'Medical clinics, walk-in centres, and healthcare providers growing their patient base.',
     services: ['RankMaxi', 'SearchMaxi', 'SiteMaxi'],
-  },
-  {
-    icon: Camera,
-    name: 'Photography & Events',
-    description: 'Photographers and event planners building a premium online presence.',
-    services: ['SiteMaxi', 'SocialMaxi', 'AdMaxi'],
+    link: '/industries/clinics',
   },
   {
     icon: Wrench,
-    name: 'Home Services',
-    description: 'Cleaners, landscapers, pest control — get found by homeowners in your area.',
+    name: 'HVAC & Plumbing',
+    description: 'Heating, cooling, and plumbing businesses dominating emergency and planned service searches.',
     services: ['RankMaxi', 'ClickMaxi', 'SiteMaxi'],
+    link: '/industries/hvac',
+  },
+  {
+    icon: Home,
+    name: 'Funeral Homes',
+    description: 'Funeral homes building a trusted, compassionate online presence for families in need.',
+    services: ['RankMaxi', 'SearchMaxi', 'SiteMaxi'],
+    link: '/industries/funeral-homes',
   },
 ];
 
@@ -91,48 +103,56 @@ const ecommerceIndustries = [
     name: 'Health & Wellness',
     description: 'Supplements, wellness products, and health brands growing online sales.',
     services: ['SearchMaxi', 'AdMaxi', 'ClickMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: ShoppingBag,
     name: 'Fashion & Apparel',
     description: 'Clothing and accessories brands building an audience and driving purchases.',
     services: ['SocialMaxi', 'AdMaxi', 'SearchMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: Cpu,
     name: 'Electronics & Tech',
     description: 'Consumer electronics and tech products competing in a high-intent search landscape.',
     services: ['ClickMaxi', 'SearchMaxi', 'SiteMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: Home,
     name: 'Home & Garden',
     description: 'Home decor, furniture, and garden products driving revenue through SEO and ads.',
     services: ['SearchMaxi', 'AdMaxi', 'ClickMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: Heart,
     name: 'Beauty & Skincare',
     description: 'Skincare, cosmetics, and beauty brands growing through content and paid social.',
     services: ['SocialMaxi', 'AdMaxi', 'SearchMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: Utensils,
     name: 'Food & Beverage',
     description: 'Specialty food, beverage, and DTC brands scaling with e-commerce marketing.',
     services: ['AdMaxi', 'SearchMaxi', 'SocialMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: Dumbbell,
     name: 'Sports & Fitness',
     description: 'Fitness equipment, activewear, and sports brands growing online revenue.',
     services: ['AdMaxi', 'SearchMaxi', 'ClickMaxi'],
+    link: '/industries/ecommerce',
   },
   {
     icon: Building,
     name: 'B2B Products',
     description: 'B2B e-commerce and supply brands targeting business buyers online.',
     services: ['SearchMaxi', 'ClickMaxi', 'SiteMaxi'],
+    link: '/industries/ecommerce',
   },
 ];
 
@@ -202,13 +222,13 @@ export function IndustriesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {localIndustries.map((industry, index) => (
               <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 3 === 1 ? 100 : index % 3 === 2 ? 200 : 0}>
-                <div className="bg-white rounded-2xl p-7 border border-gray-100 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <Link to={industry.link} className="block bg-white rounded-2xl p-7 border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 h-full flex flex-col group">
                   <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
                     <industry.icon className="w-6 h-6 text-[#1D4ED8]" />
                   </div>
-                  <h3 className="text-lg font-bold text-[#111111] mb-2">{industry.name}</h3>
+                  <h3 className="text-lg font-bold text-[#111111] mb-2 group-hover:text-[#1D4ED8] transition-colors">{industry.name}</h3>
                   <p className="text-[#6B7280] text-sm leading-relaxed mb-5 flex-1">{industry.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {industry.services.map((s) => (
                       <span
                         key={s}
@@ -219,7 +239,10 @@ export function IndustriesPage() {
                       </span>
                     ))}
                   </div>
-                </div>
+                  <span className="text-[#1D4ED8] text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                    View strategy <ArrowRight className="w-4 h-4" />
+                  </span>
+                </Link>
               </ScrollAnimateWrapper>
             ))}
           </div>
@@ -243,13 +266,13 @@ export function IndustriesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {ecommerceIndustries.map((industry, index) => (
               <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 4 === 1 ? 100 : index % 4 === 2 ? 150 : index % 4 === 3 ? 200 : 0}>
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <Link to={industry.link} className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg hover:border-green-100 transition-all duration-300 h-full flex flex-col group">
                   <div className="w-11 h-11 bg-green-50 rounded-xl flex items-center justify-center mb-4">
                     <industry.icon className="w-5 h-5 text-[#059669]" />
                   </div>
-                  <h3 className="text-base font-bold text-[#111111] mb-2">{industry.name}</h3>
+                  <h3 className="text-base font-bold text-[#111111] mb-2 group-hover:text-[#059669] transition-colors">{industry.name}</h3>
                   <p className="text-[#6B7280] text-xs leading-relaxed mb-4 flex-1">{industry.description}</p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 mb-3">
                     {industry.services.map((s) => (
                       <span
                         key={s}
@@ -260,7 +283,10 @@ export function IndustriesPage() {
                       </span>
                     ))}
                   </div>
-                </div>
+                  <span className="text-[#059669] text-xs font-semibold flex items-center gap-1">
+                    View strategy <ArrowRight className="w-3 h-3" />
+                  </span>
+                </Link>
               </ScrollAnimateWrapper>
             ))}
           </div>

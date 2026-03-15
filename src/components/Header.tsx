@@ -180,14 +180,14 @@ export function Header() {
             </button>
 
             {isResourcesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-2xl shadow-2xl py-2 z-50">
-                <Link to="/resources" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-2xl shadow-2xl py-2 z-50">
+                <Link to="/resources-hub" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
                   <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                     <Wrench className="w-4 h-4 text-[#1D4ED8]" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-[#111111]">Resources Hub</div>
-                    <div className="text-xs text-[#6B7280]">Tools & guides</div>
+                    <div className="text-xs text-[#6B7280]">Guides, checklists & templates</div>
                   </div>
                 </Link>
                 <Link to="/free-seo-audit" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
@@ -196,7 +196,7 @@ export function Header() {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-[#111111]">Free AI Audit</div>
-                    <div className="text-xs text-[#6B7280]">Instant SEO report</div>
+                    <div className="text-xs text-[#6B7280]">Instant website analysis</div>
                   </div>
                 </Link>
                 <Link to="/blog" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
@@ -205,7 +205,16 @@ export function Header() {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-[#111111]">Blog</div>
-                    <div className="text-xs text-[#6B7280]">Marketing insights</div>
+                    <div className="text-xs text-[#6B7280]">Marketing insights & tips</div>
+                  </div>
+                </Link>
+                <Link to="/resources" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-100 mt-1">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center">
+                    <Target className="w-4 h-4 text-[#6B7280]" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-[#111111]">Free Tools</div>
+                    <div className="text-xs text-[#6B7280]">Marketing tools & resources</div>
                   </div>
                 </Link>
               </div>
@@ -298,8 +307,11 @@ export function Header() {
             <Link to="/industries" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Industries
             </Link>
-            <Link to="/resources" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+            <Link to="/resources-hub" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Resources Hub
+            </Link>
+            <Link to="/resources" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+              Free Tools
             </Link>
             <Link to="/blog" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Blog

@@ -3,6 +3,8 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { StickyAuditCTA } from './components/StickyAuditCTA';
+import { FloatingContactButton } from './components/FloatingContactButton';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { TeamPage } from './pages/TeamPage';
@@ -34,6 +36,22 @@ import { AdminAuditLeadsPage } from './pages/AdminAuditLeadsPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { IndustriesPage } from './pages/IndustriesPage';
 import { ResourcesPage } from './pages/ResourcesPage';
+import { ResourcesHubPage } from './pages/ResourcesHubPage';
+import {
+  DentistsPage,
+  LawyersPage,
+  ContractorsPage,
+  PlumbersPage,
+  HVACPage,
+  RoofersPage,
+  MedSpasPage,
+  ClinicsPage,
+  RealEstatePage,
+  FuneralHomesPage,
+  RestaurantsPage,
+  AutoRepairPage,
+  EcommercePage,
+} from './pages/industries';
 
 function App() {
   return (
@@ -107,9 +125,25 @@ function App() {
               <Route path="/free-seo-audit" element={<FreeSEOAuditPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/industries" element={<IndustriesPage />} />
+              <Route path="/industries/dentists" element={<DentistsPage />} />
+              <Route path="/industries/lawyers" element={<LawyersPage />} />
+              <Route path="/industries/contractors" element={<ContractorsPage />} />
+              <Route path="/industries/plumbers" element={<PlumbersPage />} />
+              <Route path="/industries/hvac" element={<HVACPage />} />
+              <Route path="/industries/roofers" element={<RoofersPage />} />
+              <Route path="/industries/med-spas" element={<MedSpasPage />} />
+              <Route path="/industries/clinics" element={<ClinicsPage />} />
+              <Route path="/industries/real-estate" element={<RealEstatePage />} />
+              <Route path="/industries/funeral-homes" element={<FuneralHomesPage />} />
+              <Route path="/industries/restaurants" element={<RestaurantsPage />} />
+              <Route path="/industries/auto-repair" element={<AutoRepairPage />} />
+              <Route path="/industries/ecommerce" element={<EcommercePage />} />
               <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/resources-hub" element={<ResourcesHubPage />} />
             </Routes>
             <Footer />
+            <StickyAuditCTA />
+            <FloatingContactButton />
           </div>
         } />
       </Routes>
