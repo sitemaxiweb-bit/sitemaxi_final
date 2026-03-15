@@ -1,5 +1,4 @@
-import React, { forwardRef, useRef, useCallback, useEffect } from "react";
-import { gsap } from "gsap";
+import React, { forwardRef, useCallback, useState } from "react";
 import { cn } from "../../lib/cn";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -144,12 +143,10 @@ export const RevealIndustryCard = forwardRef<HTMLDivElement, RevealIndustryCardP
       ...cardProps
     } = props;
 
-    const holderRef = useRef<HTMLDivElement>(null);
-    const overlayRef = useRef<HTMLDivElement>(null);
+    const [hovered, setHovered] = useState(false);
 
     const assignRef = useCallback(
       (el: HTMLDivElement | null) => {
-        holderRef.current = el;
         if (typeof ref === "function") ref(el);
         else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = el;
       },
@@ -159,31 +156,11 @@ export const RevealIndustryCard = forwardRef<HTMLDivElement, RevealIndustryCardP
     const startClip = "circle(50px at 56px 56px)";
     const expandClip = "circle(160% at 56px 56px)";
 
-    useEffect(() => {
-      gsap.set(overlayRef.current, { clipPath: startClip });
-    }, []);
-
-    const reveal = () => {
-      gsap.to(overlayRef.current, {
-        clipPath: expandClip,
-        duration: 0.75,
-        ease: "expo.inOut",
-      });
-    };
-
-    const conceal = () => {
-      gsap.to(overlayRef.current, {
-        clipPath: startClip,
-        duration: 0.9,
-        ease: "expo.out",
-      });
-    };
-
     return (
       <div
         ref={assignRef}
-        onMouseEnter={reveal}
-        onMouseLeave={conceal}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{ borderColor: accentColor }}
         className={cn(
           "relative overflow-hidden rounded-3xl border-2 h-full cursor-pointer",
@@ -198,8 +175,13 @@ export const RevealIndustryCard = forwardRef<HTMLDivElement, RevealIndustryCardP
           />
         </div>
         <div
-          ref={overlayRef}
           className="absolute inset-0 h-full w-full"
+          style={{
+            clipPath: hovered ? expandClip : startClip,
+            transition: hovered
+              ? "clip-path 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+              : "clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
         >
           <IndustryCardBody
             {...cardProps}
