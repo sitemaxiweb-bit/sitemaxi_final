@@ -140,9 +140,6 @@ function TrustSection() {
       <div className="max-w-7xl mx-auto px-6">
         <ScrollAnimateWrapper animation="fade-up">
           <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-[#6B7280] uppercase tracking-widest mb-8">
-              Trusted by local businesses and e-commerce brands across Canada
-            </p>
             <LogoSlider />
           </div>
 
