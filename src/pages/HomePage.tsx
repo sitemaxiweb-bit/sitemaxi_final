@@ -12,6 +12,8 @@ import { SEOHead } from '../components/SEOHead';
 import { OrganizationStructuredData, WebsiteStructuredData } from '../components/StructuredData';
 import { LogoSlider } from '../components/LogoSlider';
 import { FeatureCarousel } from '../components/FeatureCarousel';
+import { AnimatedTestimonials } from '../components/ui/animated-testimonials';
+import type { Testimonial } from '../components/ui/animated-testimonials';
 
 const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
 
@@ -518,6 +520,27 @@ function FreeToolsSection() {
   );
 }
 
+const SITE_TESTIMONIALS: Testimonial[] = [
+  {
+    quote: "Thorough, detail oriented and always work towards any goal with efficiency and skill.",
+    name: "Rohail Ali",
+    designation: "SSME",
+    src: "/download (5).png",
+  },
+  {
+    quote: "SiteMaxi completely redesigned our website and the results speak for themselves.",
+    name: "Anu Gunasekara",
+    designation: "Adly Travel",
+    src: "/WhatsApp Image 2025-11-12 at 19.18.27.jpeg",
+  },
+  {
+    quote: "Professional, responsive, and truly invested in our success.",
+    name: "Dennis Kapadia",
+    designation: "WelnessMed Supply Inc",
+    src: "/Generated Image November 12, 2025 - 7_24PM.png",
+  },
+];
+
 function WhyChooseSection() {
   const differentiators = [
     {
@@ -584,30 +607,8 @@ function WhyChooseSection() {
         </ScrollAnimateWrapper>
 
         <ScrollAnimateWrapper animation="fade-up">
-          <div className="mt-16 bg-[#111318] rounded-2xl overflow-hidden">
-            <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
-              {[
-                { name: "Rohail Ali", business: "SSME", quote: "Thorough, detail oriented and always work towards any goal with efficiency and skill.", image: "/download (5).png" },
-                { name: "Anu Gunasekara", business: "Adly Travel", quote: "SiteMaxi completely redesigned our website and the results speak for themselves.", image: "/WhatsApp Image 2025-11-12 at 19.18.27.jpeg" },
-                { name: "Dennis Kapadia", business: "WelnessMed Supply Inc", quote: "Professional, responsive, and truly invested in our success.", image: "/Generated Image November 12, 2025 - 7_24PM.png" },
-              ].map((t, i) => (
-                <div key={i} className="p-8 flex flex-col gap-4">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-[#D1D5DB] text-sm leading-relaxed italic flex-1">"{t.quote}"</p>
-                  <div className="flex items-center gap-3 mt-2">
-                    <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10" />
-                    <div>
-                      <div className="font-semibold text-sm text-[#9CA3AF]">{t.name}</div>
-                      <div className="text-xs text-[#6B7280]">{t.business}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="mt-16 bg-[#111318] rounded-2xl overflow-hidden px-10 py-10">
+            <AnimatedTestimonials testimonials={SITE_TESTIMONIALS} autoplay={true} />
           </div>
         </ScrollAnimateWrapper>
       </div>
