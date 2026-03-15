@@ -584,24 +584,24 @@ function WhyChooseSection() {
         </ScrollAnimateWrapper>
 
         <ScrollAnimateWrapper animation="fade-up">
-          <div className="mt-16 bg-white rounded-3xl p-10 border border-gray-100 shadow-sm">
-            <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+          <div className="mt-16 bg-[#111318] rounded-2xl overflow-hidden">
+            <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
               {[
                 { name: "Rohail Ali", business: "SSME", quote: "Thorough, detail oriented and always work towards any goal with efficiency and skill.", image: "/download (5).png" },
                 { name: "Anu Gunasekara", business: "Adly Travel", quote: "SiteMaxi completely redesigned our website and the results speak for themselves.", image: "/WhatsApp Image 2025-11-12 at 19.18.27.jpeg" },
                 { name: "Dennis Kapadia", business: "WelnessMed Supply Inc", quote: "Professional, responsive, and truly invested in our success.", image: "/Generated Image November 12, 2025 - 7_24PM.png" },
               ].map((t, i) => (
-                <div key={i} className="pt-8 md:pt-0 md:px-8 first:pt-0 first:pl-0 last:pr-0">
-                  <div className="flex mb-3">
+                <div key={i} className="p-8 flex flex-col gap-4">
+                  <div className="flex gap-0.5">
                     {[...Array(5)].map((_, j) => (
                       <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     ))}
                   </div>
-                  <p className="text-[#374151] text-sm leading-relaxed mb-4 italic">"{t.quote}"</p>
-                  <div className="flex items-center gap-3">
-                    <img src={t.image} alt={t.name} className="w-9 h-9 rounded-full object-cover" />
+                  <p className="text-[#D1D5DB] text-sm leading-relaxed italic flex-1">"{t.quote}"</p>
+                  <div className="flex items-center gap-3 mt-2">
+                    <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10" />
                     <div>
-                      <div className="font-semibold text-sm text-[#111111]">{t.name}</div>
+                      <div className="font-semibold text-sm text-[#9CA3AF]">{t.name}</div>
                       <div className="text-xs text-[#6B7280]">{t.business}</div>
                     </div>
                   </div>
