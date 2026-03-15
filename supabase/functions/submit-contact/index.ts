@@ -28,13 +28,40 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Client-Info, Apikey',
 };
 
+function buildMimeMessage(to: string, subject: string, html: string): string {
+  const boundary = 'boundary_' + Math.random().toString(36).substring(2);
+  return [
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    '',
+    `--${boundary}`,
+    'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: quoted-printable',
+    '',
+    html,
+    '',
+    `--${boundary}--`,
+  ].join('\r\n');
+}
+
+function toBase64Url(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (const byte of bytes) {
+    binary += String.fromCharCode(byte);
+  }
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
 async function sendEmailNotification(formData: ContactFormData) {
   try {
     const picaSecretKey = Deno.env.get('PICA_SECRET_KEY');
-    const picaConnectionKey = Deno.env.get('PICA_OUTLOOK_MAIL_CONNECTION_KEY');
+    const picaGmailConnectionKey = Deno.env.get('PICA_GMAIL_CONNECTION_KEY');
 
-    if (!picaSecretKey || !picaConnectionKey) {
-      console.warn('Email credentials not configured. Skipping email notification.');
+    if (!picaSecretKey || !picaGmailConnectionKey) {
+      console.warn('Gmail credentials not configured. Skipping email notification.');
       return { success: false, error: 'Email credentials not configured' };
     }
 
@@ -91,30 +118,18 @@ async function sendEmailNotification(formData: ContactFormData) {
 </html>
     `;
 
-    const message = {
-      subject: 'New Contact Form Submission - SiteMaxi',
-      body: {
-        contentType: 'HTML',
-        content: emailContent,
-      },
-      toRecipients: [
-        {
-          emailAddress: {
-            address: 'operations@sitemaxi.com',
-          },
-        },
-      ],
-    };
+    const mime = buildMimeMessage('operations@sitemaxi.com', 'New Contact Form Submission - SiteMaxi', emailContent);
+    const raw = toBase64Url(mime);
 
-    const response = await fetch('https://api.picaos.com/v1/passthrough/me/sendMail', {
+    const response = await fetch('https://api.picaos.com/v1/passthrough/users/me/messages/send', {
       method: 'POST',
       headers: {
         'x-pica-secret': picaSecretKey,
-        'x-pica-connection-key': picaConnectionKey,
-        'x-pica-action-id': 'conn_mod_def::GCwA84KBXNw::h9iYXKQMQY-nKxeNMrZwng',
+        'x-pica-connection-key': picaGmailConnectionKey,
+        'x-pica-action-id': 'conn_mod_def::F_JeJ_A_TKg::cc2kvVQQTiiIiLEDauy6zQ',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message, saveToSentItems: true }),
+      body: JSON.stringify({ raw }),
     });
 
     if (!response.ok) {
@@ -123,7 +138,7 @@ async function sendEmailNotification(formData: ContactFormData) {
       return { success: false, error: errorText };
     }
 
-    console.log('Email sent successfully via Outlook');
+    console.log('Email sent successfully via Gmail');
     return { success: true };
   } catch (error) {
     console.error('Error sending email notification:', error);
