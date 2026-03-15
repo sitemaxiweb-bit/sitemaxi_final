@@ -6,7 +6,7 @@ import type { AuditReportData } from './seo-audit/types';
 
 interface AuditLead {
   id: string;
-  business_name: string;
+  full_name: string;
   email: string;
   website_url: string;
   audit_report: AuditReportData | null;
@@ -76,7 +76,7 @@ export function AdminAuditLeadsPage() {
   }
 
   const filtered = leads.filter(l =>
-    l.business_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    l.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     l.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     l.website_url.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -160,7 +160,7 @@ export function AdminAuditLeadsPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-5">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-1">
-                        <span className="font-bold text-[#111111] text-lg">{lead.business_name}</span>
+                        <span className="font-bold text-[#111111] text-lg">{lead.full_name}</span>
                         {lead.report_emailed && (
                           <span className="flex items-center gap-1 text-xs text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold">
                             <Mail className="w-3 h-3" />

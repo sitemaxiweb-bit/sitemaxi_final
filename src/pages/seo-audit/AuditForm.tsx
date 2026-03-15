@@ -1,15 +1,38 @@
-import { useState } from 'react';
-import { Search, Globe, Building2, Mail, ArrowRight, CheckCircle, Zap, BarChart3, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Globe, User, Mail, ArrowRight, CheckCircle, Zap, BarChart3, Shield, Lock } from 'lucide-react';
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
 
 interface AuditFormProps {
-  onSubmit: (websiteUrl: string, businessName: string, email: string) => void;
+  onSubmit: (websiteUrl: string, fullName: string, email: string, recaptchaToken: string) => void;
 }
 
 export function AuditForm({ onSubmit }: AuditFormProps) {
   const [websiteUrl, setWebsiteUrl] = useState('');
-  const [businessName, setBusinessName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string;
+
+  useEffect(() => {
+    if (!siteKey) return;
+    const scriptId = 'recaptcha-v3-script';
+    if (document.getElementById(scriptId)) return;
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    document.head.appendChild(script);
+  }, [siteKey]);
 
   function validate() {
     const newErrors: Record<string, string> = {};
@@ -17,20 +40,41 @@ export function AuditForm({ onSubmit }: AuditFormProps) {
     else if (!/^(https?:\/\/)?[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(websiteUrl.trim())) {
       newErrors.websiteUrl = 'Please enter a valid website URL';
     }
-    if (!businessName.trim()) newErrors.businessName = 'Business name is required';
+    if (!fullName.trim()) newErrors.fullName = 'Full name is required';
     if (!email.trim()) newErrors.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Please enter a valid email';
     return newErrors;
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    onSubmit(websiteUrl.trim(), businessName.trim(), email.trim());
+
+    setSubmitting(true);
+
+    try {
+      let token = '';
+      if (siteKey && window.grecaptcha) {
+        token = await new Promise<string>((resolve, reject) => {
+          window.grecaptcha.ready(async () => {
+            try {
+              const t = await window.grecaptcha.execute(siteKey, { action: 'submit_audit' });
+              resolve(t);
+            } catch (err) {
+              reject(err);
+            }
+          });
+        });
+      }
+      onSubmit(websiteUrl.trim(), fullName.trim(), email.trim(), token);
+    } catch {
+      setErrors({ general: 'Bot verification failed. Please try again.' });
+      setSubmitting(false);
+    }
   }
 
   const features = [
@@ -111,19 +155,19 @@ export function AuditForm({ onSubmit }: AuditFormProps) {
 
                   <div>
                     <label className="block text-sm font-semibold text-[#333333] mb-2">
-                      Business Name
+                      Full Name
                     </label>
                     <div className="relative">
-                      <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <input
                         type="text"
-                        value={businessName}
-                        onChange={e => { setBusinessName(e.target.value); setErrors(p => ({ ...p, businessName: '' })); }}
-                        placeholder="Your Business Name"
-                        className={`w-full bg-gray-50 border ${errors.businessName ? 'border-red-400' : 'border-gray-200'} text-[#111111] placeholder-gray-400 rounded-xl pl-12 pr-4 py-3.5 focus:outline-none focus:border-[#1D4ED8] focus:ring-2 focus:ring-blue-100 transition-all`}
+                        value={fullName}
+                        onChange={e => { setFullName(e.target.value); setErrors(p => ({ ...p, fullName: '' })); }}
+                        placeholder="Your Full Name"
+                        className={`w-full bg-gray-50 border ${errors.fullName ? 'border-red-400' : 'border-gray-200'} text-[#111111] placeholder-gray-400 rounded-xl pl-12 pr-4 py-3.5 focus:outline-none focus:border-[#1D4ED8] focus:ring-2 focus:ring-blue-100 transition-all`}
                       />
                     </div>
-                    {errors.businessName && <p className="text-red-500 text-xs mt-1.5">{errors.businessName}</p>}
+                    {errors.fullName && <p className="text-red-500 text-xs mt-1.5">{errors.fullName}</p>}
                   </div>
 
                   <div>
@@ -144,18 +188,29 @@ export function AuditForm({ onSubmit }: AuditFormProps) {
                     {errors.email && <p className="text-red-500 text-xs mt-1.5">{errors.email}</p>}
                   </div>
 
+                  {errors.general && <p className="text-red-500 text-xs text-center">{errors.general}</p>}
+
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#1D4ED8] to-[#2563EB] hover:from-[#1E40AF] hover:to-[#1D4ED8] text-white font-bold text-lg py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-200 hover:-translate-y-0.5 mt-2"
+                    disabled={submitting}
+                    className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#1D4ED8] to-[#2563EB] hover:from-[#1E40AF] hover:to-[#1D4ED8] text-white font-bold text-lg py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-200 hover:-translate-y-0.5 mt-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
                     <Search className="w-5 h-5" />
-                    Run Free Audit
+                    {submitting ? 'Verifying...' : 'Run Free Audit'}
                     <ArrowRight className="w-5 h-5" />
                   </button>
 
-                  <p className="text-center text-xs text-gray-400 pt-1">
-                    By submitting, you agree to receive your audit report via email.
-                  </p>
+                  <div className="flex items-center justify-center gap-4 pt-1">
+                    <p className="text-center text-xs text-gray-400">
+                      By submitting, you agree to receive your audit report via email.
+                    </p>
+                    {siteKey && (
+                      <div className="flex items-center gap-1 text-gray-400 text-xs flex-shrink-0">
+                        <Lock className="w-3 h-3" />
+                        <span>reCAPTCHA protected</span>
+                      </div>
+                    )}
+                  </div>
                 </form>
               </div>
             </div>

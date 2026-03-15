@@ -8,8 +8,9 @@ const corsHeaders = {
 
 interface AuditRequest {
   websiteUrl?: string;
-  businessName: string;
+  fullName: string;
   email: string;
+  recaptchaToken?: string;
   sendEmail?: boolean;
   emailOnly?: boolean;
   leadId?: string;
@@ -51,6 +52,29 @@ interface AuditReport {
   aiInsights: string;
   auditedUrl: string;
   auditDate: string;
+}
+
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  const secretKey = Deno.env.get('RECAPTCHA_SECRET_KEY');
+  if (!secretKey) {
+    console.warn('RECAPTCHA_SECRET_KEY not set — skipping verification');
+    return true;
+  }
+  if (!token) return false;
+
+  try {
+    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(token)}`,
+      signal: AbortSignal.timeout(5000),
+    });
+    const data = await res.json();
+    return data.success === true && (data.score ?? 1) >= 0.5;
+  } catch (err) {
+    console.error('reCAPTCHA verification error:', err);
+    return false;
+  }
 }
 
 function toBase64Url(str: string): string {
@@ -211,15 +235,15 @@ async function fetchPageSpeed(url: string): Promise<{ mobile: number; desktop: n
   }
 }
 
-async function generateAIInsights(seoData: ReturnType<typeof extractSEOData>, pageSpeed: Awaited<ReturnType<typeof fetchPageSpeed>>, url: string, businessName: string): Promise<string> {
+async function generateAIInsights(seoData: ReturnType<typeof extractSEOData>, pageSpeed: Awaited<ReturnType<typeof fetchPageSpeed>>, url: string, fullName: string): Promise<string> {
   const openaiKey = Deno.env.get('OPENAI_API_KEY');
   if (!openaiKey) {
-    return `Based on the analysis of ${businessName}'s website (${url}), we identified several key areas for improvement. Your site has foundational SEO elements in place, but there are opportunities to enhance your visibility in search results. Focus on optimizing page speed, ensuring all images have descriptive alt text, and strengthening your on-page content with targeted keywords. Implementing structured data markup and building quality backlinks will further strengthen your online presence.`;
+    return `Based on the analysis of ${fullName}'s website (${url}), we identified several key areas for improvement. Your site has foundational SEO elements in place, but there are opportunities to enhance your visibility in search results. Focus on optimizing page speed, ensuring all images have descriptive alt text, and strengthening your on-page content with targeted keywords. Implementing structured data markup and building quality backlinks will further strengthen your online presence.`;
   }
 
   const prompt = `You are an expert SEO analyst. Analyze this website SEO data and provide a concise, actionable 3-paragraph summary for a business owner.
 
-Business: ${businessName}
+Name: ${fullName}
 Website: ${url}
 Title Tag: ${seoData.title || 'Missing'}
 Meta Description: ${seoData.metaDescription || 'Missing'}
@@ -256,7 +280,7 @@ Be specific, professional, and actionable. Do not use bullet points or headers.`
   });
 
   if (!response.ok) {
-    return `Based on the technical analysis of ${businessName}'s website, we've identified both strengths and opportunities for improvement. Your site shows foundational SEO elements, but optimizing page speed and content structure will significantly boost search rankings. Prioritize the high-priority recommendations in this report to see measurable results within 60-90 days.`;
+    return `Based on the technical analysis of ${fullName}'s website, we've identified both strengths and opportunities for improvement. Your site shows foundational SEO elements, but optimizing page speed and content structure will significantly boost search rankings. Prioritize the high-priority recommendations in this report to see measurable results within 60-90 days.`;
   }
 
   const data = await response.json();
@@ -338,7 +362,7 @@ function buildReport(seoData: ReturnType<typeof extractSEOData>, pageSpeed: Awai
   };
 }
 
-async function sendTeamNotification(businessName: string, email: string, websiteUrl: string, seoScore: number) {
+async function sendTeamNotification(fullName: string, email: string, websiteUrl: string, seoScore: number) {
   try {
     const scoreColor = seoScore >= 75 ? '#16a34a' : seoScore >= 50 ? '#ca8a04' : '#dc2626';
     const emailContent = `
@@ -364,7 +388,7 @@ async function sendTeamNotification(businessName: string, email: string, website
       <p style="margin:4px 0 0; opacity:0.85;">A new lead has been captured from the Free AI Marketing Audit tool</p>
     </div>
     <div class="content">
-      <div class="field"><span class="label">Business Name:</span><br/><span style="font-size:18px; font-weight:600;">${businessName}</span></div>
+      <div class="field"><span class="label">Full Name:</span><br/><span style="font-size:18px; font-weight:600;">${fullName}</span></div>
       <div class="field"><span class="label">Email:</span><br/><span>${email}</span></div>
       <div class="field"><span class="label">Website Audited:</span><br/><a href="${websiteUrl}">${websiteUrl}</a></div>
       <div class="field"><span class="label">SEO Score:</span><br/><span class="score-badge">${seoScore}/100</span></div>
@@ -378,7 +402,7 @@ async function sendTeamNotification(businessName: string, email: string, website
 
     await sendGmailEmail(
       'operations@sitemaxi.com',
-      `New SEO Audit Lead: ${businessName} (Score: ${seoScore}/100)`,
+      `New SEO Audit Lead: ${fullName} (Score: ${seoScore}/100)`,
       emailContent
     );
   } catch (err) {
@@ -386,7 +410,7 @@ async function sendTeamNotification(businessName: string, email: string, website
   }
 }
 
-async function sendReportEmail(businessName: string, email: string, report: AuditReport): Promise<boolean> {
+async function sendReportEmail(fullName: string, email: string, report: AuditReport): Promise<boolean> {
   try {
     const scoreColor = report.seoScore >= 75 ? '#16a34a' : report.seoScore >= 50 ? '#ca8a04' : '#dc2626';
     const highPriorityRecs = report.recommendations.filter(r => r.priority === 'high');
@@ -424,7 +448,7 @@ async function sendReportEmail(businessName: string, email: string, report: Audi
       <p style="margin:4px 0 0; font-size:20px; opacity:0.9;">/100</p>
     </div>
     <div class="content">
-      <p>Hi ${businessName},</p>
+      <p>Hi ${fullName},</p>
       <p>Here is your personalized SEO audit report. We found ${report.onPageIssues.filter(i => i.type === 'error').length} critical issues and ${report.onPageIssues.filter(i => i.type === 'warning').length} warnings that need attention.</p>
 
       <div class="section-title">AI-Powered Insights</div>
@@ -457,7 +481,7 @@ async function sendReportEmail(businessName: string, email: string, report: Audi
 
     return await sendGmailEmail(
       email,
-      `Your SEO Audit Report - ${businessName} (Score: ${report.seoScore}/100)`,
+      `Your SEO Audit Report - ${fullName} (Score: ${report.seoScore}/100)`,
       emailContent
     );
   } catch (err) {
@@ -485,16 +509,25 @@ Deno.serve(async (req: Request) => {
     );
 
     const body: AuditRequest = await req.json();
-    const { websiteUrl, businessName, email, sendEmail = false, emailOnly = false, leadId } = body;
+    const { websiteUrl, fullName, email, recaptchaToken, sendEmail = false, emailOnly = false, leadId } = body;
 
-    if (!email || !businessName) {
+    if (!email || !fullName) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Email-only mode: load stored report from DB and send it, no re-audit
+    if (!emailOnly) {
+      const captchaValid = await verifyRecaptcha(recaptchaToken ?? '');
+      if (!captchaValid) {
+        return new Response(JSON.stringify({ error: 'Bot verification failed. Please try again.' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     if (emailOnly && leadId) {
       const { data: lead, error: leadErr } = await supabase
         .from('seo_audit_leads')
@@ -509,7 +542,7 @@ Deno.serve(async (req: Request) => {
         });
       }
 
-      const emailed = await sendReportEmail(businessName, email, lead.audit_report as AuditReport);
+      const emailed = await sendReportEmail(fullName, email, lead.audit_report as AuditReport);
       if (emailed) {
         await supabase.from('seo_audit_leads').update({ report_emailed: true }).eq('id', leadId);
       }
@@ -546,7 +579,7 @@ Deno.serve(async (req: Request) => {
       const { data: newLead } = await supabase
         .from('seo_audit_leads')
         .insert({
-          business_name: businessName,
+          full_name: fullName,
           email,
           website_url: normalizedUrl,
           audit_report: cachedReport,
@@ -555,11 +588,11 @@ Deno.serve(async (req: Request) => {
         .select()
         .single();
 
-      EdgeRuntime.waitUntil(sendTeamNotification(businessName, email, normalizedUrl, cachedReport.seoScore));
+      EdgeRuntime.waitUntil(sendTeamNotification(fullName, email, normalizedUrl, cachedReport.seoScore));
 
       let reportEmailed = false;
       if (sendEmail && newLead) {
-        reportEmailed = await sendReportEmail(businessName, email, cachedReport);
+        reportEmailed = await sendReportEmail(fullName, email, cachedReport);
         if (reportEmailed) {
           await supabase.from('seo_audit_leads').update({ report_emailed: true }).eq('id', newLead.id);
         }
@@ -588,13 +621,13 @@ Deno.serve(async (req: Request) => {
     };
 
     const pageSpeed = await fetchPageSpeed(finalUrl);
-    const aiInsights = await generateAIInsights(seoData, pageSpeed, finalUrl, businessName);
+    const aiInsights = await generateAIInsights(seoData, pageSpeed, finalUrl, fullName);
     const report = buildReport(seoData, pageSpeed, finalUrl, aiInsights);
 
     const { data: lead, error: dbError } = await supabase
       .from('seo_audit_leads')
       .insert({
-        business_name: businessName,
+        full_name: fullName,
         email,
         website_url: normalizedUrl,
         audit_report: report,
@@ -607,11 +640,11 @@ Deno.serve(async (req: Request) => {
       console.error('DB error:', dbError);
     }
 
-    EdgeRuntime.waitUntil(sendTeamNotification(businessName, email, normalizedUrl, report.seoScore));
+    EdgeRuntime.waitUntil(sendTeamNotification(fullName, email, normalizedUrl, report.seoScore));
 
     let reportEmailed = false;
     if (sendEmail && lead) {
-      reportEmailed = await sendReportEmail(businessName, email, report);
+      reportEmailed = await sendReportEmail(fullName, email, report);
       if (reportEmailed) {
         await supabase.from('seo_audit_leads').update({ report_emailed: true }).eq('id', lead.id);
       }

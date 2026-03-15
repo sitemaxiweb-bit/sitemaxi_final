@@ -12,11 +12,11 @@ export function FreeSEOAuditPage() {
   const [report, setReport] = useState<AuditReportData | null>(null);
   const [leadId, setLeadId] = useState<string>('');
   const [userEmail, setUserEmail] = useState('');
-  const [businessName, setBusinessName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [websiteUrl, setWebsiteUrl] = useState('');
 
-  async function handleSubmit(url: string, name: string, email: string) {
-    setBusinessName(name);
+  async function handleSubmit(url: string, name: string, email: string, recaptchaToken: string) {
+    setFullName(name);
     setUserEmail(email);
     setWebsiteUrl(url);
     setPageState('loading');
@@ -31,7 +31,7 @@ export function FreeSEOAuditPage() {
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ websiteUrl: url, businessName: name, email }),
+        body: JSON.stringify({ websiteUrl: url, fullName: name, email, recaptchaToken }),
       });
 
       const data = await response.json();
@@ -66,7 +66,7 @@ export function FreeSEOAuditPage() {
         body: JSON.stringify({
           emailOnly: true,
           leadId,
-          businessName,
+          fullName,
           email: userEmail,
         }),
       });
@@ -88,7 +88,7 @@ export function FreeSEOAuditPage() {
         {pageState === 'results' && report && (
           <AuditReport
             report={report}
-            businessName={businessName}
+            businessName={fullName}
             email={userEmail}
             leadId={leadId}
             onEmailReport={handleEmailReport}
