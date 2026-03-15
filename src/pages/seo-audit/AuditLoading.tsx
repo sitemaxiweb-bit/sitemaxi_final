@@ -46,16 +46,21 @@ export function AuditLoading({ websiteUrl: _ }: AuditLoadingProps) {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4 py-20">
       <div className="w-full max-w-lg text-center">
-        <div className="relative w-24 h-24 mx-auto mb-8">
-          <div className="absolute inset-0 border-4 border-gray-200 rounded-full" />
-          <div
-            className="absolute inset-0 border-4 border-[#1D4ED8] rounded-full transition-all duration-1000"
-            style={{
-              clipPath: `polygon(50% 50%, 50% 0%, ${50 + 50 * Math.sin(2 * Math.PI * progress / 100)}% ${50 - 50 * Math.cos(2 * Math.PI * progress / 100)}%, 50% 50%)`,
-            }}
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-2xl font-black text-[#111111]">{progress}%</span>
+        <div className="flex flex-col items-center mb-8">
+          <div className="generating-loader-wrapper">
+            <div className="generating-loader-text">
+              <span className="generating-loader-letter">G</span>
+              <span className="generating-loader-letter">e</span>
+              <span className="generating-loader-letter">n</span>
+              <span className="generating-loader-letter">e</span>
+              <span className="generating-loader-letter">r</span>
+              <span className="generating-loader-letter">a</span>
+              <span className="generating-loader-letter">t</span>
+              <span className="generating-loader-letter">i</span>
+              <span className="generating-loader-letter">n</span>
+              <span className="generating-loader-letter">g</span>
+            </div>
+            <div className="generating-loader-bar"></div>
           </div>
         </div>
 
