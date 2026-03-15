@@ -229,24 +229,31 @@ function ServicesSection() {
             <ScrollAnimateWrapper key={index} animation="fade-up" delay={index % 3 === 1 ? 100 : index % 3 === 2 ? 200 : 0}>
               <Link
                 to={service.path}
-                className="group block bg-white rounded-2xl p-8 border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 h-full"
+                className="group relative flex flex-col justify-between overflow-hidden bg-white rounded-2xl border border-gray-100 h-full [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] hover:[box-shadow:0_0_0_1px_rgba(0,0,0,.06),0_4px_12px_rgba(0,0,0,.08),0_24px_48px_rgba(0,0,0,.08)] transition-shadow duration-300"
               >
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ backgroundColor: service.bg }}
-                >
-                  <service.icon className="w-7 h-7" style={{ color: service.color }} />
+                <div className="pointer-events-none z-10 flex flex-col gap-1 p-8 transition-all duration-300 group-hover:-translate-y-8">
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 origin-left transform-gpu transition-all duration-300 group-hover:scale-75"
+                    style={{ backgroundColor: service.bg }}
+                  >
+                    <service.icon className="w-7 h-7" style={{ color: service.color }} />
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-xl font-bold text-[#111111]">{service.name}</h3>
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: service.bg, color: service.color }}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <p className="text-[#6B7280] leading-relaxed">{service.description}</p>
                 </div>
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-xl font-bold text-[#111111]">{service.name}</h3>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: service.bg, color: service.color }}>
-                    {service.label}
-                  </span>
+
+                <div className="pointer-events-none absolute bottom-0 flex w-full translate-y-10 flex-row items-center p-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="pointer-events-auto flex items-center gap-2 text-sm font-semibold" style={{ color: service.color }}>
+                    Learn more <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
-                <p className="text-[#6B7280] leading-relaxed mb-5">{service.description}</p>
-                <div className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-200" style={{ color: service.color }}>
-                  Learn more <ArrowRight className="w-4 h-4" />
-                </div>
+
+                <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.02]" />
               </Link>
             </ScrollAnimateWrapper>
           ))}
