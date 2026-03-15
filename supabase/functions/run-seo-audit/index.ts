@@ -529,6 +529,48 @@ Deno.serve(async (req: Request) => {
 
     const normalizedUrl = websiteUrl.startsWith('http') ? websiteUrl : `https://${websiteUrl}`;
 
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data: cachedLead } = await supabase
+      .from('seo_audit_leads')
+      .select('id, audit_report')
+      .eq('website_url', normalizedUrl)
+      .not('audit_report', 'is', null)
+      .gte('created_at', oneDayAgo)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (cachedLead?.audit_report) {
+      const cachedReport = cachedLead.audit_report as AuditReport;
+
+      const { data: newLead } = await supabase
+        .from('seo_audit_leads')
+        .insert({
+          business_name: businessName,
+          email,
+          website_url: normalizedUrl,
+          audit_report: cachedReport,
+          report_emailed: false,
+        })
+        .select()
+        .single();
+
+      EdgeRuntime.waitUntil(sendTeamNotification(businessName, email, normalizedUrl, cachedReport.seoScore));
+
+      let reportEmailed = false;
+      if (sendEmail && newLead) {
+        reportEmailed = await sendReportEmail(businessName, email, cachedReport);
+        if (reportEmailed) {
+          await supabase.from('seo_audit_leads').update({ report_emailed: true }).eq('id', newLead.id);
+        }
+      }
+
+      return new Response(JSON.stringify({ success: true, report: cachedReport, leadId: newLead?.id, reportEmailed }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     let html = '';
     let finalUrl = normalizedUrl;
     try {
