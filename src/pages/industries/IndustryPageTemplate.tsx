@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Search, ChevronDown, ChevronUp, Star } from 'lucide-react';
+import { CheckCircle, ArrowRight, Search, ChevronDown, ChevronUp } from 'lucide-react';
 import { ScrollAnimateWrapper } from '../../components/ScrollAnimateWrapper';
 import { SEOHead } from '../../components/SEOHead';
 import { useState } from 'react';
@@ -246,39 +246,6 @@ export function IndustryPageTemplate({ data }: { data: IndustryPageData }) {
         </div>
       </section>
 
-      {data.results.stats.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollAnimateWrapper animation="fade-up">
-              <div className="bg-gradient-to-br from-[#1D4ED8] to-[#1E3A8A] rounded-3xl p-10 md:p-14 text-center text-white">
-                <span className="text-blue-200 font-semibold text-sm uppercase tracking-widest">Proven Results</span>
-                <h2 className="text-3xl md:text-4xl font-bold mt-3 mb-4">What our clients achieve</h2>
-                <p className="text-blue-100 mb-12 max-w-xl mx-auto">Real results from real businesses just like yours.</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-                  {data.results.stats.map((stat, i) => (
-                    <div key={i}>
-                      <div className="text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
-                      <div className="text-blue-200 text-sm font-medium">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-                {data.results.testimonial && (
-                  <div className="bg-white/10 rounded-2xl p-8 max-w-2xl mx-auto">
-                    <div className="flex justify-center mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-white italic text-lg mb-4">"{data.results.testimonial.quote}"</p>
-                    <p className="text-blue-200 font-semibold">{data.results.testimonial.author}</p>
-                    <p className="text-blue-300 text-sm">{data.results.testimonial.company}</p>
-                  </div>
-                )}
-              </div>
-            </ScrollAnimateWrapper>
-          </div>
-        </section>
-      )}
 
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
