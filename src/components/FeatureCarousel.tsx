@@ -26,7 +26,7 @@ const FEATURES = [
     id: 'ads',
     label: 'Paid Advertising',
     icon: MousePointerClick,
-    image: 'https://images.unsplash.com/photo-1551288049-bbda38a10ad5?q=80&w=1200',
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200',
     description: 'Google Ads and paid social campaigns managed by certified professionals who optimize for ROI.',
   },
   {
