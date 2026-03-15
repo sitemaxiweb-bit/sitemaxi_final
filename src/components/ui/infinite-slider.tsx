@@ -1,7 +1,6 @@
 import { cn } from '../../lib/cn';
 import { useMotionValue, animate, motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import useMeasure from 'react-use-measure';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 type InfiniteSliderProps = {
   children: React.ReactNode;
@@ -30,23 +29,38 @@ export function InfiniteSlider({
   const effectiveDurationOnHover = speedOnHover ? speedOnHover : durationOnHover;
 
   const [currentDuration, setCurrentDuration] = useState(effectiveDuration);
-  const [ref, { width, height }] = useMeasure();
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const innerRef = useRef<HTMLDivElement>(null);
   const translation = useMotionValue(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [key, setKey] = useState(0);
 
+  const measureRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return;
+    (innerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setSize({ width: entry.contentRect.width, height: entry.contentRect.height });
+      }
+    });
+    ro.observe(node);
+  }, []);
+
+  const { width, height } = size;
+
   useEffect(() => {
     let controls: { stop: () => void } | undefined;
-    const size = direction === 'horizontal' ? width : height;
-    const contentSize = size + gap;
+    const s = direction === 'horizontal' ? width : height;
+    const contentSize = s + gap;
     const from = reverse ? -contentSize / 2 : 0;
     const to = reverse ? 0 : -contentSize / 2;
+
+    if (contentSize <= gap) return;
 
     if (isTransitioning) {
       controls = animate(translation, [translation.get(), to], {
         ease: 'linear',
-        duration:
-          currentDuration * Math.abs((translation.get() - to) / contentSize),
+        duration: currentDuration * Math.abs((translation.get() - to) / contentSize),
         onComplete: () => {
           setIsTransitioning(false);
           setKey((prevKey) => prevKey + 1);
@@ -86,13 +100,11 @@ export function InfiniteSlider({
       <motion.div
         className="flex w-max"
         style={{
-          ...(direction === 'horizontal'
-            ? { x: translation }
-            : { y: translation }),
+          ...(direction === 'horizontal' ? { x: translation } : { y: translation }),
           gap: `${gap}px`,
           flexDirection: direction === 'horizontal' ? 'row' : 'column',
         }}
-        ref={ref}
+        ref={measureRef}
         {...hoverProps}
       >
         {children}
