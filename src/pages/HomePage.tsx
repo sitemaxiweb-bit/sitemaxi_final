@@ -283,12 +283,6 @@ function ServicesSection() {
               >
                 <CardGrid color={service.color} index={index} />
                 <div className="pointer-events-none z-10 flex flex-col gap-1 p-8 transition-all duration-300 group-hover:-translate-y-8">
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 origin-left transform-gpu transition-all duration-300 group-hover:scale-75"
-                    style={{ backgroundColor: service.bg }}
-                  >
-                    <service.icon className="w-7 h-7" style={{ color: service.color }} />
-                  </div>
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-xl font-bold text-[#111111]">{service.name}</h3>
                     <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: service.bg, color: service.color }}>
