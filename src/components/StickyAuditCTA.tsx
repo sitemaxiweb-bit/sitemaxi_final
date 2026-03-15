@@ -22,28 +22,28 @@ export function StickyAuditCTA() {
 
   return (
     <div
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-500 w-full max-w-sm px-4 ${
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-500 px-4 ${
         visible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}
     >
-      <div className="bg-[#0F172A] text-white rounded-2xl shadow-2xl shadow-black/30 px-5 py-4 flex items-center gap-4 border border-white/10">
-        <div className="w-9 h-9 bg-[#1D4ED8] rounded-xl flex items-center justify-center flex-shrink-0">
-          <Zap className="w-4 h-4 text-white" />
+      <div className="bg-[#0F172A] text-white rounded-2xl shadow-2xl shadow-black/30 px-4 py-3 flex items-center gap-3 border border-white/10 whitespace-nowrap">
+        <div className="w-10 h-10 bg-[#1D4ED8] rounded-xl flex items-center justify-center flex-shrink-0">
+          <Zap className="w-5 h-5 text-white" />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-xs text-gray-400 font-medium">Free for a limited time</p>
-          <p className="text-sm font-bold leading-tight truncate">AI Marketing Audit</p>
+        <div className="flex-shrink-0">
+          <p className="text-xs text-gray-400 font-medium leading-tight">Free for a limited time</p>
+          <p className="text-sm font-bold leading-tight">AI Marketing Audit</p>
         </div>
         <Link
           to="/free-seo-audit"
-          className="flex-shrink-0 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors flex items-center gap-1.5"
+          className="flex-shrink-0 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors flex items-center gap-1.5 ml-1"
         >
           <Search className="w-3.5 h-3.5" />
           Run Free Audit
         </Link>
         <button
           onClick={() => setDismissed(true)}
-          className="flex-shrink-0 text-gray-500 hover:text-gray-300 transition-colors"
+          className="flex-shrink-0 text-gray-500 hover:text-gray-300 transition-colors ml-1"
           aria-label="Dismiss"
         >
           <X className="w-4 h-4" />
