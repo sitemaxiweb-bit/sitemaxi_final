@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { MenuItem, Menu as NavMenu } from './ui/navbar-menu';
 
 const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
 
@@ -57,21 +58,16 @@ const services = [
 
 export function Header() {
   const location = useLocation();
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const resourcesRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (servicesRef.current && !servicesRef.current.contains(event.target as Node)) {
-        setIsServicesOpen(false);
-      }
-      if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) {
-        setIsResourcesOpen(false);
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setActive(null);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -97,15 +93,14 @@ export function Header() {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsServicesOpen(false);
-    setIsResourcesOpen(false);
+    setActive(null);
   }, [location.pathname]);
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <header className={`bg-white sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'shadow-md border-b border-gray-100' : 'border-b border-gray-200'}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center flex-shrink-0">
           <img
             src="/SiteMaxi Professional Websites.png"
@@ -114,25 +109,17 @@ export function Header() {
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
-          <Link
-            to="/"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
-          >
-            Home
-          </Link>
-
-          <div className="relative" ref={servicesRef}>
-            <button
-              onClick={() => { setIsServicesOpen(!isServicesOpen); setIsResourcesOpen(false); }}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${isServicesOpen ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+        <div className="hidden lg:flex items-center" ref={navRef}>
+          <NavMenu setActive={setActive}>
+            <Link
+              to="/"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isActive('/') ? 'text-[#1D4ED8]' : 'text-[#374151] hover:text-[#1D4ED8]'}`}
             >
-              Our Services
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
-            </button>
+              Home
+            </Link>
 
-            {isServicesOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[560px] bg-white border border-gray-200 rounded-2xl shadow-2xl p-4 z-50">
+            <MenuItem setActive={setActive} active={active} item="Our Services">
+              <div className="w-[520px]">
                 <div className="grid grid-cols-2 gap-2">
                   {services.map((service) => (
                     <Link
@@ -160,29 +147,19 @@ export function Header() {
                   </Link>
                 </div>
               </div>
-            )}
-          </div>
+            </MenuItem>
 
-          <Link
-            to="/industries"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/industries') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
-          >
-            Industries
-          </Link>
-
-          <div className="relative" ref={resourcesRef}>
-            <button
-              onClick={() => { setIsResourcesOpen(!isResourcesOpen); setIsServicesOpen(false); }}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${isResourcesOpen ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
+            <Link
+              to="/industries"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isActive('/industries') ? 'text-[#1D4ED8]' : 'text-[#374151] hover:text-[#1D4ED8]'}`}
             >
-              Resources
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isResourcesOpen ? 'rotate-180' : ''}`} />
-            </button>
+              Industries
+            </Link>
 
-            {isResourcesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-2xl shadow-2xl py-2 z-50">
-                <Link to="/resources-hub" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+            <MenuItem setActive={setActive} active={active} item="Resources">
+              <div className="flex flex-col space-y-1 min-w-[220px]">
+                <Link to="/resources-hub" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
                     <Wrench className="w-4 h-4 text-[#1D4ED8]" />
                   </div>
                   <div>
@@ -190,8 +167,8 @@ export function Header() {
                     <div className="text-xs text-[#6B7280]">Guides, checklists & templates</div>
                   </div>
                 </Link>
-                <Link to="/free-seo-audit" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                <Link to="/free-seo-audit" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0">
                     <Search className="w-4 h-4 text-[#059669]" />
                   </div>
                   <div>
@@ -199,8 +176,8 @@ export function Header() {
                     <div className="text-xs text-[#6B7280]">Instant website analysis</div>
                   </div>
                 </Link>
-                <Link to="/blog" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+                <Link to="/blog" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
                     <TrendingUp className="w-4 h-4 text-[#D97706]" />
                   </div>
                   <div>
@@ -208,8 +185,8 @@ export function Header() {
                     <div className="text-xs text-[#6B7280]">Marketing insights & tips</div>
                   </div>
                 </Link>
-                <Link to="/resources" className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-100 mt-1">
-                  <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center">
+                <Link to="/resources" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors border-t border-gray-100 mt-1 pt-3">
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0">
                     <Target className="w-4 h-4 text-[#6B7280]" />
                   </div>
                   <div>
@@ -218,35 +195,35 @@ export function Header() {
                   </div>
                 </Link>
               </div>
-            )}
-          </div>
+            </MenuItem>
 
-          <Link
-            to="/blog"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/blog') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
-          >
-            Blog
-          </Link>
+            <Link
+              to="/blog"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isActive('/blog') ? 'text-[#1D4ED8]' : 'text-[#374151] hover:text-[#1D4ED8]'}`}
+            >
+              Blog
+            </Link>
 
-          <Link
-            to="/about"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/about') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
-          >
-            About
-          </Link>
+            <Link
+              to="/about"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isActive('/about') ? 'text-[#1D4ED8]' : 'text-[#374151] hover:text-[#1D4ED8]'}`}
+            >
+              About
+            </Link>
 
-          <Link
-            to="/contact"
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/contact') ? 'text-[#1D4ED8] bg-blue-50' : 'text-[#374151] hover:text-[#1D4ED8] hover:bg-gray-50'}`}
-          >
-            Contact
-          </Link>
-        </nav>
+            <Link
+              to="/contact"
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${isActive('/contact') ? 'text-[#1D4ED8]' : 'text-[#374151] hover:text-[#1D4ED8]'}`}
+            >
+              Contact
+            </Link>
+          </NavMenu>
+        </div>
 
         <div className="hidden lg:flex items-center gap-3">
           <Link
             to="/free-seo-audit"
-            className="bg-[#1D4ED8] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#1E40AF] transition-colors"
+            className="bg-[#1D4ED8] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[#1E40AF] transition-colors"
           >
             Free Audit
           </Link>
@@ -254,7 +231,7 @@ export function Header() {
             href={CALENDAR_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-[#1D4ED8] text-[#1D4ED8] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-50 transition-colors"
+            className="border border-[#1D4ED8] text-[#1D4ED8] px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-50 transition-colors"
           >
             Book Strategy Call
           </a>
@@ -326,7 +303,7 @@ export function Header() {
             <div className="mt-6 flex flex-col gap-3">
               <Link
                 to="/free-seo-audit"
-                className="bg-[#1D4ED8] text-white px-6 py-3.5 rounded-lg font-semibold text-center"
+                className="bg-[#1D4ED8] text-white px-6 py-3.5 rounded-xl font-semibold text-center"
               >
                 Free Audit
               </Link>
@@ -334,7 +311,7 @@ export function Header() {
                 href={CALENDAR_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-[#1D4ED8] text-[#1D4ED8] px-6 py-3.5 rounded-lg font-semibold text-center"
+                className="border border-[#1D4ED8] text-[#1D4ED8] px-6 py-3.5 rounded-xl font-semibold text-center"
               >
                 Book Strategy Call
               </a>
