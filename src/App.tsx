@@ -45,6 +45,20 @@ import AdminClustersPage from './pages/AdminClustersPage';
 import AdminClusterEditorPage from './pages/AdminClusterEditorPage';
 import { LocationsPage, CityPage, CityServicePage } from './pages/locations';
 import {
+  LocalSEOChecklistPage,
+  GoogleBusinessProfileGuidePage,
+  EcommerceSEOChecklistPage,
+  GoogleAdsStarterGuidePage,
+  LandingPageChecklistPage,
+  SmallBusinessPlaybookPage,
+  KeywordResearchGuidePage,
+  MetaAdsGuidePage,
+  WebsiteConversionTipsPage,
+  EcommerceGrowthGuidePage,
+  ContentCalendarTemplatePage,
+  SEOAuditChecklistPage,
+} from './pages/resources';
+import {
   DentistsPage,
   LawyersPage,
   ContractorsPage,
@@ -177,6 +191,18 @@ function App() {
               <Route path="/industries/ecommerce" element={<EcommercePage />} />
               <Route path="/resources" element={<ResourcesPage />} />
               <Route path="/resources-hub" element={<ResourcesHubPage />} />
+              <Route path="/resources/local-seo-checklist" element={<LocalSEOChecklistPage />} />
+              <Route path="/resources/google-business-profile-guide" element={<GoogleBusinessProfileGuidePage />} />
+              <Route path="/resources/ecommerce-seo-checklist" element={<EcommerceSEOChecklistPage />} />
+              <Route path="/resources/google-ads-starter-guide" element={<GoogleAdsStarterGuidePage />} />
+              <Route path="/resources/landing-page-checklist" element={<LandingPageChecklistPage />} />
+              <Route path="/resources/small-business-playbook" element={<SmallBusinessPlaybookPage />} />
+              <Route path="/resources/keyword-research-guide" element={<KeywordResearchGuidePage />} />
+              <Route path="/resources/meta-ads-guide" element={<MetaAdsGuidePage />} />
+              <Route path="/resources/website-conversion-tips" element={<WebsiteConversionTipsPage />} />
+              <Route path="/resources/ecommerce-growth-guide" element={<EcommerceGrowthGuidePage />} />
+              <Route path="/resources/content-calendar-template" element={<ContentCalendarTemplatePage />} />
+              <Route path="/resources/seo-audit-checklist" element={<SEOAuditChecklistPage />} />
               <Route path="/locations" element={<LocationsPage />} />
               <Route path="/locations/:city" element={<CityPage />} />
               <Route path="/locations/:city/:service" element={<CityServicePage />} />
