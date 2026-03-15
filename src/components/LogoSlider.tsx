@@ -29,12 +29,12 @@ const logos = [
 
 export function LogoSlider() {
   return (
-    <section className="bg-gray-50 border-y border-gray-100 py-16">
-      <div className="max-w-3xl mx-auto px-6 text-center mb-10">
+    <section className="bg-gray-50 border-y border-gray-100 py-8">
+      <div className="max-w-3xl mx-auto px-6 text-center mb-6">
         <h2 className="text-base font-semibold text-[#6B7280] tracking-wide uppercase">
           Trusted by local businesses and e-commerce brands across Canada
         </h2>
-        <div className="mx-auto mt-5 h-px max-w-sm bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+        <div className="mx-auto mt-4 h-px max-w-sm bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
       </div>
 
       <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
@@ -56,7 +56,7 @@ export function LogoSlider() {
         </InfiniteSlider>
       </div>
 
-      <div className="mx-auto mt-10 h-px max-w-2xl bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="mx-auto mt-6 h-px max-w-2xl bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
     </section>
   );
 }
