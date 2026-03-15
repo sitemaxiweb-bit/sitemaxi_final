@@ -120,7 +120,7 @@ function HeroSection() {
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <div className="text-sm font-semibold text-[#111111]">5-star agency</div>
+              <div className="text-sm font-semibold text-[#111111]">4.9-star agency</div>
               <div className="text-xs text-[#6B7280]">Trusted by 100+ businesses</div>
             </div>
           </div>
