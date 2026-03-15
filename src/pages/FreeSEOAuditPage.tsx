@@ -13,10 +13,12 @@ export function FreeSEOAuditPage() {
   const [leadId, setLeadId] = useState<string>('');
   const [userEmail, setUserEmail] = useState('');
   const [businessName, setBusinessName] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
 
-  async function handleSubmit(websiteUrl: string, name: string, email: string) {
+  async function handleSubmit(url: string, name: string, email: string) {
     setBusinessName(name);
     setUserEmail(email);
+    setWebsiteUrl(url);
     setPageState('loading');
 
     try {
@@ -29,7 +31,7 @@ export function FreeSEOAuditPage() {
           'Authorization': `Bearer ${supabaseKey}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ websiteUrl, businessName: name, email }),
+        body: JSON.stringify({ websiteUrl: url, businessName: name, email }),
       });
 
       const data = await response.json();
@@ -49,7 +51,7 @@ export function FreeSEOAuditPage() {
   }
 
   async function handleEmailReport() {
-    if (!report || !userEmail) return;
+    if (!report || !userEmail || !leadId) return;
 
     try {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -62,10 +64,10 @@ export function FreeSEOAuditPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          websiteUrl: report.auditedUrl,
+          emailOnly: true,
+          leadId,
           businessName,
           email: userEmail,
-          sendEmail: true,
         }),
       });
     } catch (err) {
@@ -82,7 +84,7 @@ export function FreeSEOAuditPage() {
       />
       <div className="min-h-screen bg-white">
         {pageState === 'form' && <AuditForm onSubmit={handleSubmit} />}
-        {pageState === 'loading' && <AuditLoading websiteUrl={report?.auditedUrl || ''} />}
+        {pageState === 'loading' && <AuditLoading websiteUrl={websiteUrl} />}
         {pageState === 'results' && report && (
           <AuditReport
             report={report}

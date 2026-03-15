@@ -7,10 +7,12 @@ const corsHeaders = {
 };
 
 interface AuditRequest {
-  websiteUrl: string;
+  websiteUrl?: string;
   businessName: string;
   email: string;
   sendEmail?: boolean;
+  emailOnly?: boolean;
+  leadId?: string;
 }
 
 interface SEOIssue {
@@ -483,9 +485,42 @@ Deno.serve(async (req: Request) => {
     );
 
     const body: AuditRequest = await req.json();
-    const { websiteUrl, businessName, email, sendEmail = false } = body;
+    const { websiteUrl, businessName, email, sendEmail = false, emailOnly = false, leadId } = body;
 
-    if (!websiteUrl || !email || !businessName) {
+    if (!email || !businessName) {
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Email-only mode: load stored report from DB and send it, no re-audit
+    if (emailOnly && leadId) {
+      const { data: lead, error: leadErr } = await supabase
+        .from('seo_audit_leads')
+        .select('audit_report')
+        .eq('id', leadId)
+        .maybeSingle();
+
+      if (leadErr || !lead?.audit_report) {
+        return new Response(JSON.stringify({ error: 'Lead not found' }), {
+          status: 404,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const emailed = await sendReportEmail(businessName, email, lead.audit_report as AuditReport);
+      if (emailed) {
+        await supabase.from('seo_audit_leads').update({ report_emailed: true }).eq('id', leadId);
+      }
+
+      return new Response(JSON.stringify({ success: true, reportEmailed: emailed }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (!websiteUrl) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
