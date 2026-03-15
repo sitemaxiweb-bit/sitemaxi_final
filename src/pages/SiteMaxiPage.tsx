@@ -1,5 +1,6 @@
 import { Check, Palette, Smartphone, Zap, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
+import { SEOHead } from '../components/SEOHead';
 
 export function SiteMaxiPage() {
   const faqs = [
@@ -27,6 +28,11 @@ export function SiteMaxiPage() {
 
   return (
     <>
+      <SEOHead
+        title="SiteMaxi Web Design — Professional Websites Canada | Built to Convert"
+        description="Get a clean, fast, and conversion-focused website with SiteMaxi. We design and build professional websites for Canadian businesses — from refreshes to full custom builds and e-commerce."
+        keywords="web design Canada, website design agency, professional website, e-commerce website Canada, custom web design, website redesign"
+      />
       <SiteMaxiHero />
       <PackagesSection />
       <CTASection />

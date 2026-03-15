@@ -1,5 +1,6 @@
 import { Check, Share2, Users, Calendar, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
+import { SEOHead } from '../components/SEOHead';
 
 export function SocialMaxiPage() {
   const faqs = [
@@ -27,6 +28,11 @@ export function SocialMaxiPage() {
 
   return (
     <>
+      <SEOHead
+        title="SocialMaxi — Social Media Management Canada | Content & Engagement"
+        description="Grow your brand with SocialMaxi. SiteMaxi manages your Facebook, Instagram, LinkedIn, and TikTok with strategic content creation, scheduling, and community engagement."
+        keywords="social media management Canada, social media marketing, Instagram management, Facebook marketing, TikTok marketing, social media agency"
+      />
       <SocialMaxiHero />
       <PackagesSection />
       <CTASection />

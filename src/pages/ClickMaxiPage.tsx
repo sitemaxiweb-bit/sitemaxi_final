@@ -1,5 +1,6 @@
 import { Check, MousePointerClick, Target, TrendingUp, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
+import { SEOHead } from '../components/SEOHead';
 
 export function ClickMaxiPage() {
   const faqs = [
@@ -27,6 +28,11 @@ export function ClickMaxiPage() {
 
   return (
     <>
+      <SEOHead
+        title="ClickMaxi — Google Ads Management Canada | PPC Campaigns"
+        description="Capture high-intent customers with ClickMaxi. SiteMaxi manages Google Search, Display, and Shopping campaigns that drive qualified leads for Canadian businesses."
+        keywords="Google Ads management Canada, PPC management, Google Ads agency, pay per click Canada, Google Shopping ads, search ads management"
+      />
       <ClickMaxiHero />
       <PackagesSection />
       <CTASection />

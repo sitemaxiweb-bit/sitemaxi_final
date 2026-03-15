@@ -1,8 +1,14 @@
 import { Target, Users, Award, TrendingUp, Lightbulb, Heart, Linkedin, Mail } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
 
 export function AboutPage() {
   return (
     <>
+      <SEOHead
+        title="About SiteMaxi — Canadian Digital Marketing Agency"
+        description="Learn about SiteMaxi, a Canadian digital marketing agency helping local businesses and e-commerce brands grow with Local SEO, Google Ads, social media, and web design."
+        keywords="about SiteMaxi, Canadian digital marketing agency, digital marketing team, local SEO experts Canada, marketing agency about us"
+      />
       <AboutHero />
       <OurStory />
       <OurValues />
