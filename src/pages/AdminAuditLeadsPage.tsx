@@ -100,8 +100,8 @@ export function AdminAuditLeadsPage() {
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-[#111111]">SEO Audit Leads</h1>
-            <p className="text-[#666666] mt-1">Leads captured from the Free AI Marketing Audit tool</p>
+            <h1 className="text-3xl font-bold text-[#111111]">SEO Audit Sales</h1>
+            <p className="text-[#666666] mt-1">Sales captured from the Free AI Marketing Audit tool</p>
           </div>
           <button
             onClick={loadLeads}
@@ -114,7 +114,7 @@ export function AdminAuditLeadsPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Total Leads', value: leads.length, icon: <Building2 className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50 border-blue-100' },
+            { label: 'Total Sales', value: leads.length, icon: <Building2 className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50 border-blue-100' },
             { label: 'Avg SEO Score', value: avgScore ? `${avgScore}/100` : 'N/A', icon: <TrendingUp className="w-5 h-5" />, color: 'text-emerald-600 bg-emerald-50 border-emerald-100' },
             { label: 'Reports Emailed', value: leads.filter(l => l.report_emailed).length, icon: <Mail className="w-5 h-5" />, color: 'text-orange-600 bg-orange-50 border-orange-100' },
             { label: 'This Week', value: leads.filter(l => new Date(l.created_at) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length, icon: <Calendar className="w-5 h-5" />, color: 'text-rose-600 bg-rose-50 border-rose-100' },
@@ -150,8 +150,8 @@ export function AdminAuditLeadsPage() {
           ) : filtered.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
               <BarChart3 className="w-10 h-10 mx-auto mb-3 opacity-30" />
-              <p className="font-medium">No leads found</p>
-              <p className="text-sm mt-1">Leads will appear here when users complete the free audit</p>
+              <p className="font-medium">No sales found</p>
+              <p className="text-sm mt-1">Sales will appear here when users complete the free audit</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-100">

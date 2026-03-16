@@ -58,21 +58,28 @@ export function AuditForm({ onSubmit }: AuditFormProps) {
 
     try {
       let token = '';
-      if (siteKey && window.grecaptcha) {
-        token = await new Promise<string>((resolve, reject) => {
-          window.grecaptcha.ready(async () => {
-            try {
-              const t = await window.grecaptcha.execute(siteKey, { action: 'submit_audit' });
-              resolve(t);
-            } catch (err) {
-              reject(err);
+      if (siteKey) {
+        token = await new Promise<string>((resolve) => {
+          const attempt = () => {
+            if (window.grecaptcha) {
+              window.grecaptcha.ready(async () => {
+                try {
+                  const t = await window.grecaptcha.execute(siteKey, { action: 'submit_audit' });
+                  resolve(t);
+                } catch {
+                  resolve('');
+                }
+              });
+            } else {
+              setTimeout(attempt, 300);
             }
-          });
+          };
+          attempt();
         });
       }
       onSubmit(websiteUrl.trim(), fullName.trim(), email.trim(), token);
     } catch {
-      setErrors({ general: 'Bot verification failed. Please try again.' });
+      setErrors({ general: 'Something went wrong. Please try again.' });
       setSubmitting(false);
     }
   }
