@@ -66,7 +66,7 @@ function WordCrawler() {
         lineHeight: 'inherit',
         height: '1em',
         position: 'relative',
-        top: '-0.05em',
+        top: '-0.12em',
       }}
     >
       <span
