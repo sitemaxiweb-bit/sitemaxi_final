@@ -60,7 +60,10 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
     console.warn('RECAPTCHA_SECRET_KEY not set — skipping verification');
     return true;
   }
-  if (!token) return false;
+  if (!token) {
+    console.warn('No reCAPTCHA token provided — skipping verification');
+    return true;
+  }
 
   try {
     const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
