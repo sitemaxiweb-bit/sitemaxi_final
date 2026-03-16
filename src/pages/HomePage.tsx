@@ -40,7 +40,7 @@ export function HomePage() {
   );
 }
 
-const CRAWL_WORDS = ['leads', 'Sales'];
+const CRAWL_WORDS = ['Leads', 'Sales'];
 
 function WordCrawler() {
   const [index, setIndex] = useState(0);
@@ -59,8 +59,15 @@ function WordCrawler() {
 
   return (
     <span
-      className="inline-block overflow-hidden align-bottom"
-      style={{ height: '1.1em', verticalAlign: 'baseline' }}
+      style={{
+        display: 'inline-block',
+        overflow: 'hidden',
+        verticalAlign: 'middle',
+        lineHeight: 'inherit',
+        height: '1em',
+        position: 'relative',
+        top: '-0.05em',
+      }}
     >
       <span
         key={index}
@@ -71,6 +78,7 @@ function WordCrawler() {
           transition: animating
             ? 'transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease'
             : 'none',
+          lineHeight: 1,
         }}
       >
         {CRAWL_WORDS[index]}
