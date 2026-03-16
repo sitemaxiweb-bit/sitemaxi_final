@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, useState, useEffect } from 'react';
 import {
   TrendingUp, Target, Share2, Zap, MousePointerClick, Palette,
   ArrowRight, CheckCircle, BarChart3, Globe, Wrench, Users, Star,
@@ -40,6 +40,45 @@ export function HomePage() {
   );
 }
 
+const CRAWL_WORDS = ['leads', 'Sales'];
+
+function WordCrawler() {
+  const [index, setIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimating(true);
+      setTimeout(() => {
+        setIndex(i => (i + 1) % CRAWL_WORDS.length);
+        setAnimating(false);
+      }, 400);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span
+      className="inline-block overflow-hidden align-bottom"
+      style={{ height: '1.1em', verticalAlign: 'baseline' }}
+    >
+      <span
+        key={index}
+        style={{
+          display: 'inline-block',
+          transform: animating ? 'translateY(-110%)' : 'translateY(0)',
+          opacity: animating ? 0 : 1,
+          transition: animating
+            ? 'transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease'
+            : 'none',
+        }}
+      >
+        {CRAWL_WORDS[index]}
+      </span>
+    </span>
+  );
+}
+
 function HeroSection() {
   return (
     <section className="bg-white py-20 md:py-28 overflow-hidden">
@@ -52,7 +91,7 @@ function HeroSection() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] mb-6 leading-[1.1]">
-              More leads. More growth.<br />
+              More <WordCrawler />. More growth.<br />
               <span className="text-[#1D4ED8]">More customers.</span>
             </h1>
 
