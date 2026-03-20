@@ -1,6 +1,7 @@
 import { Check, Search, TrendingUp, FileText, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
 import { SEOHead } from '../components/SEOHead';
+import { StructuredData } from '../components/StructuredData';
 
 export function SearchMaxiPage() {
   const faqs = [
@@ -32,6 +33,14 @@ export function SearchMaxiPage() {
         title="SearchMaxi — SEO Services Canada | Organic Search Rankings"
         description="Build long-term organic traffic with SearchMaxi. SiteMaxi's SEO service covers technical audits, content strategy, backlinks, and on-page optimization for Canadian businesses."
         keywords="SEO services Canada, organic search ranking, technical SEO, on-page SEO, SEO agency Canada, content SEO, backlink building"
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: 'Home', url: 'https://sitemaxi.com' },
+          { name: 'Services', url: 'https://sitemaxi.com/services' },
+          { name: 'SearchMaxi — SEO', url: 'https://sitemaxi.com/searchmaxi' },
+        ]}
       />
       <SearchMaxiHero />
       <PackagesSection />

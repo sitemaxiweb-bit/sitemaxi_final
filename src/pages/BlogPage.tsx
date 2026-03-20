@@ -4,6 +4,7 @@ import { Calendar, Clock, ArrowRight, Search, Tag } from 'lucide-react';
 import { getPublishedPosts } from '../lib/blogApi';
 import { BlogPost } from '../lib/supabase';
 import { ResponsiveImage } from '../components/ResponsiveImage';
+import { SEOHead } from '../components/SEOHead';
 
 export function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -40,6 +41,11 @@ export function BlogPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Digital Marketing Blog — Tips, Guides & Insights | SiteMaxi"
+        description="Explore SiteMaxi's blog for expert digital marketing advice, Local SEO tips, Google Ads guides, social media strategies, and actionable insights for Canadian businesses."
+        keywords="digital marketing blog, local SEO tips, google ads guide, social media marketing, SEO strategies canada"
+      />
       <section className="bg-gradient-to-br from-[#F3F4F6] to-[#F9FAFB] py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">

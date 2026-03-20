@@ -9,6 +9,7 @@ interface SEOHeadProps {
   ogType?: string;
   ogTitle?: string;
   ogDescription?: string;
+  noindex?: boolean;
   article?: {
     publishedTime?: string;
     modifiedTime?: string;
@@ -20,8 +21,8 @@ interface SEOHeadProps {
 const SITE_NAME = 'SiteMaxi';
 const SITE_URL = 'https://sitemaxi.com';
 const DEFAULT_DESCRIPTION =
-  'Grow your business with SiteMaxi\'s Local SEO, SEO, social media, and paid ads services. We help businesses show up on Google, attract more leads, and turn online traffic into real customers.';
-const DEFAULT_IMAGE = `${SITE_URL}/SiteMaxi Professional Websites.png`;
+  "Grow your business with SiteMaxi's Local SEO, SEO, social media, and paid ads services. We help businesses show up on Google, attract more leads, and turn online traffic into real customers.";
+const DEFAULT_IMAGE = `${SITE_URL}/sitemaxi-og-image.png`;
 
 export function SEOHead({
   title,
@@ -31,11 +32,15 @@ export function SEOHead({
   ogType = 'website',
   ogTitle,
   ogDescription,
+  noindex = false,
   article,
 }: SEOHeadProps) {
   const location = useLocation();
-  const currentUrl = `${SITE_URL}${location.pathname}`;
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - Digital Marketing Agency | Local SEO, SEO & Paid Ads`;
+  const normalizedPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/+$/, '');
+  const currentUrl = `${SITE_URL}${normalizedPath}`;
+  const fullTitle = title
+    ? `${title} | ${SITE_NAME}`
+    : `${SITE_NAME} - Digital Marketing Agency | Local SEO, SEO & Paid Ads`;
   const ogTitleFinal = ogTitle || fullTitle;
   const ogDescriptionFinal = ogDescription || description;
 
@@ -55,9 +60,21 @@ export function SEOHead({
       element.setAttribute('content', content);
     };
 
+    const removeMetaTag = (property: string, isName = false) => {
+      const attribute = isName ? 'name' : 'property';
+      const element = document.querySelector(`meta[${attribute}="${property}"]`);
+      if (element) element.remove();
+    };
+
     updateMetaTag('description', description, true);
     if (keywords) {
       updateMetaTag('keywords', keywords, true);
+    }
+
+    if (noindex) {
+      updateMetaTag('robots', 'noindex, nofollow', true);
+    } else {
+      removeMetaTag('robots', true);
     }
 
     updateMetaTag('og:title', ogTitleFinal);
@@ -99,7 +116,7 @@ export function SEOHead({
       document.head.appendChild(canonicalLink);
     }
     canonicalLink.href = currentUrl;
-  }, [fullTitle, description, keywords, ogImage, currentUrl, ogType, ogTitleFinal, ogDescriptionFinal, article]);
+  }, [fullTitle, description, keywords, ogImage, currentUrl, ogType, ogTitleFinal, ogDescriptionFinal, noindex, article]);
 
   return null;
 }

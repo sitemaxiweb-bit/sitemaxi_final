@@ -1,6 +1,7 @@
 import { Check, MapPin, Star, TrendingUp, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
 import { SEOHead } from '../components/SEOHead';
+import { StructuredData } from '../components/StructuredData';
 
 export function RankMaxiPage() {
   const faqs = [
@@ -32,6 +33,14 @@ export function RankMaxiPage() {
         title="RankMaxi — Local SEO Services Canada | Google Maps Ranking"
         description="Rank higher on Google Maps and local search with RankMaxi. SiteMaxi's local SEO service helps Canadian businesses dominate their local market and attract more customers."
         keywords="local SEO Canada, Google Maps ranking, Google Business Profile optimization, local search ranking, near me SEO, local SEO services"
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: 'Home', url: 'https://sitemaxi.com' },
+          { name: 'Services', url: 'https://sitemaxi.com/services' },
+          { name: 'RankMaxi — Local SEO', url: 'https://sitemaxi.com/rankmaxi' },
+        ]}
       />
       <RankMaxiHero />
       <PackagesSection />

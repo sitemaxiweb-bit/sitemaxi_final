@@ -45,6 +45,7 @@ import AdminKeywordImportPage from './pages/AdminKeywordImportPage';
 import AdminClustersPage from './pages/AdminClustersPage';
 import AdminClusterEditorPage from './pages/AdminClusterEditorPage';
 import { LocationsPage, CityPage, CityServicePage } from './pages/locations';
+import { NotFoundPage } from './pages/NotFoundPage';
 import {
   LocalSEOChecklistPage,
   GoogleBusinessProfileGuidePage,
@@ -134,6 +135,7 @@ function PublicLayout() {
         <Route path="/locations" element={<LocationsPage />} />
         <Route path="/locations/:city" element={<CityPage />} />
         <Route path="/locations/:city/:service" element={<CityServicePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
       {!isAuditPage && <StickyAuditCTA />}

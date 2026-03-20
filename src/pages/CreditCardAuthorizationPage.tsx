@@ -168,6 +168,7 @@ export function CreditCardAuthorizationPage() {
         <SEOHead
           title="Authorization Submitted - SiteMaxi"
           description="Your credit card authorization has been submitted successfully"
+          noindex={true}
         />
         <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8 text-center">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
@@ -204,6 +205,7 @@ export function CreditCardAuthorizationPage() {
       <SEOHead
         title="Credit Card Authorization Form - SiteMaxi"
         description="Securely authorize credit card payments for SiteMaxi services"
+        noindex={true}
       />
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">

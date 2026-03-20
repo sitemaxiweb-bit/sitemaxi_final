@@ -1,6 +1,7 @@
 import { Check, Zap, Target, DollarSign, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
 import { SEOHead } from '../components/SEOHead';
+import { StructuredData } from '../components/StructuredData';
 
 export function AdMaxiPage() {
   const faqs = [
@@ -32,6 +33,14 @@ export function AdMaxiPage() {
         title="AdMaxi — Social Media Advertising Canada | Facebook & Instagram Ads"
         description="Run profitable Facebook, Instagram, and TikTok ad campaigns with AdMaxi. SiteMaxi's paid social team creates, tests, and optimizes ads that generate real leads for Canadian businesses."
         keywords="social media advertising Canada, Facebook ads management, Instagram ads, TikTok ads, paid social media, social ads agency Canada"
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: 'Home', url: 'https://sitemaxi.com' },
+          { name: 'Services', url: 'https://sitemaxi.com/services' },
+          { name: 'AdMaxi — Social Ads', url: 'https://sitemaxi.com/admaxi' },
+        ]}
       />
       <AdMaxiHero />
       <PackagesSection />

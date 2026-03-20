@@ -1,6 +1,7 @@
 import { Check, MousePointerClick, Target, TrendingUp, Phone } from 'lucide-react';
 import { ServiceFAQ } from '../components/ServiceFAQ';
 import { SEOHead } from '../components/SEOHead';
+import { StructuredData } from '../components/StructuredData';
 
 export function ClickMaxiPage() {
   const faqs = [
@@ -32,6 +33,14 @@ export function ClickMaxiPage() {
         title="ClickMaxi — Google Ads Management Canada | PPC Campaigns"
         description="Capture high-intent customers with ClickMaxi. SiteMaxi manages Google Search, Display, and Shopping campaigns that drive qualified leads for Canadian businesses."
         keywords="Google Ads management Canada, PPC management, Google Ads agency, pay per click Canada, Google Shopping ads, search ads management"
+      />
+      <StructuredData
+        type="breadcrumb"
+        data={[
+          { name: 'Home', url: 'https://sitemaxi.com' },
+          { name: 'Services', url: 'https://sitemaxi.com/services' },
+          { name: 'ClickMaxi — Google Ads', url: 'https://sitemaxi.com/clickmaxi' },
+        ]}
       />
       <ClickMaxiHero />
       <PackagesSection />

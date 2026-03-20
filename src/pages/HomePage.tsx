@@ -10,7 +10,7 @@ import { Blog } from '../components/Blog';
 import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
 import { RevealIndustryCard } from '../components/ui/animated-industry-card';
-import { OrganizationStructuredData, WebsiteStructuredData } from '../components/StructuredData';
+import { OrganizationStructuredData, WebsiteStructuredData, LocalBusinessStructuredData } from '../components/StructuredData';
 import { LogoSlider } from '../components/LogoSlider';
 import { FeatureCarousel } from '../components/FeatureCarousel';
 import { AnimatedTestimonials } from '../components/ui/animated-testimonials';
@@ -28,6 +28,7 @@ export function HomePage() {
       />
       <OrganizationStructuredData />
       <WebsiteStructuredData />
+      <LocalBusinessStructuredData />
       <HeroSection />
       <TrustSection />
       <ServicesSection />

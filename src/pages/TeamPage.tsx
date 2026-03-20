@@ -1,4 +1,5 @@
 import { Linkedin, Mail, Heart, Target, Users, Zap, Award, TrendingUp, Globe, Lightbulb, ArrowRight } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
 
 interface TeamMember {
   name: string;
@@ -136,6 +137,11 @@ export function TeamPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Our Team — Digital Marketing Experts at SiteMaxi"
+        description="Meet the SiteMaxi team — experienced digital marketing specialists in Local SEO, Google Ads, social media, and web design helping Canadian businesses grow online."
+        keywords="sitemaxi team, digital marketing experts canada, SEO specialists, google ads experts"
+      />
       <section className="relative py-32 bg-gradient-to-br from-[#1D4ED8] to-[#8B5CF6] overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTJ2LTJoMnYyem0wIDRoLTJ2LTJoMnYyem00LTRoLTJ2LTJoMnYyem0wIDRoLTJ2LTJoMnYyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
 

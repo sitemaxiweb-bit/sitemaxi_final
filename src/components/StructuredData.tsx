@@ -137,11 +137,68 @@ export function StructuredData({ type, data }: StructuredDataProps) {
 
 const SITE_URL = 'https://sitemaxi.com';
 
+export function LocalBusinessStructuredData() {
+  useEffect(() => {
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: 'SiteMaxi',
+      url: SITE_URL,
+      logo: `${SITE_URL}/sitemaxi-og-image.png`,
+      image: `${SITE_URL}/sitemaxi-og-image.png`,
+      description:
+        'Canadian digital marketing agency specializing in Local SEO, Google Ads, social media management, and high-converting web design to help businesses grow online.',
+      telephone: '+1-866-344-6294',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '7398 Yonge St 6d Unit 619',
+        addressLocality: 'Vaughan',
+        addressRegion: 'ON',
+        postalCode: 'L4J 2J2',
+        addressCountry: 'CA',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 43.8563,
+        longitude: -79.5085,
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'Canada',
+      },
+      priceRange: '$$',
+      sameAs: [
+        'https://www.facebook.com/sitemaxi',
+        'https://www.instagram.com/sitemaxi',
+        'https://www.linkedin.com/company/sitemaxi',
+        'https://twitter.com/sitemaxi',
+      ],
+    };
+
+    const scriptId = 'structured-data-local-business';
+    let script = document.getElementById(scriptId);
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(structuredData);
+
+    return () => {
+      const existing = document.getElementById(scriptId);
+      if (existing) existing.remove();
+    };
+  }, []);
+
+  return null;
+}
+
 export function OrganizationStructuredData() {
   const organizationData: OrganizationData = {
     name: 'SiteMaxi',
     url: SITE_URL,
-    logo: `${SITE_URL}/SiteMaxi Professional Websites.png`,
+    logo: `${SITE_URL}/sitemaxi-og-image.png`,
     description:
       'Digital marketing agency specializing in Local SEO, SEO, social media management, and paid advertising services to help businesses grow online.',
     sameAs: [

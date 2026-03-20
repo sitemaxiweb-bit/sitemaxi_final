@@ -21,6 +21,7 @@ export function OnboardingPage() {
       <SEOHead
         title="Client Onboarding Questionnaire - SiteMaxi"
         description="Complete your client onboarding questionnaire to help us tailor our services to your business needs."
+        noindex={true}
       />
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
