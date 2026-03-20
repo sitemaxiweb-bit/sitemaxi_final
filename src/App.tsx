@@ -31,6 +31,7 @@ import { AdminCCPasswordSetupPage } from './pages/AdminCCPasswordSetupPage';
 import { AdminCCAuthorizationsPage } from './pages/AdminCCAuthorizationsPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AIBlueprintPage } from './pages/AIBlueprintPage';
+import { OnboardingPage } from './pages/OnboardingPage';
 import { FreeSEOAuditPage } from './pages/FreeSEOAuditPage';
 import { AdminAuditLeadsPage } from './pages/AdminAuditLeadsPage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -98,6 +99,7 @@ function PublicLayout() {
         <Route path="/terms-of-service" element={<TermsOfServicePage />} />
         <Route path="/cookie-policy" element={<CookiePolicyPage />} />
         <Route path="/credit-card-authorization" element={<CreditCardAuthorizationPage />} />
+        <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/ai-ecommerce-blueprint" element={<AIBlueprintPage />} />
         <Route path="/free-seo-audit" element={<FreeSEOAuditPage />} />
         <Route path="/services" element={<ServicesPage />} />
