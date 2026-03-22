@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 interface GenerateRequest {
-  mode: "outline" | "draft" | "full_package" | "image_prompts" | "metadata" | "titles" | "generate_image";
+  mode: "outline" | "draft" | "full_package" | "image_prompts" | "metadata" | "titles" | "generate_image" | "enhance_prompt";
   keyword: string;
   keywords?: string[];
   articleTitle?: string;
@@ -25,6 +25,7 @@ interface GenerateRequest {
   contentType?: string;
   generateImage?: boolean;
   imagePrompt?: string;
+  imageType?: "featured" | "content";
 }
 
 const SITEMAXI_CONTEXT = `
@@ -380,6 +381,32 @@ Style guidelines:
   return JSON.parse(clean);
 }
 
+async function enhancePrompt(req: GenerateRequest): Promise<object> {
+  if (!req.imagePrompt) throw new Error("imagePrompt is required for enhance_prompt mode");
+
+  const typeContext = req.imageType === "featured"
+    ? "16:9 landscape hero/featured blog image (1792x1024)"
+    : "16:9 landscape inline content image (1200x800)";
+
+  const prompt = `You are a professional AI image prompt engineer specializing in DALL-E 3.
+
+Enhance the following rough image idea into a highly detailed, photorealistic DALL-E 3 prompt for a ${typeContext}.
+
+Rough idea: "${req.imagePrompt}"
+
+Rules:
+- Keep it under 900 characters
+- Be very specific about: lighting, composition, mood, setting, style
+- Use photorealistic language: "professional photography", "natural lighting", "sharp focus", etc.
+- Canadian business context where relevant
+- No text overlays or words in the image
+- No people with identifiable faces unless essential
+- Output ONLY the enhanced prompt text, nothing else, no quotes, no explanation`;
+
+  const enhanced = await callOpenAI(prompt, "You are a professional DALL-E 3 prompt engineer. Output only the enhanced prompt text.", 400);
+  return { enhancedPrompt: enhanced.trim() };
+}
+
 async function generateFullPackage(req: GenerateRequest): Promise<object> {
   const [titles, outline, metadata, faq, imagePrompts] = await Promise.all([
     generateTitles(req),
@@ -417,6 +444,19 @@ Deno.serve(async (req: Request) => {
 
   try {
     const body: GenerateRequest = await req.json();
+
+    if (body.mode === "enhance_prompt") {
+      if (!body.imagePrompt) {
+        return new Response(JSON.stringify({ error: "imagePrompt is required for enhance_prompt mode" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const result = await enhancePrompt(body);
+      return new Response(JSON.stringify(result), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     if (body.mode === "generate_image") {
       if (!body.imagePrompt) {
