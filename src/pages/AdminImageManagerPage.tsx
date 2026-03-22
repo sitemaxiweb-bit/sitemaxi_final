@@ -137,6 +137,20 @@ export function AdminImageManagerPage() {
         throw uploadError;
       }
 
+      const { data: urlData } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(filePath);
+
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from('media_library').insert({
+        filename: seoName,
+        url: urlData.publicUrl,
+        thumbnail_url: urlData.publicUrl,
+        file_size: optimizedBlob.size,
+        mime_type: 'image/jpeg',
+        uploaded_by: user?.id,
+      });
+
       setCustomName('');
       await loadImages();
       alert('Image uploaded successfully!');
@@ -273,6 +287,20 @@ export function AdminImageManagerPage() {
         });
 
       if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(filePath);
+
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from('media_library').insert({
+        filename: filename,
+        url: urlData.publicUrl,
+        thumbnail_url: urlData.publicUrl,
+        file_size: blob.size,
+        mime_type: 'image/png',
+        uploaded_by: user?.id,
+      });
 
       await loadImages();
       alert('Image saved to library successfully!');
