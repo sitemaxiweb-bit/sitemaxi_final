@@ -100,8 +100,9 @@ function HeroSection() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#111111] mb-6 leading-[1.1]">
-              More <WordCrawler />. More growth.<br />
-              <span className="text-[#1D4ED8]">More customers.</span>
+              <span className="sr-only">Canadian Digital Marketing Agency — SEO, Google Ads &amp; Web Design | SiteMaxi</span>
+              <span aria-hidden="true">More <WordCrawler />. More growth.<br />
+              <span className="text-[#1D4ED8]">More customers.</span></span>
             </h1>
 
             <p className="text-lg md:text-xl text-[#555555] mb-4 leading-relaxed">
