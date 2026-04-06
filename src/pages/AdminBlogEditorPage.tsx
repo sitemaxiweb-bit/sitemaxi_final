@@ -464,6 +464,13 @@ export function AdminBlogEditorPage() {
         await createPost(postData);
       }
 
+      if (newStatus === 'published') {
+        const postUrl = `https://sitemaxi.com/blog/${slug}`;
+        supabase.functions.invoke('submit-indexnow', {
+          body: { urls: [postUrl] },
+        }).catch(() => {});
+      }
+
       navigate('/admin/blog');
     } catch (error: any) {
       console.error('Error saving post:', error);
