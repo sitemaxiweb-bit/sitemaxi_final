@@ -1,9 +1,18 @@
+export interface SourceCitation {
+  title: string;
+  url: string;
+}
+
 export interface PlatformResult {
-  platform: 'ChatGPT' | 'Gemini' | 'Claude';
+  platform: 'Gemini' | 'Claude';
   mentioned: boolean;
   visibilityScore: number;
   responseSnippet: string;
   competitorsMentioned: string[];
+  promptsChecked: number;
+  mentionRate: number;
+  websiteFound: boolean;
+  sources: SourceCitation[];
 }
 
 export interface VisibilityReportData {
