@@ -122,6 +122,13 @@ export function AdminDashboardPage() {
       color: 'from-emerald-500 to-teal-600'
     },
     {
+      title: 'AI Visibility Leads',
+      description: 'View leads from the AI Brand Visibility Checker tool',
+      path: '/admin/visibility-leads',
+      icon: <BarChart3 className="w-8 h-8" />,
+      color: 'from-blue-500 to-cyan-600'
+    },
+    {
       title: 'Location Pages',
       description: 'Manage city-based local SEO landing pages across Canada',
       path: '/admin/locations',

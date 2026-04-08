@@ -34,6 +34,8 @@ import { AIBlueprintPage } from './pages/AIBlueprintPage';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { FreeSEOAuditPage } from './pages/FreeSEOAuditPage';
 import { AdminAuditLeadsPage } from './pages/AdminAuditLeadsPage';
+import { AIVisibilityCheckerPage } from './pages/AIVisibilityCheckerPage';
+import { AdminVisibilityLeadsPage } from './pages/AdminVisibilityLeadsPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { IndustriesPage } from './pages/IndustriesPage';
 import { ResourcesPage } from './pages/ResourcesPage';
@@ -103,6 +105,7 @@ function PublicLayout() {
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/ai-ecommerce-blueprint" element={<AIBlueprintPage />} />
         <Route path="/free-seo-audit" element={<FreeSEOAuditPage />} />
+        <Route path="/ai-brand-visibility-checker" element={<AIVisibilityCheckerPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/industries" element={<IndustriesPage />} />
         <Route path="/industries/dentists" element={<DentistsPage />} />
@@ -189,6 +192,11 @@ function App() {
         <Route path="/admin/audit-leads" element={
           <ProtectedRoute requireAdmin={true}>
             <AdminAuditLeadsPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/visibility-leads" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminVisibilityLeadsPage />
           </ProtectedRoute>
         } />
         <Route path="/admin/locations" element={

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench } from 'lucide-react';
+import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench, Sparkles } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { MenuItem, Menu as NavMenu } from './ui/navbar-menu';
 
@@ -176,6 +176,15 @@ export function Header() {
                     <div className="text-xs text-[#6B7280]">Instant website analysis</div>
                   </div>
                 </Link>
+                <Link to="/ai-brand-visibility-checker" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-4 h-4 text-[#1D4ED8]" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-[#111111]">AI Visibility Checker</div>
+                    <div className="text-xs text-[#6B7280]">See how AI finds your brand</div>
+                  </div>
+                </Link>
                 <Link to="/blog" className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
                   <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
                     <TrendingUp className="w-4 h-4 text-[#D97706]" />
@@ -286,6 +295,12 @@ export function Header() {
             </Link>
             <Link to="/resources-hub" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Resources Hub
+            </Link>
+            <Link to="/free-seo-audit" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+              Free AI Audit
+            </Link>
+            <Link to="/ai-brand-visibility-checker" className="text-[#374151] font-medium py-4 border-b border-gray-100">
+              AI Visibility Checker
             </Link>
             <Link to="/resources" className="text-[#374151] font-medium py-4 border-b border-gray-100">
               Free Tools
