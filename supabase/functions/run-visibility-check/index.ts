@@ -380,13 +380,17 @@ function buildReportEmail(email: string, report: VisibilityReport): string {
       </div>
 
       <h2 style="font-size:18px; font-weight:700; color:#111; margin:28px 0 12px; border-bottom:2px solid #f3f4f6; padding-bottom:10px;">Top Recommendations</h2>
-      <div style="space-y:8px;">
+      <table style="width:100%; border-collapse:collapse;">
         ${report.visibilityTips.map((tip, i) => `
-        <div style="display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid #f3f4f6;">
-          <span style="background:#1d4ed8; color:white; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; margin-top:1px;">${i + 1}</span>
-          <p style="margin:0; color:#374151; font-size:14px; line-height:1.6;">${tip}</p>
-        </div>`).join('')}
-      </div>
+        <tr>
+          <td style="padding:10px 12px 10px 0; border-bottom:1px solid #f3f4f6; vertical-align:top; width:32px;">
+            <span style="display:inline-block; background:#1d4ed8; color:white; width:26px; height:26px; border-radius:50%; font-size:12px; font-weight:700; line-height:26px; text-align:center;">${i + 1}</span>
+          </td>
+          <td style="padding:10px 0; border-bottom:1px solid #f3f4f6; vertical-align:top;">
+            <p style="margin:0; color:#374151; font-size:14px; line-height:1.6;">${tip}</p>
+          </td>
+        </tr>`).join('')}
+      </table>
 
       <a href="${CALENDAR_URL}" style="display:block; background:#1d4ed8; color:white; text-align:center; padding:18px; border-radius:10px; text-decoration:none; font-weight:700; font-size:16px; margin:28px 0 0;">
         Book a Free Strategy Call to Improve Your Score
@@ -482,7 +486,7 @@ Deno.serve(async (req: Request) => {
         const userEmailHtml = buildReportEmail(email, report);
         const sent = await sendGmailEmail(
           email,
-          `Your AI Brand Visibility Report — ${brandName}`,
+          `Your AI Brand Visibility Report - ${brandName}`,
           userEmailHtml
         );
         if (sent && lead) {
