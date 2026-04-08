@@ -104,6 +104,14 @@ async function sendGmailEmail(to: string, subject: string, html: string): Promis
   }
 }
 
+function parseJsonFromLLM(raw: string): unknown {
+  let cleaned = raw.trim();
+  cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '');
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error(`No JSON object found in response. Raw: ${raw.slice(0, 200)}`);
+  return JSON.parse(jsonMatch[0]);
+}
+
 async function queryOpenAI(prompt: string, systemPrompt: string, maxTokens = 600): Promise<string> {
   const openaiKey = Deno.env.get('OPENAI_API_KEY');
   if (!openaiKey) throw new Error('OPENAI_API_KEY not set');
@@ -140,13 +148,17 @@ async function queryGemini(prompt: string, maxTokens = 600): Promise<string> {
   if (!geminiKey) throw new Error('GEMINI_API_KEY not set');
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 },
+        generationConfig: {
+          maxOutputTokens: maxTokens,
+          temperature: 0.7,
+          responseMimeType: 'application/json',
+        },
       }),
       signal: AbortSignal.timeout(30000),
     }
@@ -158,7 +170,9 @@ async function queryGemini(prompt: string, maxTokens = 600): Promise<string> {
   }
 
   const data = await response.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  console.log('Gemini raw response:', text.slice(0, 300));
+  return text;
 }
 
 async function queryClaude(prompt: string, maxTokens = 600): Promise<string> {
@@ -173,7 +187,7 @@ async function queryClaude(prompt: string, maxTokens = 600): Promise<string> {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-3-haiku-20240307',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: maxTokens,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -186,7 +200,9 @@ async function queryClaude(prompt: string, maxTokens = 600): Promise<string> {
   }
 
   const data = await response.json();
-  return data.content?.[0]?.text ?? '';
+  const text = data.content?.[0]?.text ?? '';
+  console.log('Claude raw response:', text.slice(0, 300));
+  return text;
 }
 
 function buildPlatformPrompt(
@@ -202,7 +218,7 @@ A business called "${brandName}" offers ${primaryService} services in ${city}.
 
 Your task: Respond to this query as you naturally would, then evaluate whether "${brandName}" appears in your response.
 
-Respond with ONLY a JSON object in this exact format (no markdown, no extra text):
+Respond with ONLY a JSON object — no markdown, no code fences, no extra text before or after the JSON:
 {
   "mentioned": true or false,
   "visibilityScore": number between 0 and 100,
@@ -240,16 +256,14 @@ async function checkPlatform(
     let raw = '';
 
     if (platform === 'ChatGPT') {
-      raw = await queryOpenAI(prompt, 'You are ChatGPT answering a local business search query. Respond only with the requested JSON.', 400);
+      raw = await queryOpenAI(prompt, 'You are ChatGPT answering a local business search query. Respond only with the requested JSON — no markdown, no code fences.', 500);
     } else if (platform === 'Gemini') {
-      raw = await queryGemini(prompt, 400);
+      raw = await queryGemini(prompt, 500);
     } else {
-      raw = await queryClaude(prompt, 400);
+      raw = await queryClaude(prompt, 500);
     }
 
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON in response');
-    const parsed = JSON.parse(jsonMatch[0]);
+    const parsed = parseJsonFromLLM(raw) as Record<string, unknown>;
 
     return {
       platform,
@@ -276,7 +290,7 @@ async function generateFullReport(
   const avgScore = Math.round(platforms.reduce((s, p) => s + p.visibilityScore, 0) / platforms.length);
   const allCompetitors = [...new Set(platforms.flatMap(p => p.competitorsMentioned))];
 
-  const systemPrompt = `You are a senior AI visibility and digital marketing consultant. Provide a JSON analysis only — no markdown, no extra text.`;
+  const systemPrompt = `You are a senior AI visibility and digital marketing consultant. Provide a JSON analysis only — no markdown, no code fences, no extra text.`;
 
   const prompt = `Analyze the AI visibility of this business:
 
@@ -289,7 +303,7 @@ Mentioned on AI platforms: ${mentionedCount}/3
 Average visibility score: ${avgScore}/100
 Competitors appearing instead: ${allCompetitors.join(', ')}
 
-Provide a detailed analysis in this exact JSON format:
+Provide a detailed analysis in this exact JSON format — no markdown, no code fences:
 {
   "brandSummary": "2-3 sentence paragraph describing how this brand currently appears (or doesn't appear) across AI platforms and what that means for their business",
   "strengths": ["strength 1", "strength 2", "strength 3"],
@@ -302,10 +316,8 @@ Provide a detailed analysis in this exact JSON format:
 Make recommendations highly specific to the service type (${primaryService}) and city (${city}). Reference real tactics like FAQ pages, Google Business Profile optimization, citation building, E-E-A-T signals, topical authority, and schema markup.`;
 
   try {
-    const raw = await queryOpenAI(prompt, systemPrompt, 700);
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON in response');
-    const parsed = JSON.parse(jsonMatch[0]);
+    const raw = await queryOpenAI(prompt, systemPrompt, 800);
+    const parsed = parseJsonFromLLM(raw) as Record<string, unknown>;
     return {
       brandSummary: String(parsed.brandSummary || ''),
       strengths: Array.isArray(parsed.strengths) ? parsed.strengths : [],
