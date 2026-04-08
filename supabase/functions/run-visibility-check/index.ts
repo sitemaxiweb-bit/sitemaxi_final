@@ -135,7 +135,90 @@ async function queryOpenAI(prompt: string, systemPrompt: string, maxTokens = 600
   return data.choices?.[0]?.message?.content ?? '';
 }
 
-async function simulatePlatformCheck(
+async function queryGemini(prompt: string, maxTokens = 600): Promise<string> {
+  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  if (!geminiKey) throw new Error('GEMINI_API_KEY not set');
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 },
+      }),
+      signal: AbortSignal.timeout(30000),
+    }
+  );
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`Gemini API error: ${response.status} ${err}`);
+  }
+
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+}
+
+async function queryClaude(prompt: string, maxTokens = 600): Promise<string> {
+  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+  if (!anthropicKey) throw new Error('ANTHROPIC_API_KEY not set');
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': anthropicKey,
+      'anthropic-version': '2023-06-01',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'claude-3-haiku-20240307',
+      max_tokens: maxTokens,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+    signal: AbortSignal.timeout(30000),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`Claude API error: ${response.status} ${err}`);
+  }
+
+  const data = await response.json();
+  return data.content?.[0]?.text ?? '';
+}
+
+function buildPlatformPrompt(
+  platform: 'ChatGPT' | 'Gemini' | 'Claude',
+  keyword: string,
+  brandName: string,
+  primaryService: string,
+  city: string,
+): string {
+  return `You are being asked: "${keyword}"
+
+A business called "${brandName}" offers ${primaryService} services in ${city}.
+
+Your task: Respond to this query as you naturally would, then evaluate whether "${brandName}" appears in your response.
+
+Respond with ONLY a JSON object in this exact format (no markdown, no extra text):
+{
+  "mentioned": true or false,
+  "visibilityScore": number between 0 and 100,
+  "responseSnippet": "Your actual 2-3 sentence answer to the query above, as if a real user asked you",
+  "competitorsMentioned": ["2 or 3 realistic competitor business names for ${primaryService} in ${city}"]
+}
+
+Scoring guidance:
+- 70-100: Business is well-known, has strong reviews, strong web presence, clearly relevant
+- 40-69: Business has some presence but not dominant
+- 10-39: Business is lesser known or hard to verify online
+- Be honest — most local businesses are NOT prominently surfaced by AI assistants
+- If you genuinely cannot verify the business exists online, mark mentioned=false with a low score`;
+}
+
+async function checkPlatform(
   platform: 'ChatGPT' | 'Gemini' | 'Claude',
   brandName: string,
   primaryService: string,
@@ -143,35 +226,31 @@ async function simulatePlatformCheck(
   targetKeywords: string[],
 ): Promise<PlatformResult> {
   const keyword = targetKeywords.length > 0 ? targetKeywords[0] : `best ${primaryService} in ${city}`;
+  const prompt = buildPlatformPrompt(platform, keyword, brandName, primaryService, city);
 
-  const systemPrompt = `You are simulating how the AI assistant ${platform} would respond to a local business search query. You must respond with a JSON object only — no markdown, no extra text.`;
-
-  const prompt = `A user asks ${platform}: "${keyword}"
-
-Brand being evaluated: "${brandName}" — a ${primaryService} business located in ${city}.
-
-Simulate a realistic ${platform} response to this query. Then evaluate whether "${brandName}" would likely be mentioned.
-
-Respond with this exact JSON structure:
-{
-  "mentioned": true or false,
-  "visibilityScore": number between 0-100,
-  "responseSnippet": "A 2-3 sentence excerpt from the simulated ${platform} response to the query (write it as if ${platform} is actually answering)",
-  "competitorsMentioned": ["CompetitorName1", "CompetitorName2"] (2-3 generic competitor names that would appear instead or alongside)
-}
-
-Rules:
-- If the brand has a strong online presence for this service in this city, mark mentioned=true with score 60-85
-- If the brand is newer or less established, mark mentioned=false with score 10-40
-- Be realistic — most local businesses are NOT mentioned in AI responses
-- The responseSnippet must sound like a real AI assistant response, not an evaluation
-- competitorsMentioned should be realistic business names for this service type in this city`;
+  const fallback: PlatformResult = {
+    platform,
+    mentioned: false,
+    visibilityScore: 15,
+    responseSnippet: `When asked about ${primaryService} in ${city}, I can suggest searching Google Maps or Yelp for verified local providers. I wasn't able to confirm whether ${brandName} appears prominently in local results.`,
+    competitorsMentioned: [`Top ${primaryService} Co.`, `Premier ${primaryService} Services`],
+  };
 
   try {
-    const raw = await queryOpenAI(prompt, systemPrompt, 400);
+    let raw = '';
+
+    if (platform === 'ChatGPT') {
+      raw = await queryOpenAI(prompt, 'You are ChatGPT answering a local business search query. Respond only with the requested JSON.', 400);
+    } else if (platform === 'Gemini') {
+      raw = await queryGemini(prompt, 400);
+    } else {
+      raw = await queryClaude(prompt, 400);
+    }
+
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('No JSON in response');
     const parsed = JSON.parse(jsonMatch[0]);
+
     return {
       platform,
       mentioned: Boolean(parsed.mentioned),
@@ -181,13 +260,7 @@ Rules:
     };
   } catch (err) {
     console.error(`Platform check failed for ${platform}:`, err);
-    return {
-      platform,
-      mentioned: false,
-      visibilityScore: 15,
-      responseSnippet: `When asked about ${primaryService} options in ${city}, ${platform} provided general guidance on finding local providers but did not specifically reference ${brandName}.`,
-      competitorsMentioned: [`Top ${primaryService} Co.`, `Premier ${primaryService} Services`],
-    };
+    return fallback;
   }
 }
 
@@ -282,9 +355,9 @@ async function buildVisibilityReport(
   targetKeywords: string[],
 ): Promise<VisibilityReport> {
   const [chatgptResult, geminiResult, claudeResult] = await Promise.all([
-    simulatePlatformCheck('ChatGPT', brandName, primaryService, city, targetKeywords),
-    simulatePlatformCheck('Gemini', brandName, primaryService, city, targetKeywords),
-    simulatePlatformCheck('Claude', brandName, primaryService, city, targetKeywords),
+    checkPlatform('ChatGPT', brandName, primaryService, city, targetKeywords),
+    checkPlatform('Gemini', brandName, primaryService, city, targetKeywords),
+    checkPlatform('Claude', brandName, primaryService, city, targetKeywords),
   ]);
 
   const platforms = [chatgptResult, geminiResult, claudeResult];
