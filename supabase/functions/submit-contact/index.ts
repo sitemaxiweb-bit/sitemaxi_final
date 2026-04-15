@@ -217,21 +217,23 @@ Deno.serve(async (req: Request) => {
       console.error('Failed to send email notification (non-blocking):', err);
     });
 
+    const pabblyParams = new URLSearchParams({
+      firstName,
+      lastName,
+      fullName: `${firstName} ${lastName}`,
+      email,
+      phone: phone || '',
+      service,
+      message,
+      submissionId: String(submission.id),
+      source: 'Website Contact Form',
+      submittedAt: new Date().toISOString(),
+    });
+
     fetch('https://connect.pabbly.com/webhook-listener/webhook/IjU3NjAwNTZhMDYzMzA0Mzc1MjY5NTUzNiI_3D_pc/IjU3NjcwNTZmMDYzZjA0M2Q1MjY1NTUzNTUxMzMi_pc', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        fullName: `${firstName} ${lastName}`,
-        email,
-        phone: phone || '',
-        service,
-        message,
-        submissionId: submission.id,
-        source: 'Website Contact Form',
-        submittedAt: new Date().toISOString(),
-      }),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: pabblyParams.toString(),
     }).then(r => console.log('Pabbly webhook sent:', r.status))
       .catch(err => console.error('Pabbly webhook failed (non-blocking):', err));
 
