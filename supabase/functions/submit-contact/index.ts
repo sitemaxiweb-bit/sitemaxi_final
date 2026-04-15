@@ -217,6 +217,24 @@ Deno.serve(async (req: Request) => {
       console.error('Failed to send email notification (non-blocking):', err);
     });
 
+    fetch('https://connect.pabbly.com/webhook-listener/webhook/IjU3NjAwNTZhMDYzMzA0Mzc1MjY5NTUzNiI_3D_pc/IjU3NjcwNTZmMDYzZjA0M2Q1MjY1NTUzNTUxMzMi_pc', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        fullName: `${firstName} ${lastName}`,
+        email,
+        phone: phone || '',
+        service,
+        message,
+        submissionId: submission.id,
+        source: 'Website Contact Form',
+        submittedAt: new Date().toISOString(),
+      }),
+    }).then(r => console.log('Pabbly webhook sent:', r.status))
+      .catch(err => console.error('Pabbly webhook failed (non-blocking):', err));
+
     const { data: apiKeyData, error: keyError } = await supabase
       .from('api_config')
       .select('key_value')
