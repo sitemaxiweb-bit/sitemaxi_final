@@ -645,6 +645,25 @@ Deno.serve(async (req: Request) => {
 
     EdgeRuntime.waitUntil(sendTeamNotification(fullName, email, normalizedUrl, report.seoScore));
 
+    try {
+      const webhookParams = new URLSearchParams({
+        fullName,
+        email,
+        websiteUrl: normalizedUrl,
+        seoScore: String(report.seoScore),
+        source: 'Audit Form',
+        submittedAt: new Date().toISOString(),
+      });
+      const webhookRes = await fetch('https://services.leadconnectorhq.com/hooks/VKhdX8dKRkeRN0ZNlZCa/webhook-trigger/f606e3d3-061c-4dd4-910d-b887c8fa6860', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: webhookParams.toString(),
+      });
+      console.log('Webhook sent, status:', webhookRes.status);
+    } catch (err) {
+      console.error('Webhook failed:', err);
+    }
+
     let reportEmailed = false;
     if (sendEmail && lead) {
       reportEmailed = await sendReportEmail(fullName, email, report);

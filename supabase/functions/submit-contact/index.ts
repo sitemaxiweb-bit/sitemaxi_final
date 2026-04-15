@@ -217,7 +217,7 @@ Deno.serve(async (req: Request) => {
       console.error('Failed to send email notification (non-blocking):', err);
     });
 
-    const pabblyParams = new URLSearchParams({
+    const webhookParams = new URLSearchParams({
       firstName,
       lastName,
       fullName: `${firstName} ${lastName}`,
@@ -226,16 +226,20 @@ Deno.serve(async (req: Request) => {
       service,
       message,
       submissionId: String(submission.id),
-      source: 'Website Contact Form',
+      source: 'Contact Form',
       submittedAt: new Date().toISOString(),
     });
 
-    fetch('https://connect.pabbly.com/webhook-listener/webhook/IjU3NjAwNTZhMDYzMzA0Mzc1MjY5NTUzNiI_3D_pc/IjU3NjcwNTZmMDYzZjA0M2Q1MjY1NTUzNTUxMzMi_pc', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: pabblyParams.toString(),
-    }).then(r => console.log('Pabbly webhook sent:', r.status))
-      .catch(err => console.error('Pabbly webhook failed (non-blocking):', err));
+    try {
+      const webhookRes = await fetch('https://services.leadconnectorhq.com/hooks/VKhdX8dKRkeRN0ZNlZCa/webhook-trigger/f606e3d3-061c-4dd4-910d-b887c8fa6860', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: webhookParams.toString(),
+      });
+      console.log('Webhook sent, status:', webhookRes.status);
+    } catch (err) {
+      console.error('Webhook failed:', err);
+    }
 
     const { data: apiKeyData, error: keyError } = await supabase
       .from('api_config')
