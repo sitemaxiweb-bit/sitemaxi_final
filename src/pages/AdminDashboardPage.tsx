@@ -90,6 +90,13 @@ export function AdminDashboardPage() {
       icon: <Image className="w-8 h-8" />,
       color: 'from-slate-500 to-slate-600'
     },
+    {
+      title: 'Service Page Images',
+      description: 'Manage methodology step images for each service page (RankMaxi, SearchMaxi, etc.)',
+      path: '/admin/service-images',
+      icon: <Image className="w-8 h-8" />,
+      color: 'from-blue-500 to-cyan-500'
+    },
   ];
 
   const sections: AdminSection[] = [

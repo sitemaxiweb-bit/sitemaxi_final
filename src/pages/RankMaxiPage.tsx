@@ -1,7 +1,8 @@
-import { MapPin, Phone, Star, TrendingUp, Search, XCircle, AlertCircle, MessageSquare, CheckCircle, ArrowRight, BarChart3, Users, Target } from 'lucide-react';
+import { MapPin, Star, TrendingUp, Search, XCircle, AlertCircle, MessageSquare, ArrowRight, BarChart3, Target, ClipboardCheck, Settings, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEOHead } from '../components/SEOHead';
 import { StructuredData } from '../components/StructuredData';
+import { ServiceMethodologyCarousel } from '../components/ServiceMethodologyCarousel';
 import { useState } from 'react';
 
 const APPLY_URL = '/apply';
@@ -26,7 +27,7 @@ export function RankMaxiPage() {
       <ProblemSection />
       <StatsSection />
       <BentoSection />
-      <ProcessSection />
+      <RankMaxiMethodology />
       <ResultsSection />
       <FAQSection />
       <FinalCTASection />
@@ -290,89 +291,46 @@ function BentoSection() {
   );
 }
 
-/* ─── Process ───────────────────────────────────────────── */
-function ProcessSection() {
-  const steps = [
-    { n: "1", title: "Diagnose", desc: "We audit your current profile and local competition to identify every gap." },
-    { n: "2", title: "Optimize", desc: "Technical updates to your GBP and website to align with local ranking factors." },
-    { n: "3", title: "Build Authority", desc: "Generating citations and reviews that establish you as the local leader." },
-    { n: "4", title: "Track & Grow", desc: "Monthly analysis and iterative improvements to stay ahead of competitors." },
-  ];
+/* ─── Methodology Carousel ──────────────────────────────── */
+const RANKMAXI_STEPS = [
+  {
+    id: 'diagnose',
+    label: 'Diagnose',
+    icon: ClipboardCheck,
+    description: 'We audit your current profile and local competition to identify every gap holding you back.',
+    fallbackImage: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  },
+  {
+    id: 'optimize',
+    label: 'Optimize',
+    icon: Settings,
+    description: 'Technical updates to your Google Business Profile and website to align with local ranking factors.',
+    fallbackImage: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  },
+  {
+    id: 'authority',
+    label: 'Build Authority',
+    icon: Award,
+    description: 'Generating citations and reviews that establish you as the undisputed local leader.',
+    fallbackImage: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  },
+  {
+    id: 'grow',
+    label: 'Track & Grow',
+    icon: TrendingUp,
+    description: 'Monthly analysis and iterative improvements to stay ahead of every competitor in your market.',
+    fallbackImage: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  },
+];
 
+function RankMaxiMethodology() {
   return (
-    <section id="how-it-works" className="py-24 px-4 md:px-12 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-16 items-center">
-          {/* Left — steps */}
-          <div className="md:w-1/2">
-            <span
-              className="text-[#0058BE] text-xs font-medium tracking-widest uppercase mb-4 block"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
-            >
-              Our Methodology
-            </span>
-            <h2
-              className="text-3xl md:text-5xl font-bold text-[#111111] mb-10 leading-tight"
-              style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
-            >
-              A Clear Process, Not a Black Box
-            </h2>
-            <div className="space-y-10">
-              {steps.map(({ n, title, desc }) => (
-                <div key={n} className="flex gap-6">
-                  <div
-                    className="w-12 h-12 bg-[#0058BE] text-white rounded-full flex items-center justify-center flex-shrink-0 text-lg font-bold"
-                    style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-                  >
-                    {n}
-                  </div>
-                  <div>
-                    <h3
-                      className="text-xl font-semibold text-[#111111] mb-1"
-                      style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-                    >
-                      {title}
-                    </h3>
-                    <p
-                      className="text-[#45464D] text-sm leading-relaxed"
-                      style={{ fontFamily: "'Inter', sans-serif" }}
-                    >
-                      {desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right — visual panel */}
-          <div className="md:w-1/2 w-full">
-            <div className="relative p-8 bg-[#ECEEF0] rounded-3xl">
-              <img
-                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Local SEO dashboard showing growth metrics"
-                className="rounded-2xl shadow-xl w-full object-cover"
-                style={{ height: '360px' }}
-              />
-              <div className="absolute -bottom-6 -right-6 bg-white p-5 rounded-2xl shadow-lg border border-[#E2E8F0] hidden lg:block">
-                <div
-                  className="text-[#0058BE] font-bold text-2xl"
-                  style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-                >
-                  +80%
-                </div>
-                <div
-                  className="text-[#45464D] text-xs font-medium uppercase tracking-widest mt-0.5"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Call Volume
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <ServiceMethodologyCarousel
+      serviceSlug="rankmaxi"
+      steps={RANKMAXI_STEPS}
+      heading="A Clear Process, Not a Black Box"
+      label="Our Methodology"
+    />
   );
 }
 

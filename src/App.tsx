@@ -22,6 +22,7 @@ import { AdminSetupPage } from './pages/AdminSetupPage';
 import { AdminBlogPage } from './pages/AdminBlogPage';
 import { AdminBlogEditorPage } from './pages/AdminBlogEditorPage';
 import { AdminImageManagerPage } from './pages/AdminImageManagerPage';
+import { AdminServiceImagesPage } from './pages/AdminServiceImagesPage';
 import { AdminSubmissionsPage } from './pages/AdminSubmissionsPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsOfServicePage } from './pages/TermsOfServicePage';
@@ -175,6 +176,11 @@ function App() {
         <Route path="/admin/images" element={
           <ProtectedRoute requireAdmin={true}>
             <AdminImageManagerPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/service-images" element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminServiceImagesPage />
           </ProtectedRoute>
         } />
         <Route path="/admin/submissions" element={
