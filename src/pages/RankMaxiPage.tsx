@@ -1,43 +1,12 @@
-import { MapPin, Phone, Star, TrendingUp, Search, AlertTriangle, CheckCircle, ArrowRight, BarChart3, Users, Clock, Target, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Star, TrendingUp, Search, XCircle, AlertCircle, MessageSquare, CheckCircle, ArrowRight, BarChart3, Users, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ServiceFAQ } from '../components/ServiceFAQ';
 import { SEOHead } from '../components/SEOHead';
 import { StructuredData } from '../components/StructuredData';
+import { useState } from 'react';
 
 const APPLY_URL = '/apply';
 
 export function RankMaxiPage() {
-  const faqs = [
-    {
-      question: "How long does it take to see results from Local SEO?",
-      answer: "Most businesses start seeing measurable improvements in their Google Maps rankings within 4–8 weeks. Stronger, more competitive results typically come at the 3–6 month mark as citations, reviews, and profile authority build up."
-    },
-    {
-      question: "What exactly does Local SEO include?",
-      answer: "Local SEO covers your Google Business Profile optimization, citation building across local directories, review acquisition and management, local landing pages, NAP (name, address, phone) consistency, and on-page signals that tell Google where you serve."
-    },
-    {
-      question: "Do I need more reviews to rank higher on Google Maps?",
-      answer: "Yes — reviews are one of the strongest local ranking signals. Quantity, recency, and how you respond all matter. We help you build a consistent review strategy so new reviews come in regularly, not just in bursts."
-    },
-    {
-      question: "Can you help multi-location businesses?",
-      answer: "Absolutely. We create and optimize individual Google Business Profiles and local landing pages for each location. Each location gets its own citation profile and review strategy so they all rank independently."
-    },
-    {
-      question: "How will I know if it's working?",
-      answer: "You'll receive monthly reports showing your Google Maps ranking positions, call and direction request volume, profile views, and keyword visibility changes. We track the metrics that matter to your business — not vanity numbers."
-    },
-    {
-      question: "What happens after I apply for a Growth Call?",
-      answer: "We'll review your Google Business Profile and local presence before the call. When we meet, we'll walk you through exactly where you stand, what's holding you back, and what a realistic improvement plan looks like. No pressure, no generic pitch."
-    },
-    {
-      question: "Do I need a big budget to get started with Local SEO?",
-      answer: "Local SEO is one of the most cost-effective channels for local businesses. Unlike ads, the improvements compound over time. During your Growth Call, we'll discuss what's realistic for your situation and what level of investment makes sense for your goals."
-    }
-  ];
-
   return (
     <>
       <SEOHead
@@ -55,98 +24,106 @@ export function RankMaxiPage() {
       />
       <HeroSection />
       <ProblemSection />
-      <WhyItMattersSection />
+      <StatsSection />
+      <BentoSection />
       <ProcessSection />
-      <WhatWeImproveSection />
-      <WhoIsThisForSection />
       <ResultsSection />
-      <ServiceFAQ
-        faqs={faqs}
-        primaryColor="#1D4ED8"
-        bgColor="#DBEAFE"
-        title="Common Questions About Local SEO"
-        subtitle="Answers to what most businesses ask before getting started"
-      />
+      <FAQSection />
       <FinalCTASection />
     </>
   );
 }
 
+/* ─── Hero ─────────────────────────────────────────────── */
 function HeroSection() {
   return (
-    <section className="bg-white pt-32 pb-24">
-      <div className="max-w-5xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-blue-50 text-[#1D4ED8] px-4 py-2 rounded-full mb-8">
-          <MapPin className="w-4 h-4" />
-          <span className="font-semibold text-sm uppercase tracking-wide">Local SEO & Google Maps</span>
-        </div>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#111111] mb-6 leading-[1.08] tracking-tight">
-          Get Found When Local<br className="hidden md:block" /> Customers Are Ready<br className="hidden md:block" /> To Buy
-        </h1>
-        <p className="text-xl text-[#555555] mb-10 max-w-2xl mx-auto leading-relaxed">
-          Your customers search on Google before they call anyone. We help your business appear in the top results on Google Maps — so more of those searches turn into calls, visits, and revenue.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <Link
-            to={APPLY_URL}
-            className="bg-[#1D4ED8] text-white px-9 py-4 rounded-lg font-semibold hover:bg-[#1E40AF] transition-all duration-200 text-lg shadow-sm hover:shadow-md inline-flex items-center gap-2"
-          >
-            Apply For A Growth Call <ArrowRight className="w-5 h-5" />
-          </Link>
-          <a
-            href="#how-it-works"
-            className="bg-white text-[#1D4ED8] border-2 border-[#1D4ED8] px-9 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 text-lg inline-block"
-          >
-            See How It Works
-          </a>
-        </div>
-        <p className="mt-6 text-sm text-[#888888]">No pricing commitments on this call — we review your situation first.</p>
+    <section className="py-24 px-4 md:px-12 text-center max-w-4xl mx-auto" style={{ paddingTop: '7rem' }}>
+      <span
+        className="inline-block bg-blue-100 text-blue-900 px-3 py-1 rounded-full mb-6 text-xs font-medium tracking-widest uppercase"
+        style={{ fontFamily: "'JetBrains Mono', monospace" }}
+      >
+        Local Growth Channel
+      </span>
+      <h1
+        className="text-4xl md:text-6xl font-bold text-[#111111] mb-6 leading-tight tracking-tight"
+        style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+      >
+        Get Found When Local Customers Are Ready To Buy
+      </h1>
+      <p
+        className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
+        style={{ fontFamily: "'Inter', sans-serif" }}
+      >
+        Your customers search on Google before they call anyone. We help your business appear in the top results on Google Maps — so more of those searches turn into calls, visits, and revenue.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Link
+          to={APPLY_URL}
+          className="bg-[#111111] text-white px-8 py-4 rounded-lg font-semibold text-base flex items-center justify-center gap-2 hover:bg-[#222222] transition-all duration-200 shadow-sm"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+        >
+          Apply For A Growth Call
+          <TrendingUp className="w-4 h-4" />
+        </Link>
+        <a
+          href="#how-it-works"
+          className="border border-[#E2E8F0] bg-white text-[#111111] px-8 py-4 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+        >
+          See How It Works
+        </a>
       </div>
     </section>
   );
 }
 
+/* ─── Problem ───────────────────────────────────────────── */
 function ProblemSection() {
   const problems = [
     {
-      icon: Search,
-      title: "You're not showing up in the Map Pack",
-      desc: "When someone searches for your service in your city, your competitors appear in the top 3 map results — and you don't. Most customers never scroll past those three listings."
+      icon: XCircle,
+      title: "No Map Pack Visibility",
+      desc: "You're not showing up in the crucial top 3 Google Maps results where 70% of clicks happen."
     },
     {
-      icon: AlertTriangle,
-      title: "Your Google Business Profile is incomplete",
-      desc: "Missing hours, wrong categories, no photos, no responses to reviews. Google treats an incomplete profile as a low-trust signal and ranks it lower than optimized competitors."
+      icon: AlertCircle,
+      title: "Incomplete Profile",
+      desc: "Your Google Business Profile is incomplete or unoptimized, confusing both customers and Google."
     },
     {
       icon: MessageSquare,
-      title: "You have few or inconsistent reviews",
-      desc: "Reviews are one of Google's strongest local ranking signals. Without a consistent strategy, you fall behind businesses that actively earn new reviews every month."
+      title: "Review Stagnation",
+      desc: "Few or inconsistent reviews signal to prospective customers that your business might be inactive."
     }
   ];
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="max-w-2xl mb-14">
-          <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#555555] px-4 py-2 rounded-full mb-6">
-            <span className="font-semibold text-sm uppercase tracking-wide">The Problem</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-5 leading-tight">
-            Most Local Businesses Are Invisible on Google
-          </h2>
-          <p className="text-lg text-[#555555] leading-relaxed">
-            Having a website isn't enough. If your Google Business Profile isn't optimized and you're not building local authority, you're handing customers directly to your competitors.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6">
+    <section className="py-20 bg-[#F2F4F6] px-4 md:px-12">
+      <div className="max-w-6xl mx-auto text-center">
+        <h2
+          className="text-3xl md:text-5xl font-bold text-[#111111] mb-16 leading-tight"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+        >
+          Why Most Local Businesses Are Invisible on Google
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {problems.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
-              <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-5">
-                <Icon className="w-6 h-6 text-red-500" />
+            <div key={title} className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-white flex items-center justify-center rounded-xl mb-6 shadow-sm">
+                <Icon className="w-7 h-7 text-red-500" />
               </div>
-              <h3 className="font-bold text-[#111111] text-lg mb-3">{title}</h3>
-              <p className="text-[#666666] leading-relaxed text-sm">{desc}</p>
+              <h3
+                className="text-xl font-semibold text-[#111111] mb-3"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              >
+                {title}
+              </h3>
+              <p
+                className="text-[#45464D] text-sm leading-relaxed max-w-xs"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {desc}
+              </p>
             </div>
           ))}
         </div>
@@ -155,256 +132,48 @@ function ProblemSection() {
   );
 }
 
-function WhyItMattersSection() {
+/* ─── Stats (dark bento) ────────────────────────────────── */
+function StatsSection() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 bg-blue-50 text-[#1D4ED8] px-4 py-2 rounded-full mb-6">
-              <span className="font-semibold text-sm uppercase tracking-wide">Why It Matters</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-6 leading-tight">
+    <section className="py-20 px-4 md:px-12">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-[#131B2E] rounded-2xl p-10 md:p-12 flex flex-col md:flex-row items-center gap-12">
+          <div className="md:w-1/2">
+            <h2
+              className="text-white text-3xl md:text-4xl font-bold mb-5 leading-tight"
+              style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+            >
               Every Month Without Local SEO Is Revenue Left on the Table
             </h2>
-            <p className="text-lg text-[#555555] mb-6 leading-relaxed">
-              Local search is high intent. People searching "plumber near me" or "best dentist in Vaughan" are ready to buy today — they're not browsing. If you're not in the top results when they search, that call goes to your competitor.
-            </p>
-            <p className="text-lg text-[#555555] mb-8 leading-relaxed">
-              Unlike paid ads, Local SEO builds compounding authority. The improvements we make today increase your visibility next month and next year.
-            </p>
-            <div className="space-y-4">
-              {[
-                "Missed calls from high-intent customers",
-                "Competitor businesses ranking above you despite being newer",
-                "Low review count hurting your credibility",
-                "Service areas you serve that customers can't find you in",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3">
-                  <div className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <div className="w-2 h-2 bg-red-500 rounded-full" />
-                  </div>
-                  <p className="text-[#555555]">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="bg-gray-50 rounded-3xl p-10 border border-gray-200">
-            <div className="text-center mb-8">
-              <p className="text-6xl font-bold text-[#1D4ED8] mb-2">76%</p>
-              <p className="text-[#555555] text-lg">of people who search for a local business visit or contact that business within 24 hours.</p>
-            </div>
-            <div className="w-full h-px bg-gray-200 mb-8" />
-            <div className="grid grid-cols-2 gap-6">
-              {[
-                { stat: "46%", label: "of all Google searches have local intent" },
-                { stat: "88%", label: "of local mobile searches lead to a call or visit within a day" },
-              ].map(({ stat, label }) => (
-                <div key={stat} className="text-center">
-                  <p className="text-3xl font-bold text-[#111111] mb-1">{stat}</p>
-                  <p className="text-sm text-[#666666] leading-relaxed">{label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ProcessSection() {
-  const steps = [
-    {
-      number: "01",
-      title: "Diagnose",
-      desc: "We audit your Google Business Profile, map rankings, citations, and review profile to understand exactly where you stand and what's holding you back.",
-      icon: Search
-    },
-    {
-      number: "02",
-      title: "Optimize",
-      desc: "We fix your profile — categories, services, photos, hours, and descriptions — and correct NAP inconsistencies across the web that confuse Google.",
-      icon: Target
-    },
-    {
-      number: "03",
-      title: "Build Authority",
-      desc: "We build citations on reputable local directories, launch a review acquisition strategy, and create local landing pages for your service areas.",
-      icon: TrendingUp
-    },
-    {
-      number: "04",
-      title: "Track & Grow",
-      desc: "Monthly reports show your ranking positions, call volume, and profile views. We continue optimizing based on what the data shows.",
-      icon: BarChart3
-    }
-  ];
-
-  return (
-    <section id="how-it-works" className="py-24 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#555555] px-4 py-2 rounded-full mb-6">
-            <span className="font-semibold text-sm uppercase tracking-wide">How It Works</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-5 leading-tight">
-            A Clear Process, Not a Black Box
-          </h2>
-          <p className="text-lg text-[#555555] leading-relaxed">
-            You'll always know what we're doing and why. Here's how we approach local SEO.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map(({ number, title, desc, icon: Icon }) => (
-            <div key={number} className="bg-white rounded-2xl p-7 border border-gray-200 shadow-sm relative overflow-hidden">
-              <div className="text-7xl font-black text-gray-100 absolute -top-3 -right-1 leading-none select-none">
-                {number}
-              </div>
-              <div className="w-11 h-11 bg-blue-50 rounded-xl flex items-center justify-center mb-5 relative z-10">
-                <Icon className="w-5 h-5 text-[#1D4ED8]" />
-              </div>
-              <h3 className="font-bold text-[#111111] text-lg mb-3 relative z-10">{title}</h3>
-              <p className="text-[#666666] text-sm leading-relaxed relative z-10">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WhatWeImproveSection() {
-  const deliverables = [
-    {
-      icon: MapPin,
-      title: "Google Business Profile",
-      desc: "Full optimization of your profile including categories, services, photos, description, and attributes."
-    },
-    {
-      icon: Star,
-      title: "Review Management",
-      desc: "Strategy to consistently earn new reviews, plus professional responses to existing reviews."
-    },
-    {
-      icon: Search,
-      title: "Citation Building",
-      desc: "Submissions to authoritative local directories to build consistent NAP signals across the web."
-    },
-    {
-      icon: TrendingUp,
-      title: "Map Pack Rankings",
-      desc: "Ongoing optimization to push your business into the top 3 results for your target local searches."
-    },
-    {
-      icon: Target,
-      title: "Local Landing Pages",
-      desc: "Dedicated pages for your service areas that capture local search traffic and convert visitors to leads."
-    },
-    {
-      icon: Phone,
-      title: "Call & Direction Tracking",
-      desc: "Track exactly how many calls, website clicks, and direction requests your Google profile generates."
-    },
-    {
-      icon: BarChart3,
-      title: "Monthly Ranking Reports",
-      desc: "Clear reports showing your position changes, profile performance, and what's improving month over month."
-    },
-    {
-      icon: Users,
-      title: "Competitor Analysis",
-      desc: "Understand what your top-ranking competitors are doing and how we'll strategically outperform them."
-    }
-  ];
-
-  return (
-    <section className="py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-[#1D4ED8] px-4 py-2 rounded-full mb-6">
-            <span className="font-semibold text-sm uppercase tracking-wide">What We Improve</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-5 leading-tight">
-            Specific Improvements, Not Vague Promises
-          </h2>
-          <p className="text-lg text-[#555555] leading-relaxed">
-            Here's exactly what we work on — and what changes as a result.
-          </p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {deliverables.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="bg-gray-50 rounded-2xl p-6 border border-gray-200 hover:border-[#1D4ED8] hover:shadow-sm transition-all duration-200 group">
-              <div className="w-10 h-10 bg-white border border-gray-200 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all duration-200">
-                <Icon className="w-5 h-5 text-[#1D4ED8]" />
-              </div>
-              <h3 className="font-bold text-[#111111] mb-2">{title}</h3>
-              <p className="text-[#666666] text-sm leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-12 text-center">
-          <Link
-            to={APPLY_URL}
-            className="inline-flex items-center gap-2 bg-[#1D4ED8] text-white px-9 py-4 rounded-lg font-semibold hover:bg-[#1E40AF] transition-all duration-200 text-lg shadow-sm"
-          >
-            Apply For A Growth Call <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WhoIsThisForSection() {
-  const personas = [
-    {
-      title: "Local service businesses",
-      desc: "Contractors, plumbers, HVAC companies, electricians — businesses where the phone ringing is everything."
-    },
-    {
-      title: "Healthcare & wellness practices",
-      desc: "Dentists, clinics, physios, med spas that rely on patients finding them locally rather than travelling."
-    },
-    {
-      title: "Brick-and-mortar retailers",
-      desc: "Stores and studios where foot traffic matters and being discovered on Google Maps drives real visits."
-    },
-    {
-      title: "Multi-location businesses",
-      desc: "Franchises or expanding businesses that need each location ranking independently in its own service area."
-    }
-  ];
-
-  return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid lg:grid-cols-5 gap-14 items-start">
-          <div className="lg:col-span-2">
-            <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#555555] px-4 py-2 rounded-full mb-6">
-              <span className="font-semibold text-sm uppercase tracking-wide">Who This Is For</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-5 leading-tight">
-              Built for Businesses That Need Local Customers
-            </h2>
-            <p className="text-lg text-[#555555] leading-relaxed mb-8">
-              RankMaxi is the right fit if your customers are nearby, and you need them to find you before they find your competitor.
-            </p>
-            <Link
-              to={APPLY_URL}
-              className="inline-flex items-center gap-2 bg-[#1D4ED8] text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-[#1E40AF] transition-all duration-200"
+            <p
+              className="text-[#7C839B] text-base leading-relaxed"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              Apply For A Growth Call <ArrowRight className="w-4 h-4" />
-            </Link>
+              Missing out on local searches means your competitors are taking your potential customers every single day.
+            </p>
           </div>
-          <div className="lg:col-span-3 space-y-4">
-            {personas.map(({ title, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-6 border border-gray-200 flex items-start gap-4 shadow-sm">
-                <CheckCircle className="w-5 h-5 text-[#1D4ED8] flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-bold text-[#111111] mb-1">{title}</p>
-                  <p className="text-[#666666] text-sm leading-relaxed">{desc}</p>
+          <div className="md:w-1/2 grid grid-cols-1 gap-5 w-full">
+            {[
+              { stat: "76%", text: "of people visit or contact a local business within 24 hours of search." },
+              { stat: "46%", text: "of all Google searches have direct local intent." },
+              { stat: "88%", text: "of local mobile searches lead to a call or visit within a day." },
+            ].map(({ stat, text }) => (
+              <div
+                key={stat}
+                className="bg-white/10 backdrop-blur-sm border border-white/20 p-6 rounded-xl flex items-center gap-5"
+              >
+                <div
+                  className="text-4xl font-bold text-[#ADC6FF] flex-shrink-0 min-w-[5rem]"
+                  style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+                >
+                  {stat}
                 </div>
+                <p
+                  className="text-white text-sm leading-relaxed"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {text}
+                </p>
               </div>
             ))}
           </div>
@@ -414,57 +183,234 @@ function WhoIsThisForSection() {
   );
 }
 
-function ResultsSection() {
-  const outcomes = [
-    {
-      icon: MapPin,
-      metric: "Top 3",
-      label: "Map Pack Position",
-      desc: "Businesses we work with consistently move into the top 3 local results for their primary search terms within 3–6 months."
-    },
-    {
-      icon: Phone,
-      metric: "+40–80%",
-      label: "More Calls from Google",
-      desc: "Higher Map Pack rankings and optimized profiles drive significantly more calls and direction requests directly from Google."
-    },
-    {
-      icon: Star,
-      metric: "3×",
-      label: "More New Reviews",
-      desc: "A consistent review strategy brings in new reviews regularly — improving both rankings and customer trust at the same time."
-    },
-    {
-      icon: Clock,
-      metric: "4–8 Wks",
-      label: "To First Results",
-      desc: "Early ranking improvements and profile performance gains typically appear within the first two months of the engagement."
-    }
+/* ─── Bento Services Grid ───────────────────────────────── */
+function BentoSection() {
+  const small = [
+    { icon: Star, title: "Review Management", desc: "Systematically grow your social proof and manage customer feedback." },
+    { icon: Target, title: "Local Landing Pages", desc: "Optimized pages that convert local traffic into phone calls." },
+    { icon: BarChart3, title: "Ranking Reports", desc: "Clear, data-driven insights on your business's performance." },
+    { icon: Search, title: "Citation Building", desc: "Ensure your business information is accurate across the web." },
   ];
 
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-[#1D4ED8] px-4 py-2 rounded-full mb-6">
-            <span className="font-semibold text-sm uppercase tracking-wide">What To Expect</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#111111] mb-5 leading-tight">
-            Real Outcomes for Local Businesses
+    <section className="py-20 bg-[#E6E8EA] px-4 md:px-12">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2
+            className="text-3xl md:text-5xl font-bold text-[#111111] mb-4 leading-tight"
+            style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+          >
+            Specific Improvements, Not Vague Promises
           </h2>
-          <p className="text-lg text-[#555555] leading-relaxed">
-            These are the improvements our clients experience when we execute a focused local SEO strategy.
+          <p
+            className="text-[#45464D] max-w-2xl mx-auto text-base"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            We provide high-precision optimization for the signals Google cares about most.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {outcomes.map(({ icon: Icon, metric, label, desc }) => (
-            <div key={label} className="bg-gray-50 rounded-2xl p-7 border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                <Icon className="w-6 h-6 text-[#1D4ED8]" />
+
+        {/* Bento layout: hidden on mobile, visible md+ */}
+        <div className="hidden md:grid md:grid-cols-4 gap-6" style={{ gridTemplateRows: '1fr 1fr', minHeight: '520px' }}>
+          {/* Large feature card: 2 cols × 2 rows */}
+          <div className="md:col-span-2 row-span-2 bg-white rounded-2xl p-8 border border-[#E2E8F0] flex flex-col justify-between overflow-hidden">
+            <div>
+              <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-5">
+                <MapPin className="w-5 h-5 text-[#0058BE]" />
               </div>
-              <p className="text-3xl font-black text-[#111111] mb-0.5">{metric}</p>
-              <p className="text-sm font-semibold text-[#1D4ED8] uppercase tracking-wide mb-3">{label}</p>
-              <p className="text-[#666666] text-sm leading-relaxed">{desc}</p>
+              <h3
+                className="text-xl font-semibold text-[#111111] mb-4"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              >
+                Map Pack Dominance
+              </h3>
+              <p
+                className="text-[#45464D] text-sm leading-relaxed mb-6"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Get into the coveted top 3 local results where customers actually click. We manage the technical details so you get the visibility — and the calls that come with it.
+              </p>
+            </div>
+            <img
+              src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
+              alt="Marketing team analyzing local SEO data"
+              className="rounded-xl w-full h-48 object-cover"
+            />
+          </div>
+
+          {/* 4 small cards fill 2 cols × 2 rows */}
+          {small.map(({ icon: Icon, title, desc }) => (
+            <div
+              key={title}
+              className="bg-white rounded-2xl p-6 border border-[#E2E8F0] hover:shadow-md transition-all"
+            >
+              <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+                <Icon className="w-4 h-4 text-[#0058BE]" />
+              </div>
+              <h4
+                className="font-semibold text-[#111111] mb-2 text-base"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              >
+                {title}
+              </h4>
+              <p
+                className="text-[#45464D] text-sm leading-relaxed"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {desc}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile fallback: simple stacked grid */}
+        <div className="grid grid-cols-1 gap-5 md:hidden">
+          {[{ icon: MapPin, title: "Map Pack Dominance", desc: "Get into the coveted top 3 local results where customers actually click." }, ...small].map(({ icon: Icon, title, desc }) => (
+            <div key={title} className="bg-white rounded-2xl p-6 border border-[#E2E8F0]">
+              <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+                <Icon className="w-4 h-4 text-[#0058BE]" />
+              </div>
+              <h4 className="font-semibold text-[#111111] mb-2" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>{title}</h4>
+              <p className="text-[#45464D] text-sm leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            to={APPLY_URL}
+            className="inline-flex items-center gap-2 bg-[#111111] text-white px-9 py-4 rounded-lg font-semibold hover:bg-[#222222] transition-all duration-200 text-base"
+            style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+          >
+            Apply For A Growth Call <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Process ───────────────────────────────────────────── */
+function ProcessSection() {
+  const steps = [
+    { n: "1", title: "Diagnose", desc: "We audit your current profile and local competition to identify every gap." },
+    { n: "2", title: "Optimize", desc: "Technical updates to your GBP and website to align with local ranking factors." },
+    { n: "3", title: "Build Authority", desc: "Generating citations and reviews that establish you as the local leader." },
+    { n: "4", title: "Track & Grow", desc: "Monthly analysis and iterative improvements to stay ahead of competitors." },
+  ];
+
+  return (
+    <section id="how-it-works" className="py-24 px-4 md:px-12 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-16 items-center">
+          {/* Left — steps */}
+          <div className="md:w-1/2">
+            <span
+              className="text-[#0058BE] text-xs font-medium tracking-widest uppercase mb-4 block"
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              Our Methodology
+            </span>
+            <h2
+              className="text-3xl md:text-5xl font-bold text-[#111111] mb-10 leading-tight"
+              style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+            >
+              A Clear Process, Not a Black Box
+            </h2>
+            <div className="space-y-10">
+              {steps.map(({ n, title, desc }) => (
+                <div key={n} className="flex gap-6">
+                  <div
+                    className="w-12 h-12 bg-[#0058BE] text-white rounded-full flex items-center justify-center flex-shrink-0 text-lg font-bold"
+                    style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+                  >
+                    {n}
+                  </div>
+                  <div>
+                    <h3
+                      className="text-xl font-semibold text-[#111111] mb-1"
+                      style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+                    >
+                      {title}
+                    </h3>
+                    <p
+                      className="text-[#45464D] text-sm leading-relaxed"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — visual panel */}
+          <div className="md:w-1/2 w-full">
+            <div className="relative p-8 bg-[#ECEEF0] rounded-3xl">
+              <img
+                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Local SEO dashboard showing growth metrics"
+                className="rounded-2xl shadow-xl w-full object-cover"
+                style={{ height: '360px' }}
+              />
+              <div className="absolute -bottom-6 -right-6 bg-white p-5 rounded-2xl shadow-lg border border-[#E2E8F0] hidden lg:block">
+                <div
+                  className="text-[#0058BE] font-bold text-2xl"
+                  style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+                >
+                  +80%
+                </div>
+                <div
+                  className="text-[#45464D] text-xs font-medium uppercase tracking-widest mt-0.5"
+                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  Call Volume
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Results ───────────────────────────────────────────── */
+function ResultsSection() {
+  const metrics = [
+    { value: "#1–3", label: "Map Pack Position" },
+    { value: "+40–80%", label: "More Phone Calls" },
+    { value: "3×", label: "New Reviews Monthly" },
+    { value: "4–8 Wks", label: "To First Results" },
+  ];
+
+  return (
+    <section className="py-20 bg-[#131B2E] text-white px-4 md:px-12">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-14">
+          <h2
+            className="text-3xl md:text-5xl font-bold mb-4 leading-tight"
+            style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+          >
+            Real Outcomes for Local Businesses
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {metrics.map(({ value, label }) => (
+            <div key={label} className="p-8 border border-white/10 rounded-2xl text-center">
+              <div
+                className="text-4xl md:text-5xl font-bold text-[#ADC6FF] mb-3"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+              >
+                {value}
+              </div>
+              <p
+                className="text-[#7C839B] text-xs font-medium uppercase tracking-widest"
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+              >
+                {label}
+              </p>
             </div>
           ))}
         </div>
@@ -473,26 +419,135 @@ function ResultsSection() {
   );
 }
 
+/* ─── FAQ ───────────────────────────────────────────────── */
+function FAQSection() {
+  const faqs = [
+    {
+      q: "How long does it take to see results from Local SEO?",
+      a: "Most businesses start seeing measurable improvements in their Google Maps rankings within 4–8 weeks. Stronger, more competitive results typically come at the 3–6 month mark as citations, reviews, and profile authority build up."
+    },
+    {
+      q: "What exactly does Local SEO include?",
+      a: "Local SEO covers your Google Business Profile optimization, citation building across local directories, review acquisition and management, local landing pages, NAP (name, address, phone) consistency, and on-page signals that tell Google where you serve."
+    },
+    {
+      q: "Do I need more reviews to rank higher on Google Maps?",
+      a: "Yes — reviews are one of the strongest local ranking signals. Quantity, recency, and how you respond all matter. We help you build a consistent review strategy so new reviews come in regularly, not just in bursts."
+    },
+    {
+      q: "Can you help multi-location businesses?",
+      a: "Absolutely. We create and optimize individual Google Business Profiles and local landing pages for each location. Each location gets its own citation profile and review strategy so they all rank independently."
+    },
+    {
+      q: "How will I know if it's working?",
+      a: "You'll receive monthly reports showing your Google Maps ranking positions, call and direction request volume, profile views, and keyword visibility changes. We track the metrics that matter to your business — not vanity numbers."
+    },
+    {
+      q: "What happens after I apply for a Growth Call?",
+      a: "We'll review your Google Business Profile and local presence before the call. When we meet, we'll walk you through exactly where you stand, what's holding you back, and what a realistic improvement plan looks like. No pressure, no generic pitch."
+    },
+    {
+      q: "Do I need a big budget to get started with Local SEO?",
+      a: "Local SEO is one of the most cost-effective channels for local businesses. Unlike ads, the improvements compound over time. During your Growth Call, we'll discuss what's realistic for your situation and what level of investment makes sense for your goals."
+    }
+  ];
+
+  return (
+    <section className="py-24 px-4 md:px-12 bg-white">
+      <div className="max-w-3xl mx-auto">
+        <h2
+          className="text-3xl md:text-5xl font-bold text-[#111111] text-center mb-12 leading-tight"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+        >
+          Common Questions About Local SEO
+        </h2>
+        <div className="space-y-4">
+          {faqs.map((faq, i) => (
+            <FAQItem key={i} question={faq.q} answer={faq.a} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`bg-white border rounded-xl overflow-hidden transition-all duration-200 ${open ? 'border-[#0058BE] shadow-sm' : 'border-[#E2E8F0]'}`}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex justify-between items-center p-6 text-left"
+      >
+        <span
+          className="font-semibold text-[#111111] pr-8 text-base"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+        >
+          {question}
+        </span>
+        <svg
+          className={`w-5 h-5 text-[#0058BE] flex-shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="px-6 pb-6 pt-0">
+          <div className="w-full h-px bg-gray-100 mb-5" />
+          <p
+            className="text-[#45464D] text-sm leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            {answer}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Final CTA ─────────────────────────────────────────── */
 function FinalCTASection() {
   return (
-    <section className="py-28 bg-[#0F172A]">
-      <div className="max-w-3xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 px-4 py-2 rounded-full mb-8">
-          <span className="font-semibold text-sm uppercase tracking-wide">Ready to Grow?</span>
-        </div>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+    <section className="py-24 px-4 md:px-12 text-center bg-white">
+      <div className="max-w-4xl mx-auto border-t border-[#E2E8F0] pt-24">
+        <span
+          className="text-[#0058BE] text-xs font-medium tracking-widest uppercase mb-4 block"
+          style={{ fontFamily: "'JetBrains Mono', monospace" }}
+        >
+          Get Started Today
+        </span>
+        <h2
+          className="text-3xl md:text-5xl font-bold text-[#111111] mb-6 leading-tight"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
+        >
           Ready to Find the Biggest Growth Opportunity in Your Local Market?
         </h2>
-        <p className="text-xl text-white/70 mb-10 leading-relaxed">
+        <p
+          className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
+          style={{ fontFamily: "'Inter', sans-serif" }}
+        >
           Apply for a Growth Call and we'll review exactly where your business is getting overlooked on Google — before we even speak.
         </p>
         <Link
           to={APPLY_URL}
-          className="inline-flex items-center gap-2 bg-[#1D4ED8] text-white px-10 py-5 rounded-lg font-semibold text-lg hover:bg-[#1E40AF] transition-all duration-200 shadow-lg hover:shadow-xl"
+          className="inline-flex items-center gap-2 bg-[#111111] text-white px-10 py-5 rounded-lg font-bold text-lg hover:bg-[#222222] transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02]"
+          style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
         >
           Apply For A Growth Call <ArrowRight className="w-5 h-5" />
         </Link>
-        <p className="mt-6 text-white/40 text-sm">No pricing commitments. No generic pitch. Just a real look at your situation.</p>
+        <div className="mt-12 flex flex-wrap justify-center gap-10 opacity-40">
+          {["Care Made Home Care", "Therapy Supply", "Adly Travel", "South Surrey"].map((name) => (
+            <div
+              key={name}
+              className="font-bold text-lg text-[#111111] grayscale"
+              style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+            >
+              {name.toUpperCase()}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
