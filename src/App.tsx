@@ -36,6 +36,7 @@ import { FreeSEOAuditPage } from './pages/FreeSEOAuditPage';
 import { AdminAuditLeadsPage } from './pages/AdminAuditLeadsPage';
 import { AIVisibilityCheckerPage } from './pages/AIVisibilityCheckerPage';
 import { AdminVisibilityLeadsPage } from './pages/AdminVisibilityLeadsPage';
+import { ApplyPage } from './pages/ApplyPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { IndustriesPage } from './pages/IndustriesPage';
 import { ResourcesPage } from './pages/ResourcesPage';
@@ -90,6 +91,8 @@ function PublicLayout() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/apply" element={<ApplyPage />} />
+        <Route path="/contact/apply" element={<ApplyPage />} />
         <Route path="/rankmaxi" element={<RankMaxiPage />} />
         <Route path="/searchmaxi" element={<SearchMaxiPage />} />
         <Route path="/socialmaxi" element={<SocialMaxiPage />} />
