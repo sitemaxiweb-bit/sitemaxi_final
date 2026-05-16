@@ -55,7 +55,7 @@ function HeroSection() {
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
-        Paid ads stop the moment you stop paying. Organic SEO compounds. We build the technical foundation, content strategy, and authority signals that move your business to the top of search results — and keep it there.
+        Paid ads stop the moment you stop paying. Organic SEO compounds. We build the technical foundation, content strategy, and authority signals that move your business to the top of search results and keep it there.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link
