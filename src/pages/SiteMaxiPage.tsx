@@ -318,7 +318,7 @@ function FAQSection() {
   const faqs = [
     {
       q: "How long does it take to build a website?",
-      a: "Most custom websites are completed within 4–8 weeks from kickoff, depending on scope and how quickly content and approvals are provided. E-commerce builds typically take 6–10 weeks. We provide a clear timeline at the start of every project."
+      a: "Most custom websites are completed within 2–4 weeks from kickoff, depending on scope and how quickly content and approvals are provided. E-commerce builds typically take 4–6 weeks. We provide a clear timeline at the start of every project."
     },
     {
       q: "Do I own the website after it's built?",
