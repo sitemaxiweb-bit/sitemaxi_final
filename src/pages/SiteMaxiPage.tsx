@@ -342,7 +342,7 @@ function FAQSection() {
     },
     {
       q: "What support do you provide after the website goes live?",
-      a: "Every project includes 3 months of post-launch support covering bug fixes, minor adjustments, and technical assistance. After that period, we offer ongoing support retainers for clients who want continued help."
+      a: "Every project includes 2 months of post-launch support covering bug fixes, minor adjustments, and technical assistance. After that period, we offer ongoing support retainers for clients who want continued help."
     }
   ];
 
