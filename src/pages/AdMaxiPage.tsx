@@ -334,7 +334,7 @@ function FAQSection() {
     },
     {
       q: "What platforms do you run ads on?",
-      a: "Our primary focus is Facebook and Instagram (Meta). Depending on your business and audience, we may also recommend additional channels. We'll discuss the best platform mix for your goals during your Growth Call."
+      a: "Our primary focus is Google, Facebook and Instagram (Meta). Depending on your business and audience, we may also recommend additional channels. We'll discuss the best platform mix for your goals during your Growth Call."
     },
     {
       q: "How will I know my ads are performing?",
