@@ -12,7 +12,7 @@ export function ClickMaxiPage() {
     <>
       <SEOHead
         title="ClickMaxi — Google Ads Management That Generates High-Intent Leads | SiteMaxi Canada"
-        description="Capture customers the moment they search for what you offer. ClickMaxi manages Google Ads campaigns for Canadian businesses — precise targeting, optimized bids, and maximum ROI."
+        description="Capture customers the moment they search for what you offer. ClickMaxi manages Google Ads campaigns for Canadian businesses with precise targeting, optimized bids, and maximum ROI."
         keywords="Google Ads management Canada, PPC advertising, pay-per-click Canada, Google search ads, Google Ads agency, PPC management services"
       />
       <StructuredData
@@ -89,7 +89,7 @@ function ProblemSection() {
     {
       icon: AlertCircle,
       title: "No Conversion Tracking",
-      desc: "Running Google Ads without conversion tracking is like driving with your eyes closed. You can't optimize what you're not measuring — and most campaigns aren't measuring the right things."
+      desc: "Running Google Ads without conversion tracking is like driving with your eyes closed. You can't optimize what you're not measuring, and most campaigns aren't measuring the right things."
     },
     {
       icon: XCircle,
@@ -137,7 +137,7 @@ function StatsSection() {
               Google Ads Captures Customers at the Exact Moment They're Ready to Buy
             </h2>
             <p className="text-[#7C839B] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-              No other channel reaches buyers with this level of intent — but only expertly managed campaigns convert that intent into revenue.
+              No other channel reaches buyers with this level of intent. But only expertly managed campaigns convert that intent into revenue.
             </p>
           </div>
           <div className="md:w-1/2 grid grid-cols-1 gap-5 w-full">
@@ -163,7 +163,7 @@ function BentoSection() {
   const small = [
     { icon: FileText, title: "Ad Copywriting", desc: "High-converting headlines and descriptions tested across multiple variations to maximize CTR." },
     { icon: BarChart3, title: "Bid Management", desc: "Smart bidding strategies adjusted continuously to hit your target CPA and ROAS goals." },
-    { icon: Target, title: "Conversion Tracking", desc: "Full tracking setup — calls, form fills, and purchases — so every click is accountable." },
+    { icon: Target, title: "Conversion Tracking", desc: "Full tracking setup for calls, form fills, and purchases so every click is accountable." },
     { icon: Layers, title: "Negative Keywords", desc: "Ongoing exclusion of irrelevant search terms so your budget reaches only qualified buyers." },
   ];
 
@@ -178,7 +178,7 @@ function BentoSection() {
             Precision-Engineered Campaigns, Not Set-and-Forget Ads
           </h2>
           <p className="text-[#45464D] max-w-2xl mx-auto text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Every element of your campaign — structure, keywords, bids, and creative — is actively managed to minimize waste and maximize return.
+            Every element of your campaign, from structure and keywords to bids and creative, is actively managed to minimize waste and maximize return.
           </p>
         </div>
 
@@ -190,7 +190,7 @@ function BentoSection() {
               </div>
               <h3 className="text-xl font-semibold text-[#111111] mb-4" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>Campaign Architecture</h3>
               <p className="text-[#45464D] text-sm leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Campaign structure is the foundation of Google Ads performance. We build tightly themed ad groups, matching keyword intent to ad copy and landing pages — so Quality Scores improve, costs drop, and every click is working toward a conversion.
+                Campaign structure is the foundation of Google Ads performance. We build tightly themed ad groups that match keyword intent to ad copy and landing pages, so Quality Scores improve, costs drop, and every click is working toward a conversion.
               </p>
             </div>
             <img
@@ -257,7 +257,7 @@ const CLICKMAXI_STEPS = [
     id: 'launch',
     label: 'Launch',
     icon: Zap,
-    description: 'Campaigns go live with structured A/B tests running from day one — multiple ad variations competing to find the highest performer.',
+    description: 'Campaigns go live with structured A/B tests running from day one. Multiple ad variations compete to find the highest performer.',
     fallbackImage: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
@@ -334,7 +334,7 @@ function FAQSection() {
     },
     {
       q: "How do you prevent irrelevant clicks from wasting budget?",
-      a: "We build comprehensive negative keyword lists during setup and refine them weekly. We also use match types strategically — phrase and exact match for high-intent terms — to ensure your ads only show to searchers with genuine buying intent."
+      a: "We build comprehensive negative keyword lists during setup and refine them weekly. We also use match types strategically, prioritizing phrase and exact match for high-intent terms, to ensure your ads only show to searchers with genuine buying intent."
     },
     {
       q: "What metrics will I see in monthly reports?",
@@ -342,7 +342,7 @@ function FAQSection() {
     },
     {
       q: "Will my campaigns keep running if I pause the service?",
-      a: "Yes — we give you full ownership of the Google Ads account. Your campaigns, ad history, and data remain yours. We can provide handover documentation so you or another team can continue managing them."
+      a: "You keep full ownership of the Google Ads account. Your campaigns, ad history, and data remain yours. We can provide handover documentation so you or another team can continue managing them."
     }
   ];
 
@@ -406,7 +406,7 @@ function FinalCTASection() {
           className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Apply for a Growth Call and we'll audit your current Google Ads account — or show you exactly what a new campaign would target — before we even speak.
+          Apply for a Growth Call and we'll audit your current Google Ads account before we even speak. If you're starting fresh, we'll show you exactly what a new campaign would target.
         </p>
         <Link
           to={APPLY_URL}

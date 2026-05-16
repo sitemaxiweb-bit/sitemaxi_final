@@ -84,7 +84,7 @@ function ProblemSection() {
     {
       icon: XCircle,
       title: "No Page-One Rankings",
-      desc: "Your website exists but ranks on page 3, 4, or nowhere. Without page-one visibility, you simply don't get the traffic — or the leads."
+      desc: "Your website exists but ranks on page 3, 4, or nowhere. Without page-one visibility, you simply don't get the traffic or the leads."
     },
     {
       icon: AlertCircle,
@@ -94,7 +94,7 @@ function ProblemSection() {
     {
       icon: FileX,
       title: "Technical SEO Ignored",
-      desc: "Crawl errors, slow Core Web Vitals, broken internal links — these silent issues stop Google from properly indexing and ranking your site."
+      desc: "Crawl errors, slow Core Web Vitals, and broken internal links are silent issues that stop Google from properly indexing and ranking your site."
     }
   ];
 
@@ -150,7 +150,7 @@ function StatsSection() {
               className="text-[#7C839B] text-base leading-relaxed"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              Organic search is the highest-intent, lowest-cost traffic source available — but only if you've earned the rankings.
+              Organic search is the highest-intent, lowest-cost traffic source available, but only if you've earned the rankings.
             </p>
           </div>
           <div className="md:w-1/2 grid grid-cols-1 gap-5 w-full">
@@ -207,7 +207,7 @@ function BentoSection() {
             className="text-[#45464D] max-w-2xl mx-auto text-base"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            Rankings come from the combination of technical health, content quality, and authoritative links — we manage all three.
+            Rankings come from the combination of technical health, content quality, and authoritative links. We manage all three.
           </p>
         </div>
 
@@ -227,7 +227,7 @@ function BentoSection() {
                 className="text-[#45464D] text-sm leading-relaxed mb-6"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                Every page on your site is an opportunity to rank. We align your titles, headings, internal links, schema markup, and content with what Google needs to understand and promote your pages — so each asset works harder for you.
+                Every page on your site is an opportunity to rank. We align your titles, headings, internal links, schema markup, and content with what Google needs to understand and promote your pages, so each asset works harder for you.
               </p>
             </div>
             <img
@@ -287,7 +287,7 @@ const SEARCHMAXI_STEPS = [
     id: 'strategy',
     label: 'Strategy',
     icon: BarChart3,
-    description: 'A keyword and content roadmap built around real search intent — so every piece of content has a clear path to rank.',
+    description: 'A keyword and content roadmap built around real search intent, so every piece of content has a clear path to rank.',
     fallbackImage: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
@@ -365,11 +365,11 @@ function FAQSection() {
   const faqs = [
     {
       q: "How long does it take to rank on page one of Google?",
-      a: "For competitive keywords, realistic page-one rankings take 3–6 months of consistent effort. Less competitive terms can move faster — within 4–8 weeks. We set clear milestones so you always know where you stand."
+      a: "For competitive keywords, realistic page-one rankings take 3 to 6 months of consistent effort. Less competitive terms can move faster, within 4 to 8 weeks. We set clear milestones so you always know where you stand."
     },
     {
       q: "What is included in SearchMaxi's organic SEO service?",
-      a: "SearchMaxi covers full technical SEO auditing and fixes, keyword research, on-page optimization, content strategy and creation, internal linking, schema markup, and authority link building — everything needed to compete organically."
+      a: "SearchMaxi covers full technical SEO auditing and fixes, keyword research, on-page optimization, content strategy and creation, internal linking, schema markup, and authority link building. Everything you need to compete organically."
     },
     {
       q: "Do you write the content or just advise on it?",
@@ -377,7 +377,7 @@ function FAQSection() {
     },
     {
       q: "What is link building and why does it matter?",
-      a: "Backlinks — links from other websites to yours — are one of Google's strongest ranking signals. They tell Google that other sites trust and vouch for your content. We build high-quality links through editorial outreach to relevant, authoritative websites."
+      a: "Backlinks are links from other websites to yours and they are one of Google's strongest ranking signals. They tell Google that other sites trust your content. We build high-quality links through editorial outreach to relevant, authoritative websites."
     },
     {
       q: "Will my rankings drop if I stop the service?",
@@ -385,11 +385,11 @@ function FAQSection() {
     },
     {
       q: "How do you measure SEO success?",
-      a: "We track keyword position changes, organic traffic growth, click-through rates, and conversion events — not just vanity metrics. Monthly reports show what moved, what's next, and how organic performance maps to real business outcomes."
+      a: "We track keyword position changes, organic traffic growth, click-through rates, and conversion events, not just vanity metrics. Monthly reports show what moved, what's next, and how organic performance maps to real business outcomes."
     },
     {
       q: "Is SearchMaxi right for a new website with no existing traffic?",
-      a: "Yes — starting SEO early is actually an advantage. We can build the right architecture, content, and authority from day one rather than correcting mistakes later. New sites can see meaningful traction within 3–4 months with the right strategy."
+      a: "Starting SEO early is actually an advantage. We build the right architecture, content, and authority from day one rather than correcting mistakes later. New sites can see meaningful traction within 3 to 4 months with the right strategy."
     }
   ];
 
@@ -453,7 +453,7 @@ function FinalCTASection() {
           className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Apply for a Growth Call and we'll audit your current organic presence — where you rank, what you're missing, and the fastest path to page one — before we even speak.
+          Apply for a Growth Call and we'll audit your current organic presence before we even speak. We'll show you where you rank, what you're missing, and the fastest path to page one.
         </p>
         <Link
           to={APPLY_URL}

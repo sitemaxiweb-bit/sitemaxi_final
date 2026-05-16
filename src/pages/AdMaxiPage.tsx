@@ -12,7 +12,7 @@ export function AdMaxiPage() {
     <>
       <SEOHead
         title="AdMaxi — Social Ad Campaigns That Generate Real Leads | SiteMaxi Canada"
-        description="Stop wasting ad spend on campaigns that don't convert. AdMaxi runs high-ROI Facebook and Instagram ad campaigns for Canadian businesses — targeted, tested, and built to generate leads."
+        description="Stop wasting ad spend on campaigns that don't convert. AdMaxi runs high-ROI Facebook and Instagram ad campaigns for Canadian businesses. Targeted, tested, and built to generate leads."
         keywords="Facebook ads Canada, Instagram advertising, social media ads, Meta ads management, paid social media Canada, lead generation ads"
       />
       <StructuredData
@@ -49,7 +49,7 @@ function HeroSection() {
         className="text-4xl md:text-6xl font-bold text-[#111111] mb-6 leading-tight tracking-tight"
         style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
       >
-        Stop Wasting Ad Spend — Start Generating Leads
+        Stop Wasting Ad Spend. Start Generating Leads.
       </h1>
       <p
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
@@ -84,7 +84,7 @@ function ProblemSection() {
     {
       icon: DollarSign,
       title: "Ad Spend With No Returns",
-      desc: "Running ads without proper targeting or creative testing burns budget fast — and most businesses have no idea which campaigns are actually working."
+      desc: "Running ads without proper targeting or creative testing burns budget fast. Most businesses have no idea which campaigns are actually working."
     },
     {
       icon: AlertCircle,
@@ -94,7 +94,7 @@ function ProblemSection() {
     {
       icon: XCircle,
       title: "No Conversion Tracking",
-      desc: "Without proper pixel setup and conversion events, you're flying blind. You can't optimize what you can't measure — and most businesses aren't measuring anything meaningful."
+      desc: "Without proper pixel setup and conversion events, you're flying blind. You can't optimize what you can't measure, and most businesses aren't measuring anything meaningful."
     }
   ];
 
@@ -137,7 +137,7 @@ function StatsSection() {
               Social Advertising Is Where Your Buyers Already Spend Their Time
             </h2>
             <p className="text-[#7C839B] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
-              The opportunity is massive — but only if your campaigns are built with precision targeting and compelling creative.
+              The opportunity is massive, but only if your campaigns are built with precision targeting and compelling creative.
             </p>
           </div>
           <div className="md:w-1/2 grid grid-cols-1 gap-5 w-full">
@@ -178,7 +178,7 @@ function BentoSection() {
             Campaigns Built to Generate Leads, Not Just Impressions
           </h2>
           <p className="text-[#45464D] max-w-2xl mx-auto text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Every campaign we build is optimized for your actual business goal — not vanity metrics like reach and clicks.
+            Every campaign we build is optimized for your actual business goal, not vanity metrics like reach and clicks.
           </p>
         </div>
 
@@ -190,7 +190,7 @@ function BentoSection() {
               </div>
               <h3 className="text-xl font-semibold text-[#111111] mb-4" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>Campaign Strategy</h3>
               <p className="text-[#45464D] text-sm leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                We design full-funnel ad strategies — from awareness to conversion — that align with your sales process. No cookie-cutter campaigns. Every strategy is tailored to your offer, your market, and your ideal customer.
+                We design full-funnel ad strategies covering awareness through conversion, aligned with your sales process. No cookie-cutter campaigns. Every strategy is tailored to your offer, your market, and your ideal customer.
               </p>
             </div>
             <img
@@ -250,14 +250,14 @@ const ADMAXI_STEPS = [
     id: 'build',
     label: 'Build',
     icon: Layers,
-    description: 'Campaigns, ad sets, and creatives built to a clear objective — with every conversion event tracked from day one.',
+    description: 'Campaigns, ad sets, and creatives built to a clear objective, with every conversion event tracked from day one.',
     fallbackImage: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
     id: 'launch',
     label: 'Launch',
     icon: Zap,
-    description: 'Campaigns go live with a structured testing framework — multiple creatives, audiences, and copy variants competing simultaneously.',
+    description: 'Campaigns go live with a structured testing framework. Multiple creatives, audiences, and copy variants compete simultaneously to surface the top performer.',
     fallbackImage: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
@@ -318,7 +318,7 @@ function FAQSection() {
   const faqs = [
     {
       q: "How quickly will I see results from Facebook and Instagram ads?",
-      a: "Most clients see their first leads within the first 2–4 weeks. The first 30 days are a learning phase — we test audiences and creatives to find what works best for your offer. By month 2, campaigns are fully optimized and delivering consistent results."
+      a: "Most clients see their first leads within the first 2 to 4 weeks. The first 30 days are a learning phase where we test audiences and creatives to find what works best for your offer. By month 2, campaigns are fully optimized and delivering consistent results."
     },
     {
       q: "What is ad spend and is it included in the service fee?",
@@ -342,7 +342,7 @@ function FAQSection() {
     },
     {
       q: "What happens if an ad campaign isn't performing well?",
-      a: "We monitor campaigns weekly and make real-time adjustments to targeting, bidding, and creative. If a campaign isn't hitting targets, we diagnose the issue — whether it's audience, creative, or offer — and adjust accordingly. We don't let underperforming campaigns run on autopilot."
+      a: "We monitor campaigns weekly and make real-time adjustments to targeting, bidding, and creative. If a campaign isn't hitting targets, we diagnose whether it's the audience, creative, or offer and adjust accordingly. We don't let underperforming campaigns run on autopilot."
     }
   ];
 
@@ -406,7 +406,7 @@ function FinalCTASection() {
           className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Apply for a Growth Call and we'll analyze your current ad setup — what's working, what's wasting budget, and where the biggest opportunity lies — before we even speak.
+          Apply for a Growth Call and we'll analyze your current ad setup before we even speak. We'll show you what's working, what's wasting budget, and where the biggest opportunity lies.
         </p>
         <Link
           to={APPLY_URL}

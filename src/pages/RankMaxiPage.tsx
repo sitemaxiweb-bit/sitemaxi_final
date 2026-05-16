@@ -12,7 +12,7 @@ export function RankMaxiPage() {
     <>
       <SEOHead
         title="RankMaxi — Local SEO & Google Maps Ranking Services Canada"
-        description="Get found when local customers are ready to buy. RankMaxi by SiteMaxi helps Canadian businesses rank higher on Google Maps and local search — more calls, more direction requests, more customers."
+        description="Get found when local customers are ready to buy. RankMaxi by SiteMaxi helps Canadian businesses rank higher on Google Maps and local search. More calls, more direction requests, more customers."
         keywords="local SEO Canada, Google Maps ranking, Google Business Profile optimization, local search ranking, near me SEO, local SEO services Canada"
       />
       <StructuredData
@@ -55,7 +55,7 @@ function HeroSection() {
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
-        Your customers search on Google before they call anyone. We help your business appear in the top results on Google Maps — so more of those searches turn into calls, visits, and revenue.
+        Your customers search on Google before they call anyone. We help your business appear in the top results on Google Maps, so more of those searches turn into calls, visits, and revenue.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link
@@ -229,7 +229,7 @@ function BentoSection() {
                 className="text-[#45464D] text-sm leading-relaxed mb-6"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                Get into the coveted top 3 local results where customers actually click. We manage the technical details so you get the visibility — and the calls that come with it.
+                Get into the coveted top 3 local results where customers actually click. We manage the technical details so you get the visibility and the calls that come with it.
               </p>
             </div>
             <img
@@ -390,7 +390,7 @@ function FAQSection() {
     },
     {
       q: "Do I need more reviews to rank higher on Google Maps?",
-      a: "Yes — reviews are one of the strongest local ranking signals. Quantity, recency, and how you respond all matter. We help you build a consistent review strategy so new reviews come in regularly, not just in bursts."
+      a: "Reviews are one of the strongest local ranking signals. Quantity, recency, and how you respond all matter. We help you build a consistent review strategy so new reviews come in regularly, not just in bursts."
     },
     {
       q: "Can you help multi-location businesses?",
@@ -398,11 +398,11 @@ function FAQSection() {
     },
     {
       q: "How will I know if it's working?",
-      a: "You'll receive monthly reports showing your Google Maps ranking positions, call and direction request volume, profile views, and keyword visibility changes. We track the metrics that matter to your business — not vanity numbers."
+      a: "You'll receive monthly reports showing your Google Maps ranking positions, call and direction request volume, profile views, and keyword visibility changes. We track the metrics that actually matter to your business, not vanity numbers."
     },
     {
       q: "What happens after I apply for a Growth Call?",
-      a: "We'll review your Google Business Profile and local presence before the call. When we meet, we'll walk you through exactly where you stand, what's holding you back, and what a realistic improvement plan looks like. No pressure, no generic pitch."
+      a: "We review your Google Business Profile and local presence before the call. When we meet, we walk you through exactly where you stand, what's holding you back, and what a realistic improvement plan looks like. No pressure, no generic pitch."
     },
     {
       q: "Do I need a big budget to get started with Local SEO?",
@@ -486,7 +486,7 @@ function FinalCTASection() {
           className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Apply for a Growth Call and we'll review exactly where your business is getting overlooked on Google — before we even speak.
+          Apply for a Growth Call and we'll review exactly where your business is getting overlooked on Google before we even speak.
         </p>
         <Link
           to={APPLY_URL}

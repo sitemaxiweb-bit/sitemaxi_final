@@ -55,7 +55,7 @@ function HeroSection() {
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
-        Sporadic posting and recycled content don't grow businesses — strategic, consistent social media does. We manage your entire social presence so you can focus on running your business while we build your audience and brand authority.
+        Sporadic posting and recycled content don't grow businesses. Strategic, consistent social media does. We manage your entire social presence so you can focus on running your business while we build your audience and brand authority.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link
@@ -84,7 +84,7 @@ function ProblemSection() {
     {
       icon: Clock,
       title: "Inconsistent Posting",
-      desc: "Posting once a week when inspired — then going silent for a month — destroys your reach. Algorithms reward consistency, and your audience expects it."
+      desc: "Posting once a week when inspired, then going silent for a month, destroys your reach. Algorithms reward consistency and your audience expects it."
     },
     {
       icon: AlertCircle,
@@ -134,7 +134,7 @@ function StatsSection() {
               className="text-white text-3xl md:text-4xl font-bold mb-5 leading-tight"
               style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
             >
-              Your Customers Are On Social Media — The Question Is Whether They Can Find You
+              Your Customers Are Already On Social Media. The Question Is Whether They Can Find You.
             </h2>
             <p className="text-[#7C839B] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
               Social proof and brand authority built through consistent social media directly influences buying decisions.
@@ -178,7 +178,7 @@ function BentoSection() {
             Everything Your Social Presence Needs, Done for You
           </h2>
           <p className="text-[#45464D] max-w-2xl mx-auto text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
-            From strategy to creation to community management — we handle every aspect of your social media so you don't have to.
+            From strategy to creation to community management, we handle every aspect of your social media so you don't have to.
           </p>
         </div>
 
@@ -190,7 +190,7 @@ function BentoSection() {
               </div>
               <h3 className="text-xl font-semibold text-[#111111] mb-4" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>Platform Strategy</h3>
               <p className="text-[#45464D] text-sm leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Not every platform is right for every business. We identify where your ideal customers spend their time and build a platform-specific strategy that matches your content to the right format, algorithm, and audience behavior — so every post counts.
+                Not every platform is right for every business. We identify where your ideal customers spend their time and build a platform-specific strategy that matches your content to the right format, algorithm, and audience behavior so every post actually counts.
               </p>
             </div>
             <img
@@ -243,7 +243,7 @@ const SOCIALMAXI_STEPS = [
     id: 'audit',
     label: 'Brand Audit',
     icon: ClipboardCheck,
-    description: 'A complete review of your current social presence — what\'s working, what\'s missing, and how you compare to competitors in your space.',
+    description: "A complete review of your current social presence: what's working, what's missing, and how you compare to competitors in your space.",
     fallbackImage: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
@@ -257,7 +257,7 @@ const SOCIALMAXI_STEPS = [
     id: 'produce',
     label: 'Produce',
     icon: Cpu,
-    description: 'Monthly content creation — graphics, captions, reels, and stories — reviewed, approved, and scheduled so your feed is always active.',
+    description: 'Monthly content creation covering graphics, captions, reels, and stories, reviewed, approved, and scheduled so your feed is always active.',
     fallbackImage: 'https://images.pexels.com/photos/3182759/pexels-photo-3182759.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
@@ -318,11 +318,11 @@ function FAQSection() {
   const faqs = [
     {
       q: "Which social media platforms does SocialMaxi manage?",
-      a: "We manage Instagram, Facebook, LinkedIn, TikTok, and X (Twitter). During your onboarding, we identify which platforms make the most sense for your business and audience — not every business needs to be everywhere."
+      a: "We manage Instagram, Facebook, LinkedIn, TikTok, and X (Twitter). During your onboarding, we identify which platforms make the most sense for your business and audience. Not every business needs to be everywhere."
     },
     {
       q: "Do you create the content or do we provide it?",
-      a: "We create all the content — captions, graphics, and short-form video concepts. You'll review and approve a monthly content calendar before anything is published. Some clients like to provide photos and videos from their business, which we incorporate into the content."
+      a: "We create all the content including captions, graphics, and short-form video concepts. You'll review and approve a monthly content calendar before anything is published. Some clients like to provide photos and videos from their business, which we incorporate into the content."
     },
     {
       q: "How long before I see real follower and engagement growth?",
@@ -330,11 +330,11 @@ function FAQSection() {
     },
     {
       q: "Will someone respond to our comments and messages?",
-      a: "Yes — community management is included. We respond to comments, handle DMs, and flag any sensitive or urgent messages for your direct response. Response times and escalation protocols are agreed upon during onboarding."
+      a: "Community management is included. We respond to comments, handle DMs, and flag any sensitive or urgent messages for your direct response. Response times and escalation protocols are agreed upon during onboarding."
     },
     {
       q: "How is social media content approved before it goes live?",
-      a: "Every month you receive a full content calendar for review and approval before anything is scheduled. You can request changes, request different messaging, or pause content — you stay in control of what represents your brand."
+      a: "Every month you receive a full content calendar for review and approval before anything is scheduled. You can request changes, request different messaging, or pause content. You stay in control of what represents your brand."
     },
     {
       q: "Can social media management help with sales directly?",
@@ -342,7 +342,7 @@ function FAQSection() {
     },
     {
       q: "What makes SocialMaxi different from hiring an internal social media person?",
-      a: "SocialMaxi brings a full team — a strategist, content creator, and community manager — for less than the cost of a single part-time hire. You also get consistent output regardless of vacation, illness, or turnover. No training required, no HR overhead."
+      a: "SocialMaxi brings a full team including a strategist, content creator, and community manager for less than the cost of a single part-time hire. You get consistent output regardless of vacation, illness, or turnover. No training required, no HR overhead."
     }
   ];
 
@@ -406,7 +406,7 @@ function FinalCTASection() {
           className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Apply for a Growth Call and we'll review your current social presence — what's working, what's holding you back, and what a realistic growth plan looks like for your business.
+          Apply for a Growth Call and we'll review your current social presence before we even speak. We'll show you what's working, what's holding you back, and what a realistic growth plan looks like for your business.
         </p>
         <Link
           to={APPLY_URL}

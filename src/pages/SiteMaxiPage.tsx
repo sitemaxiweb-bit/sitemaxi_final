@@ -55,7 +55,7 @@ function HeroSection() {
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
-        Your website is your most important salesperson — available 24/7. We design and build fast, modern, mobile-first websites that don't just look impressive but are engineered to turn browsers into buyers and inquiries into revenue.
+        Your website is your most important salesperson, available around the clock. We design and build fast, modern, mobile-first websites that don't just look impressive but are engineered to turn browsers into buyers and inquiries into revenue.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link
@@ -84,12 +84,12 @@ function ProblemSection() {
     {
       icon: XCircle,
       title: "Outdated Design Kills Credibility",
-      desc: "75% of users judge a business's credibility based on its website. An outdated or amateur design tells visitors you're not serious — before they've read a single word."
+      desc: "75% of users judge a business's credibility based on its website. An outdated or amateur design tells visitors you're not serious before they've even read a single word."
     },
     {
       icon: Clock,
       title: "Slow Speed Drives Bounces",
-      desc: "A one-second delay in page load reduces conversions by 7%. Slow websites don't just frustrate visitors — they also rank lower on Google, compounding the damage."
+      desc: "A one-second delay in page load reduces conversions by 7%. Slow websites don't just frustrate visitors. They also rank lower on Google, which compounds the damage over time."
     },
     {
       icon: AlertCircle,
@@ -134,7 +134,7 @@ function StatsSection() {
               className="text-white text-3xl md:text-4xl font-bold mb-5 leading-tight"
               style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
             >
-              Your Website Is Either Working for You or Against You — There Is No Middle Ground
+              Your Website Is Either Working for You or Against You. There Is No Middle Ground.
             </h2>
             <p className="text-[#7C839B] text-base leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
               In a world where customers check your website before calling, a subpar digital presence is actively costing you business every day.
@@ -161,7 +161,7 @@ function StatsSection() {
 /* ─── Bento ─────────────────────────────────────────────── */
 function BentoSection() {
   const small = [
-    { icon: Smartphone, title: "Mobile-First Design", desc: "Every website we build is flawless on any screen — from mobile to desktop to large displays." },
+    { icon: Smartphone, title: "Mobile-First Design", desc: "Every website we build looks and performs flawlessly on any screen, from mobile to desktop." },
     { icon: Zap, title: "Speed & Core Web Vitals", desc: "Optimized to hit 90+ PageSpeed scores for both performance and SEO ranking factors." },
     { icon: ShoppingCart, title: "CMS Integration", desc: "Easy-to-update content management so you can manage your own content without a developer." },
     { icon: BarChart3, title: "Conversion Optimization", desc: "Clear calls to action, trust signals, and lead capture built into every page by design." },
@@ -178,7 +178,7 @@ function BentoSection() {
             Every Website We Build Is Designed to Convert
           </h2>
           <p className="text-[#45464D] max-w-2xl mx-auto text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Beautiful design that also performs — fast loading, SEO-ready, and engineered to turn visitors into leads and buyers.
+            Beautiful design that also performs. Fast loading, SEO-ready, and engineered to turn visitors into leads and buyers.
           </p>
         </div>
 
@@ -190,7 +190,7 @@ function BentoSection() {
               </div>
               <h3 className="text-xl font-semibold text-[#111111] mb-4" style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}>Conversion-First Architecture</h3>
               <p className="text-[#45464D] text-sm leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Every page is structured around a clear goal — get the visitor to take action. We design the hierarchy, messaging, and user flow to reduce friction and guide visitors naturally toward calling, booking, or buying. Form follows function.
+                Every page is structured around a clear goal: get the visitor to take action. We design the hierarchy, messaging, and user flow to reduce friction and guide visitors naturally toward calling, booking, or buying. Form follows function.
               </p>
             </div>
             <img
@@ -250,21 +250,21 @@ const SITEMAXI_STEPS = [
     id: 'design',
     label: 'Design',
     icon: Palette,
-    description: 'Wireframes and high-fidelity mockups reviewed and approved before a single line of code is written — no surprises at launch.',
+    description: 'Wireframes and high-fidelity mockups reviewed and approved before a single line of code is written. No surprises at launch.',
     fallbackImage: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
     id: 'build',
     label: 'Build',
     icon: Settings,
-    description: 'Development, content integration, speed optimization, and mobile testing — every detail handled before you see the staging version.',
+    description: 'Development, content integration, speed optimization, and mobile testing. Every detail is handled before you see the staging version.',
     fallbackImage: 'https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
     id: 'launch',
     label: 'Launch',
     icon: Award,
-    description: 'Final QA, SEO setup, analytics integration, and go-live — followed by post-launch support to ensure everything performs as expected.',
+    description: 'Final QA, SEO setup, analytics integration, and go-live, followed by post-launch support to ensure everything performs as expected.',
     fallbackImage: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
 ];
@@ -322,7 +322,7 @@ function FAQSection() {
     },
     {
       q: "Do I own the website after it's built?",
-      a: "Yes — you own 100% of the website, all the code, and all the content. We don't lock you into proprietary platforms or hold your site hostage. You can host it anywhere and make changes with any developer after handover."
+      a: "You own 100% of the website, all the code, and all the content. We don't lock you into proprietary platforms or hold your site hostage. You can host it anywhere and make changes with any developer after handover."
     },
     {
       q: "What platform do you build on?",
@@ -330,11 +330,11 @@ function FAQSection() {
     },
     {
       q: "Is SEO included in the website build?",
-      a: "Every SiteMaxi website is built SEO-ready — proper URL structure, meta tags, schema markup, Core Web Vitals optimization, and sitemap submission. This gives you the technical foundation. For ongoing content and ranking growth, SearchMaxi complements this perfectly."
+      a: "Every SiteMaxi website is built SEO-ready with proper URL structure, meta tags, schema markup, Core Web Vitals optimization, and sitemap submission. This gives you the technical foundation. For ongoing content and ranking growth, SearchMaxi complements this perfectly."
     },
     {
       q: "Can you redesign an existing website instead of building from scratch?",
-      a: "Absolutely. Many clients come to us with an existing site that needs a refresh rather than a full rebuild. We assess what's working, preserve valuable SEO equity, and redesign around your goals — faster and often at a lower cost than starting fresh."
+      a: "Absolutely. Many clients come to us with an existing site that needs a refresh rather than a full rebuild. We assess what's working, preserve valuable SEO equity, and redesign around your goals. It's typically faster and at a lower cost than starting fresh."
     },
     {
       q: "Will I be able to update the website myself after launch?",
@@ -342,7 +342,7 @@ function FAQSection() {
     },
     {
       q: "What support do you provide after the website goes live?",
-      a: "Every project includes 3 months of post-launch support — bug fixes, minor adjustments, and technical assistance. After that period, we offer ongoing support retainers for clients who want continued technical assistance."
+      a: "Every project includes 3 months of post-launch support covering bug fixes, minor adjustments, and technical assistance. After that period, we offer ongoing support retainers for clients who want continued help."
     }
   ];
 
@@ -406,7 +406,7 @@ function FinalCTASection() {
           className="text-[#45464D] mb-10 max-w-xl mx-auto text-base leading-relaxed"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Apply for a Growth Call and we'll review your current site — what's working, what's hurting you, and what a conversion-optimized redesign would look like for your business.
+          Apply for a Growth Call and we'll review your current site before we even speak. We'll show you what's working, what's hurting you, and what a conversion-optimized redesign would look like.
         </p>
         <Link
           to={APPLY_URL}
