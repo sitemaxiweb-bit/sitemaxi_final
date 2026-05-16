@@ -322,7 +322,7 @@ function FAQSection() {
     },
     {
       q: "What is ad spend and is it included in the management fee?",
-      a: "Ad spend is the budget paid directly to Google for showing your ads. It is separate from our management fee. We recommend a minimum of $500–$1,500/month in ad spend to gather enough data for meaningful optimization."
+      a: "Ad spend is the budget paid directly to Google for showing your ads. It is separate from our management fee. We recommend a minimum of $2500–$3,500/month(depending on the industry) in ad spend to gather enough data for meaningful optimization."
     },
     {
       q: "What is a Quality Score and why does it matter?",
