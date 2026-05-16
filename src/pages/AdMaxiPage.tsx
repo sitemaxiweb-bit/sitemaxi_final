@@ -55,7 +55,7 @@ function HeroSection() {
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
-        Most social ad budgets are burned on poor targeting, untested creatives, and zero conversion tracking. We build Facebook and Instagram campaigns that are engineered from day one to drive real leads at a profitable cost.
+        Most social ad budgets are burned on poor targeting, untested creatives, and zero conversion tracking. We build Google, Meta, Pinterest and Tiktok campaigns that are engineered from day one to drive real leads at a profitable cost.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link
