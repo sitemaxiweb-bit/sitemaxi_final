@@ -322,7 +322,7 @@ function FAQSection() {
     },
     {
       q: "What is ad spend and is it included in the service fee?",
-      a: "Ad spend is the budget you pay directly to Facebook/Instagram for showing your ads. It is separate from our management fee. We recommend a minimum ad spend of $500–$1,000/month to get meaningful data and results."
+      a: "Ad spend is the budget you pay directly to Google, Meta for showing your ads. It is separate from our management fee. We recommend a minimum ad spend of $500–$1,000/month(depending on the industry) to get meaningful data and results."
     },
     {
       q: "What types of businesses does AdMaxi work best for?",
