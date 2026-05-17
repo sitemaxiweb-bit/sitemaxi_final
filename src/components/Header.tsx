@@ -3,8 +3,6 @@ import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClic
 import { useState, useEffect, useRef } from 'react';
 import { MenuItem, Menu as NavMenu } from './ui/navbar-menu';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 const services = [
   {
     icon: TrendingUp,
@@ -236,14 +234,12 @@ export function Header() {
           >
             Free Audit
           </Link>
-          <a
-            href={CALENDAR_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/apply"
             className="border border-[#1D4ED8] text-[#1D4ED8] px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-50 transition-colors"
           >
-            Book Strategy Call
-          </a>
+            Apply For A Growth Call
+          </Link>
         </div>
 
         <button
@@ -322,14 +318,12 @@ export function Header() {
               >
                 Free Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border border-[#1D4ED8] text-[#1D4ED8] px-6 py-3.5 rounded-xl font-semibold text-center"
               >
-                Book Strategy Call
-              </a>
+                Apply For A Growth Call
+              </Link>
             </div>
           </nav>
         </div>

@@ -8,8 +8,6 @@ import {
 import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 type Category = 'all' | 'seo' | 'local' | 'ads' | 'ecommerce' | 'conversion' | 'templates';
 
 interface Resource {
@@ -592,15 +590,13 @@ export function ResourcesHubPage() {
               <div className="bg-gray-50 rounded-2xl p-10 border border-gray-100">
                 <h3 className="text-2xl font-bold text-[#111111] mb-3">Want a custom strategy?</h3>
                 <p className="text-[#6B7280] mb-6">Book a free strategy call with our team. We\'ll review your business, goals, and build a custom marketing plan.</p>
-                <a
-                  href={CALENDAR_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/apply"
                   className="inline-flex items-center gap-2 bg-[#1D4ED8] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#1E40AF] transition-colors"
                 >
-                  Book Strategy Call
+                  Apply For A Growth Call
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </div>
             </div>
           </ScrollAnimateWrapper>

@@ -38,8 +38,6 @@ const typeColors: Record<string, { color: string; bg: string }> = {
   Playbook: { color: '#DC2626', bg: '#FEE2E2' },
 };
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function ResourcePageTemplate({ data }: { data: ResourcePageData }) {
   const typeStyle = typeColors[data.type];
 
@@ -156,14 +154,12 @@ export function ResourcePageTemplate({ data }: { data: ResourcePageData }) {
                   >
                     Get Free Audit <ArrowRight className="w-4 h-4" />
                   </Link>
-                  <a
-                    href={CALENDAR_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/apply"
                     className="inline-flex items-center gap-2 border border-white/30 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/10 transition-colors"
                   >
-                    Book Strategy Call
-                  </a>
+                    Apply For A Growth Call
+                  </Link>
                 </div>
               </div>
             </ScrollAnimateWrapper>
@@ -220,14 +216,12 @@ export function ResourcePageTemplate({ data }: { data: ResourcePageData }) {
                 <p className="text-[#6B7280] text-xs leading-relaxed mb-4">
                   Book a free strategy call with our team. We'll review your business and build a custom plan.
                 </p>
-                <a
-                  href={CALENDAR_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/apply"
                   className="block w-full border border-[#059669] text-[#059669] text-center py-3 rounded-xl font-semibold hover:bg-green-50 transition-colors text-sm"
                 >
-                  Book Free Call
-                </a>
+                  Apply For A Growth Call
+                </Link>
               </div>
             </ScrollAnimateWrapper>
           </aside>

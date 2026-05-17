@@ -7,8 +7,6 @@ import type { LocationRecord, LocationPageRecord } from './types';
 import { SERVICE_TYPES } from './types';
 import { SUPPORTED_INDUSTRIES } from './locationContent';
 
-const CALENDAR_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF';
-
 interface FAQItemProps {
   question: string;
   answer: string;
@@ -115,15 +113,13 @@ export function LocationPageTemplate({ location, page, nearbyCityPages }: Props)
                   <Search className="w-5 h-5" />
                   {page.custom_cta_text || 'Get Free AI Marketing Audit'}
                 </Link>
-                <a
-                  href={CALENDAR_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/apply"
                   className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors flex items-center gap-2"
                 >
-                  Book Strategy Call
+                  Apply For A Growth Call
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-6 mt-8">
                 {['No long-term contracts', 'Canadian team', 'Results-focused strategy'].map((item) => (
@@ -355,7 +351,7 @@ export function LocationPageTemplate({ location, page, nearbyCityPages }: Props)
                 <div className="space-y-2">
                   {[
                     { label: 'Free AI Marketing Audit', path: '/free-seo-audit' },
-                    { label: 'Book a Strategy Call', path: CALENDAR_URL, external: true },
+                    { label: 'Apply For A Growth Call', path: '/apply', external: false },
                     { label: 'Our Blog', path: '/blog' },
                     { label: 'Resources Hub', path: '/resources-hub' },
                     { label: 'View All Cities', path: '/locations' },
@@ -407,15 +403,13 @@ export function LocationPageTemplate({ location, page, nearbyCityPages }: Props)
                 <Search className="w-5 h-5" />
                 Get Free AI Marketing Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors flex items-center gap-2"
               >
-                Book Strategy Call
+                Apply For A Growth Call
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
           </ScrollAnimateWrapper>
         </div>

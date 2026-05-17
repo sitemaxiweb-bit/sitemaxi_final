@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Search, ArrowRight, Zap } from 'lucide-react';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function BlogLeadCapture() {
   return (
     <div className="my-10 bg-gradient-to-br from-[#F0F9FF] to-white rounded-2xl border border-blue-100 p-8">
@@ -25,15 +23,13 @@ export function BlogLeadCapture() {
               <Search className="w-4 h-4" />
               Run Free Audit
             </Link>
-            <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/apply"
               className="inline-flex items-center gap-2 border border-gray-200 text-[#374151] px-5 py-3 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors text-sm"
             >
-              Book Strategy Call
+              Apply For A Growth Call
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

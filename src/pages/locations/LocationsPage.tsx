@@ -7,8 +7,6 @@ import { getLocations } from './locationApi';
 import type { LocationRecord } from './types';
 import { SERVICE_TYPES, PROVINCE_ORDER } from './types';
 
-const CALENDAR_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF';
-
 const PROVINCE_NAMES: Record<string, string> = {
   BC: 'British Columbia',
   AB: 'Alberta',
@@ -78,15 +76,13 @@ export function LocationsPage() {
                 <Search className="w-5 h-5" />
                 Get Free AI Marketing Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors flex items-center gap-2"
               >
-                Book Strategy Call
+                Apply For A Growth Call
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
           </ScrollAnimateWrapper>
         </div>
@@ -303,15 +299,13 @@ export function LocationsPage() {
                 <Search className="w-5 h-5" />
                 Get Free AI Marketing Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors flex items-center gap-2"
               >
-                Book Strategy Call
+                Apply For A Growth Call
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
           </ScrollAnimateWrapper>
         </div>

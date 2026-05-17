@@ -16,8 +16,6 @@ import { FeatureCarousel } from '../components/FeatureCarousel';
 import { AnimatedTestimonials } from '../components/ui/animated-testimonials';
 import type { Testimonial } from '../components/ui/animated-testimonials';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function HomePage() {
   return (
     <>
@@ -121,14 +119,12 @@ function HeroSection() {
                 Get Free AI Marketing Audit
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-all duration-200 text-base"
               >
-                Book Strategy Call
-              </a>
+                Apply For A Growth Call
+              </Link>
             </div>
 
             <div className="flex flex-wrap items-center gap-6 text-sm text-[#6B7280]">
@@ -652,14 +648,12 @@ function FinalCTASection() {
               <Search className="w-5 h-5" />
               Run Free AI Marketing Audit
             </Link>
-            <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/apply"
               className="bg-white/10 border border-white/20 text-white px-10 py-4 rounded-xl font-bold text-base hover:bg-white/20 transition-colors"
             >
-              Book Strategy Call
-            </a>
+              Apply For A Growth Call
+            </Link>
           </div>
           <p className="text-blue-300 text-sm mt-6">No commitment. No credit card. Just clarity.</p>
         </div>

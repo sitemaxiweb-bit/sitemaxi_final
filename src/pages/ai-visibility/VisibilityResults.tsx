@@ -1,7 +1,6 @@
 import { CheckCircle, XCircle, TrendingUp, TrendingDown, Users, Lightbulb, ArrowRight, RefreshCw, BookOpen, Search, Eye, MessageSquare, Globe, ExternalLink, Info } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import type { VisibilityReportData, PlatformResult } from './types';
-
-const CALENDAR_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF';
 
 function ScoreGauge({ score }: { score: number }) {
   const color = score >= 70 ? '#16a34a' : score >= 40 ? '#ca8a04' : '#dc2626';
@@ -293,15 +292,13 @@ export function VisibilityResults({ report, onRunAnother }: VisibilityResultsPro
             Our team of AI visibility experts can help you get found across Gemini, Claude, and ChatGPT — consistently.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/apply"
               className="bg-[#1D4ED8] hover:bg-[#1E40AF] text-white font-bold px-8 py-4 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-900/30"
             >
-              Book a Free Strategy Call
+              Apply For A Growth Call
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
             <button
               onClick={onRunAnother}
               className="border border-white/20 text-white hover:bg-white/10 font-semibold px-6 py-4 rounded-xl transition-all flex items-center gap-2"

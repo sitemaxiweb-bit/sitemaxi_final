@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 const services = [
   {
     icon: TrendingUp,
@@ -146,14 +144,12 @@ export function ServicesPage() {
                 <Search className="w-5 h-5" />
                 Get Free AI Marketing Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors"
               >
-                Book Strategy Call
-              </a>
+                Apply For A Growth Call
+              </Link>
             </div>
           </ScrollAnimateWrapper>
         </div>

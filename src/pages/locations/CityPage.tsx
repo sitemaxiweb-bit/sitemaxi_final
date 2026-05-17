@@ -7,8 +7,6 @@ import { getLocationBySlug, getLocationPages } from './locationApi';
 import type { LocationRecord, LocationPageRecord } from './types';
 import { SERVICE_TYPES } from './types';
 
-const CALENDAR_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF';
-
 export function CityPage() {
   const { city } = useParams<{ city: string }>();
   const [location, setLocation] = useState<LocationRecord | null>(null);
@@ -80,15 +78,13 @@ export function CityPage() {
                   <Search className="w-5 h-5" />
                   Get Free AI Marketing Audit
                 </Link>
-                <a
-                  href={CALENDAR_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/apply"
                   className="border-2 border-gray-200 text-[#374151] px-8 py-4 rounded-xl font-semibold hover:border-[#1D4ED8] hover:text-[#1D4ED8] transition-colors flex items-center gap-2"
                 >
-                  Book Strategy Call
+                  Apply For A Growth Call
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </div>
             </div>
           </ScrollAnimateWrapper>
@@ -182,15 +178,13 @@ export function CityPage() {
                 <Search className="w-5 h-5" />
                 Get Free AI Marketing Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="border border-white/20 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-colors flex items-center gap-2"
               >
-                Book Strategy Call
+                Apply For A Growth Call
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
           </ScrollAnimateWrapper>
         </div>

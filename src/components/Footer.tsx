@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Search } from 'lucide-react';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function Footer() {
   return (
     <footer className="bg-[#0F172A] text-white">
@@ -40,14 +38,12 @@ export function Footer() {
                 <Search className="w-4 h-4" />
                 Free Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className="inline-flex items-center justify-center gap-2 border border-white/20 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-white/10 transition-colors"
               >
-                Book Strategy Call
-              </a>
+                Apply For A Growth Call
+              </Link>
             </div>
           </div>
 

@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import { Search, ArrowRight, CheckCircle } from 'lucide-react';
 import { ScrollAnimateWrapper } from './ScrollAnimateWrapper';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 interface AuditCTABlockProps {
   variant?: 'dark' | 'light' | 'blue';
   heading?: string;
@@ -46,19 +44,17 @@ export function AuditCTABlock({
                 <Search className="w-5 h-5" />
                 Get Free AI Marketing Audit
               </Link>
-              <a
-                href={CALENDAR_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/apply"
                 className={`px-7 py-4 rounded-xl font-semibold transition-colors flex items-center gap-2 ${
                   isDark || isBlue
                     ? 'border-2 border-white/20 text-white hover:border-white/40'
                     : 'border-2 border-gray-200 text-[#374151] hover:border-[#1D4ED8] hover:text-[#1D4ED8]'
                 }`}
               >
-                Book Strategy Call
+                Apply For A Growth Call
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-6">
               {['Free, no credit card needed', 'Results in minutes', 'Actionable recommendations'].map((item) => (

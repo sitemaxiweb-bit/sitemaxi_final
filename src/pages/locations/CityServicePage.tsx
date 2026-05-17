@@ -7,8 +7,6 @@ import { serviceContentTemplates } from './locationContent';
 import { SEOHead } from '../../components/SEOHead';
 import { Search, ArrowRight } from 'lucide-react';
 
-const CALENDAR_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF';
-
 export function CityServicePage() {
   const { city, service } = useParams<{ city: string; service: string }>();
   const [pageData, setPageData] = useState<LocationPageWithLocation | null>(null);

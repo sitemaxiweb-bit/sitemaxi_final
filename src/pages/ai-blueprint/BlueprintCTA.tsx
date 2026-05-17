@@ -1,4 +1,5 @@
 import { ArrowRight, Calendar, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CALENDAR_LINK = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF';
 
@@ -31,15 +32,13 @@ export function BlueprintCTA() {
             <ArrowRight className="w-5 h-5" />
             Request an AI Visibility Audit
           </a>
-          <a
-            href={CALENDAR_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/apply"
             className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/20 hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
           >
             <Calendar className="w-5 h-5" />
-            Book a Strategy Call
-          </a>
+            Apply For A Growth Call
+          </Link>
           <a
             href={CALENDAR_LINK}
             target="_blank"

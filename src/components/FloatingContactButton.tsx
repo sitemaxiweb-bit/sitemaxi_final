@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, X, Search, Calendar, ChevronRight } from 'lucide-react';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function FloatingContactButton() {
   const [open, setOpen] = useState(false);
 
@@ -30,10 +28,8 @@ export function FloatingContactButton() {
               </div>
               <ChevronRight className="w-4 h-4 text-[#9CA3AF] group-hover:text-[#1D4ED8] transition-colors" />
             </Link>
-            <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/apply"
               onClick={() => setOpen(false)}
               className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-green-50 transition-colors group"
             >
@@ -41,11 +37,11 @@ export function FloatingContactButton() {
                 <Calendar className="w-5 h-5 text-[#059669]" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-[#111111] text-sm">Book Strategy Call</p>
+                <p className="font-semibold text-[#111111] text-sm">Apply For A Growth Call</p>
                 <p className="text-[#9CA3AF] text-xs">Free 30-minute consultation</p>
               </div>
               <ChevronRight className="w-4 h-4 text-[#9CA3AF] group-hover:text-[#059669] transition-colors" />
-            </a>
+            </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}

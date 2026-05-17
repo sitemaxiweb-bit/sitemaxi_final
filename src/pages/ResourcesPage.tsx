@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { SEOHead } from '../components/SEOHead';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function ResourcesPage() {
   return (
     <>
@@ -224,15 +222,13 @@ export function ResourcesPage() {
                     <p className="text-[#6B7280] text-sm mb-4">
                       Book a free 30-minute strategy call. We'll review your site, your competitors, and walk you through a custom plan.
                     </p>
-                    <a
-                      href={CALENDAR_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      to="/apply"
                       className="inline-flex items-center gap-2 border-2 border-[#1D4ED8] text-[#1D4ED8] px-6 py-3 rounded-xl font-semibold text-sm hover:bg-blue-50 transition-colors"
                     >
-                      Book Free Strategy Call
+                      Apply For A Growth Call
                       <ArrowRight className="w-4 h-4" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

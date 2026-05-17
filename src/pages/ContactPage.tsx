@@ -4,8 +4,6 @@ import { ScrollAnimateWrapper } from '../components/ScrollAnimateWrapper';
 import { Link } from 'react-router-dom';
 import { Search, ArrowRight, CheckCircle, Calendar, Phone, Mail } from 'lucide-react';
 
-const CALENDAR_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2m0vspPUrR0-YqZ4woobo35YfltXEIKt__2utprk-3OdzJy3Qk9mCNHtvzlEdxZC0Y34jiLzfF";
-
 export function ContactPage() {
   return (
     <>
@@ -74,15 +72,13 @@ export function ContactPage() {
                     </div>
                   ))}
                 </div>
-                <a
-                  href={CALENDAR_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/apply"
                   className="flex items-center justify-center gap-2 bg-[#1D4ED8] text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-[#1E40AF] transition-colors w-full"
                 >
                   <Calendar className="w-4 h-4" />
-                  Book Free Call
-                </a>
+                  Apply For A Growth Call
+                </Link>
               </div>
 
               <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
