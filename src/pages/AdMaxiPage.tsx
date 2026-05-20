@@ -283,7 +283,7 @@ function AdMaxiMethodology() {
 /* ─── Results ───────────────────────────────────────────── */
 function ResultsSection() {
   const metrics = [
-    { value: "$2–4", label: "ROAS Average" },
+    { value: "2–4X", label: "ROAS Average" },
     { value: "-40%", label: "Cost Per Lead" },
     { value: "30 Days", label: "To First Results" },
     { value: "4–6", label: "Active Campaigns" },
