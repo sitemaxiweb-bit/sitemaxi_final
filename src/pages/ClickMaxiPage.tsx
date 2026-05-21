@@ -283,9 +283,9 @@ function ClickMaxiMethodology() {
 /* ─── Results ───────────────────────────────────────────── */
 function ResultsSection() {
   const metrics = [
-    { value: "2–5X", label: "ROAS Average" },
+    { value: "$2–5", label: "ROAS Average" },
     { value: "-35%", label: "Cost Per Click" },
-    { value: "14 Days", label: "To Go Live" },
+    { value: "30 Days", label: "To Go Live" },
     { value: "6+", label: "Active Ad Groups" },
   ];
 
