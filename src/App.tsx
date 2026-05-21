@@ -38,6 +38,7 @@ import { AdminAuditLeadsPage } from './pages/AdminAuditLeadsPage';
 import { AIVisibilityCheckerPage } from './pages/AIVisibilityCheckerPage';
 import { AdminVisibilityLeadsPage } from './pages/AdminVisibilityLeadsPage';
 import { ApplyPage } from './pages/ApplyPage';
+import { InterviewQuestionsPage } from './pages/InterviewQuestionsPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { IndustriesPage } from './pages/IndustriesPage';
 import { ResourcesPage } from './pages/ResourcesPage';
@@ -239,6 +240,7 @@ function App() {
           </ProtectedRoute>
         } />
 
+        <Route path="/interview-questions" element={<InterviewQuestionsPage />} />
         <Route path="/*" element={<PublicLayout />} />
       </Routes>
     </Router>
