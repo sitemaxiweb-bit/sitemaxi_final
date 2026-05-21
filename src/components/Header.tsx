@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench, Sparkles } from 'lucide-react';
+import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench, Sparkles, MapPin } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { MenuItem, Menu as NavMenu } from './ui/navbar-menu';
 
@@ -51,6 +51,14 @@ const services = [
     path: '/sitemaxi',
     color: '#7C3AED',
     bg: '#EDE9FE',
+  },
+  {
+    icon: MapPin,
+    name: 'LocalMaxi',
+    description: 'Google LSA — pay per lead, Google Guaranteed',
+    path: '/localmaxi',
+    color: '#16A34A',
+    bg: '#DCFCE7',
   },
 ];
 
