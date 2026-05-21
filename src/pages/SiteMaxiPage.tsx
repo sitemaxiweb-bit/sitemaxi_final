@@ -4,6 +4,7 @@ import { SEOHead } from '../components/SEOHead';
 import { StructuredData } from '../components/StructuredData';
 import { ServiceMethodologyCarousel } from '../components/ServiceMethodologyCarousel';
 import { useState } from 'react';
+import { WordCrawler } from '../components/WordCrawler';
 
 const APPLY_URL = '/apply';
 
@@ -105,7 +106,7 @@ function ProblemSection() {
           className="text-3xl md:text-5xl font-bold text-[#111111] mb-16 leading-tight"
           style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
         >
-          Why Most Business Websites Fail to Generate Leads
+          Why Most Business Websites Fail to Generate <WordCrawler />
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {problems.map(({ icon: Icon, title, desc }) => (
@@ -343,6 +344,14 @@ function FAQSection() {
     {
       q: "What support do you provide after the website goes live?",
       a: "Every project includes 2 months of post-launch support covering bug fixes, minor adjustments, and technical assistance. After that period, we offer ongoing support retainers for clients who want continued help."
+    },
+    {
+      q: "Where will my website be hosted?",
+      a: "We host all websites on our own managed hosting infrastructure, which is optimized for speed, uptime, and security. Hosting is $250/year for standard websites. The first year of hosting is included free with every new website build."
+    },
+    {
+      q: "What are the payment terms?",
+      a: "We require 50% of the total project cost before development begins to secure your spot and cover initial work. The remaining 50% is due before your website goes live. This structure keeps both parties aligned and ensures a smooth project from start to finish."
     }
   ];
 

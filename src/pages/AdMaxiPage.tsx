@@ -4,6 +4,7 @@ import { SEOHead } from '../components/SEOHead';
 import { StructuredData } from '../components/StructuredData';
 import { ServiceMethodologyCarousel } from '../components/ServiceMethodologyCarousel';
 import { useState } from 'react';
+import { WordCrawler } from '../components/WordCrawler';
 
 const APPLY_URL = '/apply';
 
@@ -49,7 +50,7 @@ function HeroSection() {
         className="text-4xl md:text-6xl font-bold text-[#111111] mb-6 leading-tight tracking-tight"
         style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
       >
-        Stop Wasting Ad Spend. Start Generating Leads.
+        Stop Wasting Ad Spend. Start Generating <WordCrawler />.
       </h1>
       <p
         className="text-[#45464D] text-base md:text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
@@ -175,7 +176,7 @@ function BentoSection() {
             className="text-3xl md:text-5xl font-bold text-[#111111] mb-4 leading-tight"
             style={{ fontFamily: "'Hanken Grotesk', sans-serif", letterSpacing: '-0.02em' }}
           >
-            Campaigns Built to Generate Leads, Not Just Impressions
+            Campaigns Built to Generate <WordCrawler />, Not Just Impressions
           </h2>
           <p className="text-[#45464D] max-w-2xl mx-auto text-base" style={{ fontFamily: "'Inter', sans-serif" }}>
             Every campaign we build is optimized for your actual business goal, not vanity metrics like reach and clicks.

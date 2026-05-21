@@ -20,7 +20,7 @@ interface Props {
   label?: string;
 }
 
-const AUTO_PLAY_INTERVAL = 3000;
+const AUTO_PLAY_INTERVAL = 5500;
 const ITEM_HEIGHT = 65;
 const BRAND_BLUE = '#1D4ED8';
 
