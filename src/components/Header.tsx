@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench, Sparkles, MapPin } from 'lucide-react';
+import { ChevronDown, Menu, X, TrendingUp, Target, Share2, Zap, MousePointerClick, Palette, Search, Wrench, Sparkles, MapPin, ShoppingBag } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { MenuItem, Menu as NavMenu } from './ui/navbar-menu';
 
@@ -59,6 +59,14 @@ const services = [
     path: '/localmaxi',
     color: '#16A34A',
     bg: '#DCFCE7',
+  },
+  {
+    icon: ShoppingBag,
+    name: 'ShopMaxi',
+    description: 'Shopify Growth — CRO, ads, email and scaling',
+    path: '/shopmaxi',
+    color: '#0369A1',
+    bg: '#E0F2FE',
   },
 ];
 

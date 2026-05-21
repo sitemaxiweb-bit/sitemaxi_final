@@ -16,6 +16,7 @@ import { AdMaxiPage } from './pages/AdMaxiPage';
 import { ClickMaxiPage } from './pages/ClickMaxiPage';
 import { SiteMaxiPage } from './pages/SiteMaxiPage';
 import { LocalMaxiPage } from './pages/LocalMaxiPage';
+import { ShopMaxiPage } from './pages/ShopMaxiPage';
 import { BlogPage } from './pages/BlogPage';
 import { BlogPostPage } from './pages/BlogPostPage';
 import { AdminLoginPage } from './pages/AdminLoginPage';
@@ -103,6 +104,7 @@ function PublicLayout() {
         <Route path="/clickmaxi" element={<ClickMaxiPage />} />
         <Route path="/sitemaxi" element={<SiteMaxiPage />} />
         <Route path="/localmaxi" element={<LocalMaxiPage />} />
+        <Route path="/shopmaxi" element={<ShopMaxiPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
