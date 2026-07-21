@@ -72,7 +72,7 @@ export function Team() {
                   alt={member.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   style={{
-                    objectPosition: member.image.includes('2026-06-16') ? '50% 80%' : member.image.includes('2025-12-21') ? '50% 25%' : 'top',
+                    objectPosition: member.image.includes('2026-06-16') ? '50% 68%' : member.image.includes('2025-12-21') ? '50% 25%' : 'top',
                     ...(member.image.startsWith('/team/') ? { filter: 'brightness(1.15) contrast(1.08) saturate(1.15)' } : member.image.startsWith('/WhatsApp') || member.image.startsWith('/whatsapp') ? { filter: 'brightness(1.05) contrast(1.05) saturate(1.1)' } : {})
                   }}
                 />
