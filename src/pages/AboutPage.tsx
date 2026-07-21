@@ -253,11 +253,11 @@ function OurTeam() {
       email: "moji@sitemaxi.com"
     },
     {
-      name: "Sarah Zizolfo",
-      role: "Paid Media Manager",
-      bio: "Experienced in managing high-performing Facebook, Instagram, and Google Ads campaigns. Sarah drives measurable ROI through smart targeting, creative testing, and continuous optimization.",
-      image: "https://shwcwyonepqlupiwxijx.supabase.co/storage/v1/object/public/blog-images/content/1764212855448-uidojj.png",
-      email: "socil@sitemaxi.com"
+      name: "Sharmilan Subramaniyam",
+      role: "Head of Digital",
+      bio: "Results-driven digital marketer specialising in paid media, lead generation, and growth strategy. Sharmilan brings expertise in Meta Ads, Google Ads, and conversion optimisation across tourism, real estate, education, and e-commerce — turning data and creativity into measurable business growth.",
+      image: "/WhatsApp_Image_2026-07-20_at_21.43.20.jpeg",
+      email: "digital@sitemaxi.com"
     },
     {
       name: "Tharindu Shalika",
@@ -309,7 +309,8 @@ function OurTeam() {
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                  style={member.image.startsWith('/WhatsApp') ? { filter: 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 

@@ -19,12 +19,11 @@ export function Team() {
       email: "Sani@sitemaxi.com"
     },
     {
-      name: "Sarah Chen",
-      role: "Head of SEO",
-      bio: "SEO specialist who has helped hundreds of businesses rank #1 in their markets.",
-      image: "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=400",
-      linkedin: "#",
-      email: "sarah@sitemaxi.com"
+      name: "Sharmilan Subramaniyam",
+      role: "Head of Digital",
+      bio: "Results-driven digital marketer specialising in paid media, lead generation, and growth strategy across Meta Ads, Google Ads, and conversion optimisation.",
+      image: "/WhatsApp_Image_2026-07-20_at_21.43.20.jpeg",
+      email: "digital@sitemaxi.com"
     },
     {
       name: "Michael Torres",
@@ -64,7 +63,8 @@ export function Team() {
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                  style={member.image.startsWith('/WhatsApp') ? { filter: 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 

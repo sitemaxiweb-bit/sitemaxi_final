@@ -27,15 +27,14 @@ export function TeamPage() {
       achievements: ["Built 3 successful marketing agencies", "Featured in Forbes", "TEDx Speaker"]
     },
     {
-      name: "Sarah Chen",
-      role: "Head of SEO",
-      bio: "SEO expert who has ranked 500+ websites on page 1",
-      fullBio: "Sarah is a certified SEO specialist with a proven track record of helping businesses dominate search results. She's passionate about technical SEO and has developed proprietary strategies that consistently deliver first-page rankings. Her analytical mindset and creative problem-solving make her invaluable to our clients.",
-      image: "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=800",
-      linkedin: "#",
-      email: "sarah@sitemaxi.com",
-      expertise: ["Technical SEO", "Content Strategy", "Link Building", "Analytics"],
-      achievements: ["Google Analytics Certified", "Ranked #1 for 200+ keywords", "Published SEO research"]
+      name: "Sharmilan Subramaniyam",
+      role: "Head of Digital",
+      bio: "Results-driven digital marketer turning data and creativity into measurable growth",
+      fullBio: "Sharmilan is a results-driven digital marketing professional with deep expertise in paid media, lead generation, and growth marketing across tourism, education, real estate, and e-commerce. He specialises in Meta Ads, Google Ads, conversion optimisation, marketing automation, and data-driven growth strategies — helping businesses increase brand visibility, generate qualified leads, and achieve sustainable growth.",
+      image: "/WhatsApp_Image_2026-07-20_at_21.43.20.jpeg",
+      email: "digital@sitemaxi.com",
+      expertise: ["Meta Ads", "Google Ads", "Lead Generation", "Conversion Optimisation"],
+      achievements: ["Multi-industry paid media specialist", "Performance-focused campaign strategist", "Growth marketing & automation expert"]
     },
     {
       name: "Michael Torres",
@@ -230,7 +229,8 @@ export function TeamPage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                    style={member.image.startsWith('/WhatsApp') ? { filter: 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
