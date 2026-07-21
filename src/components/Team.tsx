@@ -47,6 +47,13 @@ export function Team() {
       bio: "A Publicist specializing in social media and digital communication, focused on strategic content planning and audience engagement. I help brands shape their online presence through creative, purpose-driven messaging that aligns with business goals and market needs.",
       image: "/whatsapp_image_2025-12-21_at_11.36.05.jpeg",
       email: "rafaela@sitemaxi.com"
+    },
+    {
+      name: "Nick Panchal",
+      role: "Sales Development Representative",
+      bio: "Relationship-builder and pipeline driver combining sharp communication and prospecting skills to connect businesses with the right solutions from the very first interaction.",
+      image: "/team/WhatsApp_Image_2026-06-16_at_19.07.02.jpeg",
+      email: "nick@sitemaxi.com"
     }
   ];
 
@@ -64,7 +71,7 @@ export function Team() {
                   src={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
-                  style={member.image.startsWith('/WhatsApp') ? { filter: 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
+                  style={member.image.startsWith('/WhatsApp') || member.image.startsWith('/team/') ? { filter: member.image.startsWith('/team/') ? 'brightness(1.15) contrast(1.08) saturate(1.15)' : 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 

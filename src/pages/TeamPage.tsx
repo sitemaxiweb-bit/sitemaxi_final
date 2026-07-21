@@ -101,6 +101,16 @@ export function TeamPage() {
       email: "rachel@sitemaxi.com",
       expertise: ["Client Relations", "Project Management", "Marketing Strategy", "Analytics"],
       achievements: ["98% client satisfaction", "150+ successful projects", "Certified PMP"]
+    },
+    {
+      name: "Nick Panchal",
+      role: "Sales Development Representative",
+      bio: "Relationship-builder and pipeline driver connecting businesses with the right solutions",
+      fullBio: "Nick is a results-focused Sales Development Representative who thrives in fast-paced environments. He combines strong communication, prospecting, and problem-solving skills to drive pipeline growth and support revenue goals. Passionate about connecting with people, Nick creates positive, value-led customer experiences from the very first interaction — identifying real business opportunities and helping prospects solve challenges through the right solutions.",
+      image: "/team/WhatsApp_Image_2026-06-16_at_19.07.02.jpeg",
+      email: "nick@sitemaxi.com",
+      expertise: ["Prospecting", "Relationship Building", "Pipeline Growth", "Business Development"],
+      achievements: ["Value-first sales approach", "Fast-paced pipeline specialist", "Customer experience champion"]
     }
   ];
 
@@ -230,7 +240,7 @@ export function TeamPage() {
                     src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
-                    style={member.image.startsWith('/WhatsApp') ? { filter: 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
+                    style={member.image.startsWith('/WhatsApp') || member.image.startsWith('/team/') ? { filter: member.image.startsWith('/team/') ? 'brightness(1.15) contrast(1.08) saturate(1.15)' : 'brightness(1.05) contrast(1.05) saturate(1.1)' } : undefined}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
