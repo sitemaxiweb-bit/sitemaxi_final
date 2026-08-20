@@ -48,13 +48,6 @@ export function Team() {
       image: "/whatsapp_image_2025-12-21_at_11.36.05.jpeg",
       email: "rafaela@sitemaxi.com"
     },
-    {
-      name: "Nick Panchal",
-      role: "Sales Development Representative",
-      bio: "Relationship-builder and pipeline driver combining sharp communication and prospecting skills to connect businesses with the right solutions from the very first interaction.",
-      image: "/team/WhatsApp_Image_2026-06-16_at_19.07.02.jpeg",
-      email: "nick@sitemaxi.com"
-    }
   ];
 
   return (
