@@ -148,7 +148,7 @@ export function Contact() {
                     <div className="font-semibold text-[#111111] mb-1">Office</div>
                     <p className="text-[#666666]">
                       7398 Yonge St 6d Unit 619<br />
-                      Vaughan, ON ,CA L4J 2J2
+                      Vaughan, ON ,CA L4J 8J2
                     </p>
                   </div>
                 </div>

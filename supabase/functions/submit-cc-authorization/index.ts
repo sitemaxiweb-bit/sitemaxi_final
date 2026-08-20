@@ -111,7 +111,7 @@ async function sendEmailNotification(
           
           <div class="footer">
             <p>This is an automated notification from SiteMaxi Credit Card Authorization System</p>
-            <p>7398 Yonge St, Unit 619, Vaughan, ON, CA L4J 2J2</p>
+            <p>7398 Yonge St, Unit 619, Vaughan, ON, CA L4J 8J2</p>
           </div>
         </div>
       </body>

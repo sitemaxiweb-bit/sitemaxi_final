@@ -154,7 +154,7 @@ export function LocalBusinessStructuredData() {
         streetAddress: '7398 Yonge St 6d Unit 619',
         addressLocality: 'Vaughan',
         addressRegion: 'ON',
-        postalCode: 'L4J 2J2',
+        postalCode: 'L4J 8J2',
         addressCountry: 'CA',
       },
       geo: {

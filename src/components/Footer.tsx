@@ -88,7 +88,7 @@ export function Footer() {
               </li>
               <li className="leading-relaxed">
                 7398 Yonge St 6d Unit 619<br />
-                Vaughan, ON, CA L4J 2J2
+                Vaughan, ON, CA L4J 8J2
               </li>
             </ul>
           </div>

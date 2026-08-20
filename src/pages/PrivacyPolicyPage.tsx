@@ -131,7 +131,7 @@ export function PrivacyPolicyPage() {
             <div className="bg-gray-50 p-6 rounded-lg">
               <p className="font-semibold text-[#111111]">SiteMaxi</p>
               <p>7398 Yonge St 6d Unit 619</p>
-              <p>Vaughan, ON L4J 2J2</p>
+              <p>Vaughan, ON L4J 8J2</p>
               <p>Canada</p>
               <p className="mt-2">Email: hello@sitemaxi.com</p>
               <p>Phone: +1 (866) 344-6294</p>
