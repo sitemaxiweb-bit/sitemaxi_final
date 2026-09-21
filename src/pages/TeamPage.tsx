@@ -102,6 +102,15 @@ export function TeamPage() {
       expertise: ["Client Relations", "Project Management", "Marketing Strategy", "Analytics"],
       achievements: ["98% client satisfaction", "150+ successful projects", "Certified PMP"]
     },
+    {
+      name: "Melvin Obrique",
+      role: "Business Development Representative",
+      bio: "Driven business development professional connecting businesses with growth solutions",
+      fullBio: "Melvin is a proactive business development professional with a talent for identifying new opportunities and building lasting client relationships. He specialises in outreach strategy, lead nurturing, and consultative selling — helping prospective clients understand how the right digital marketing solutions can accelerate their growth and deliver measurable results.",
+      image: "/team/WhatsApp_Image_2026-09-21_at_15.30.26.jpeg",
+      expertise: ["Client Outreach", "Lead Nurturing", "Partnership Development", "Business Growth"],
+      achievements: ["Consultative selling specialist", "Strategic pipeline builder", "Client-first relationship approach"]
+    },
   ];
 
   const values = [

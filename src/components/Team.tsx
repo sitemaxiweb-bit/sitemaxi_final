@@ -48,6 +48,12 @@ export function Team() {
       image: "/whatsapp_image_2025-12-21_at_11.36.05.jpeg",
       email: "rafaela@sitemaxi.com"
     },
+    {
+      name: "Melvin Obrique",
+      role: "Business Development Representative",
+      bio: "Driven business development professional focused on identifying growth opportunities, building meaningful client relationships, and connecting businesses with the right digital solutions to reach their goals.",
+      image: "/team/WhatsApp_Image_2026-09-21_at_15.30.26.jpeg",
+    },
   ];
 
   return (
