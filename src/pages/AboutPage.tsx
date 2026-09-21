@@ -242,7 +242,7 @@ function OurTeam() {
       name: "Sani Nirosh",
       role: "Co-Founder",
       bio: "15+ years of strategic marketing experience helping brands grow across multiple industries. Passionate about building systems that drive real business outcomes through clear strategy, strong positioning, and modern digital execution.",
-      image: "https://shwcwyonepqlupiwxijx.supabase.co/storage/v1/object/public/blog-images/content/sani-nirosh-1763018688091-bc7kg.jpg",
+      image: "/Sajith.png",
       email: "Sani@sitemaxi.com"
     },
     {
